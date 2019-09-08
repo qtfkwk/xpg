@@ -1,6 +1,6 @@
 # About
 
-XKCD Password Generator (xpg)
+xkcd-style password generator
 
 # Features
 
@@ -15,8 +15,8 @@ XKCD Password Generator (xpg)
 
 ~~~
 $ xpg -h
-xpg 0.1.0
-xkcd password generator
+xpg 0.1.2
+xkcd-style password generator
 
 USAGE:
     xpg [FLAGS] [OPTIONS]
@@ -33,47 +33,47 @@ OPTIONS:
 
 ~~~
 $ xpg -V
-xpg 0.1.0
+xpg 0.1.2
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-EastBroadLineCompare
+PeaceFirmWerePower
 ~~~
 
 ~~~
 $ xpg -c 10
-ShallWillHorseRound
-PortugalSoldierReachWedge
-BothGreekWhetherFlat
-StudentsSubstancesDoorBean
-ElectricTriangleGaveLone
-MakeWindowMayorPossible
-EdgeDuckGameWelcome
-LisbonIndicateNeckDictionary
-RoundAuntLostWheat
-SureSoldierCentsTerms
+ColorSpringRingHall
+AnotherCentLendDelaware
+SureEveryTriedVowel
+ConsiderLearnSendWave
+JerusalemJoinRichHole
+FarmExactlyStationGrew
+DecimalForcePresidentsLater
+EnjoyAppearGrownWood
+OftenShallDirectionCourse
+MayorGreeceCongoDecimal
 ~~~
 
 ~~~
 $ xpg -w 8
-IronSpeedVirginiaSightExpressMontanaPureJapanese
+SpeakAlongLaborGrassNailBattlePositionReach
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-ChilePartialWhatDirectTeamLevelPrepareRace
-BecomePanamaSafetySellStrangeFellowPrintedFind
-ActionPointSingNeighborChurchMachineSpendGirl
-OppositeTriedHeardMatterLaterProudScaleWave
-ScientistsSystemAustriaLoneLaterBeenNeedleJapan
-PlanWestDenmarkSufferRightNevadaHillHole
-TrainingHuntUsuallyWouldGreeceMoreIdeaVermont
-QuietDriedCoverCoastLiftedFloorTakenDifferent
-DriedOtherWithoutKillGreenPropertySlowSpot
-SmiledAroundPictureClockTomorrowWingsVeryLower
+LostButterFellowWouldJoinedOfferEggsShine
+StreamFlowYardCountGeneralEffectSecondLearn
+SpeedGermanyCouldThinkMondayKissStrikeOctober
+DearStationWentLikeAfricaPerhapsBeenWomen
+CongoAgainstPlantEarlyGonePracticeAlabamaSail
+HeavenUncleSuggestedNoiseBurningPassedEtchingTrust
+FightColombiaJapanWillJoinedAgreedSentLabor
+RiddenReachSubjectEnemyAfraidGroupCompanySuppose
+NoneHouseBonesPastDressEffortBoatFellow
+NailIrelandTestCowsScoreLikelyWheatWorth
 ~~~
 
 ~~~
@@ -130,6 +130,8 @@ Words | Permutations
 
 # Changelog
 
+* 0.1.2 (2019-09-08)
+    * minor fixes
 * 0.1.1 (2019-09-08)
     * minor fixes
 * 0.1.0 (2019-09-08)
@@ -166,10 +168,10 @@ test tests::default_xpg_macro_returns_four_words ... ok
 test tests::xpg_can_return_five_words ... ok
 test tests::xpg_cannot_return_zero_words ... ok
 test tests::xpg_can_return_three_words ... ok
-test tests::xpg_macro_can_return_one_word ... ok
-test tests::xpg_macro_cannot_return_zero_words ... ok
 test tests::xpg_macro_can_return_five_words ... ok
+test tests::xpg_macro_cannot_return_zero_words ... ok
 test tests::xpg_macro_can_return_four_words ... ok
+test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_macro_can_return_three_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
