@@ -1,6 +1,11 @@
 [package]
 name = "xpg"
+description = "xkcd password generator"
+categories = ["command-line-utilities"]
 version = "0.1.0"
+license = "MIT"
+repository = "https://github.com/qtfkwk/xpg"
+readme = "README.md"
 authors = ["qtfkwk <qtfkwk+xpg@gmail.com>"]
 edition = "2018"
 
