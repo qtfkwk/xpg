@@ -49,7 +49,9 @@ $$ xpg --analyze -w 8
 
 # Changelog
 
-* 0.1.0 (YYYY-MM-DD)
+* 0.1.1 (2019-09-08)
+    * minor fixes
+* 0.1.0 (2019-09-08)
     * store wordlist as constant and operate on it without copying
     * select N words without repetition via `choose_multiple`
     * tests

@@ -1405,7 +1405,7 @@ fn permutations(n: u128, k: u128) -> u128 {
 /// Command line interface
 pub fn cli() {
     let a = clap_app!(xpg =>
-        (version: "0.1.0")
+        (version: "0.1.1")
         (about: "xkcd password generator")
         (@arg analyze: --analyze "Analyze")
         (@arg words: -w --words +takes_value

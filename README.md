@@ -40,40 +40,40 @@ xpg 0.1.0
 
 ~~~
 $ xpg
-BroughtStoneBelfastDegree
+EastBroadLineCompare
 ~~~
 
 ~~~
 $ xpg -c 10
-AugustDoesEngineSystem
-MarylandVariousEveryoneSchool
-EnglishTableSubjectBritain
-EarsLaborBlackSeem
-WheatWashQuarterSaturday
-DiedSoldiersFromVermont
-TeachAdditionPersonForeign
-FifthTakeBuildDetails
-MoleculesWhichChinaSelf
-ForeignNoticePeaceDetermine
+ShallWillHorseRound
+PortugalSoldierReachWedge
+BothGreekWhetherFlat
+StudentsSubstancesDoorBean
+ElectricTriangleGaveLone
+MakeWindowMayorPossible
+EdgeDuckGameWelcome
+LisbonIndicateNeckDictionary
+RoundAuntLostWheat
+SureSoldierCentsTerms
 ~~~
 
 ~~~
 $ xpg -w 8
-CostSectionGainSpendBroughtDropBuildingSeat
+IronSpeedVirginiaSightExpressMontanaPureJapanese
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-TellProudManyDifferenceAgreeAboutLongSweden
-SoundPaintBulgariaThousandsBreakSpokeBeanArticle
-HistoryPairSorryPainItselfSubstancesPortugalMarch
-CollegeCoveredJumpTrustScaleDistantFreshEdge
-StarEdgeRolledHappenKeepWedgeMillionWhite
-WearMindFamilyPreparedHardAlmostEnergyTuesday
-ThankWhenEnjoyCollegeMeetingDrawCaughtCold
-ReachMontanaPrintedFeetNoseYardBallHand
-EnglandBicycleLiftedStrikeSleepMightWheatSort
-JordanHuntCertainReadQueenNieceEngineExpect
+ChilePartialWhatDirectTeamLevelPrepareRace
+BecomePanamaSafetySellStrangeFellowPrintedFind
+ActionPointSingNeighborChurchMachineSpendGirl
+OppositeTriedHeardMatterLaterProudScaleWave
+ScientistsSystemAustriaLoneLaterBeenNeedleJapan
+PlanWestDenmarkSufferRightNevadaHillHole
+TrainingHuntUsuallyWouldGreeceMoreIdeaVermont
+QuietDriedCoverCoastLiftedFloorTakenDifferent
+DriedOtherWithoutKillGreenPropertySlowSpot
+SmiledAroundPictureClockTomorrowWingsVeryLower
 ~~~
 
 ~~~
@@ -130,7 +130,9 @@ Words | Permutations
 
 # Changelog
 
-* 0.1.0 (YYYY-MM-DD)
+* 0.1.1 (2019-09-08)
+    * minor fixes
+* 0.1.0 (2019-09-08)
     * store wordlist as constant and operate on it without copying
     * select N words without repetition via `choose_multiple`
     * tests
@@ -158,17 +160,17 @@ Words | Permutations
 $ cargo test
 
 running 11 tests
-test tests::xpg_macro_cannot_return_zero_words ... ok
-test tests::xpg_cannot_return_zero_words ... ok
 test tests::xpg_can_return_one_word ... ok
-test tests::xpg_macro_can_return_one_word ... ok
-test tests::xpg_can_return_three_words ... ok
-test tests::xpg_macro_can_return_three_words ... ok
 test tests::xpg_can_return_four_words ... ok
 test tests::default_xpg_macro_returns_four_words ... ok
 test tests::xpg_can_return_five_words ... ok
-test tests::xpg_macro_can_return_four_words ... ok
+test tests::xpg_cannot_return_zero_words ... ok
+test tests::xpg_can_return_three_words ... ok
+test tests::xpg_macro_can_return_one_word ... ok
+test tests::xpg_macro_cannot_return_zero_words ... ok
 test tests::xpg_macro_can_return_five_words ... ok
+test tests::xpg_macro_can_return_four_words ... ok
+test tests::xpg_macro_can_return_three_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
