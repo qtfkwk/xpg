@@ -1,0 +1,20 @@
+[package]
+name = "xpg"
+version = "0.1.0"
+authors = ["qtfkwk <qtfkwk+xpg@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.6.5"
+clap = "2.33.0"
+num = "0.2.0"
+separator = "0.4.1"
+factorial = "0.1.1"
+
+[dev-dependencies]
+regex = "1.1.7"
+criterion = "0.3.0"
+
+[[bench]]
+name = "xpg"
+harness = false

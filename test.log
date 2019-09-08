@@ -1,0 +1,26 @@
+
+running 11 tests
+test tests::xpg_macro_cannot_return_zero_words ... ok
+test tests::xpg_cannot_return_zero_words ... ok
+test tests::xpg_macro_can_return_one_word ... ok
+test tests::xpg_can_return_one_word ... ok
+test tests::xpg_can_return_four_words ... ok
+test tests::xpg_can_return_five_words ... ok
+test tests::xpg_macro_can_return_five_words ... ok
+test tests::xpg_can_return_three_words ... ok
+test tests::xpg_macro_can_return_three_words ... ok
+test tests::xpg_macro_can_return_four_words ... ok
+test tests::default_xpg_macro_returns_four_words ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+

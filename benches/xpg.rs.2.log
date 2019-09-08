@@ -1,0 +1,27 @@
+
+running 6 tests
+test tests::default_xpg_returns_four_words ... ignored
+test tests::xpg_can_return_five_words ... ignored
+test tests::xpg_can_return_four_words ... ignored
+test tests::xpg_can_return_one_word ... ignored
+test tests::xpg_can_return_three_words ... ignored
+test tests::xpg_cannot_return_zero_words ... ignored
+
+test result: ok. 0 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+Benchmarking xpg
+Benchmarking xpg: Warming up for 3.0000 s
+Benchmarking xpg: Collecting 100 samples in estimated 5.0002 s (24M iterations)
+Benchmarking xpg: Analyzing
+xpg                     time:   [191.25 ns 191.64 ns 192.26 ns]
+                        change: [-99.649% -99.648% -99.646%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 6 outliers among 100 measurements (6.00%)
+  2 (2.00%) high mild
+  4 (4.00%) high severe
+
