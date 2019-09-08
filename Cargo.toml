@@ -8,6 +8,11 @@ repository = "https://github.com/qtfkwk/xpg"
 readme = "README.md"
 authors = ["qtfkwk <qtfkwk+xpg@gmail.com>"]
 edition = "2018"
+exclude = [
+	"Makefile",
+	"README.master.md",
+	"*.log",
+]
 
 [dependencies]
 rand = "0.6.5"
