@@ -15,7 +15,7 @@ xkcd-style password generator
 
 ~~~
 $ xpg -h
-xpg 0.1.2
+xpg 0.2.0
 xkcd-style password generator
 
 USAGE:
@@ -33,47 +33,47 @@ OPTIONS:
 
 ~~~
 $ xpg -V
-xpg 0.1.2
+xpg 0.2.0
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-PeaceFirmWerePower
+FastYardStoreExercise
 ~~~
 
 ~~~
 $ xpg -c 10
-ColorSpringRingHall
-AnotherCentLendDelaware
-SureEveryTriedVowel
-ConsiderLearnSendWave
-JerusalemJoinRichHole
-FarmExactlyStationGrew
-DecimalForcePresidentsLater
-EnjoyAppearGrownWood
-OftenShallDirectionCourse
-MayorGreeceCongoDecimal
+StoneShotMondayPlease
+DistantSeparateEdgeWait
+JapaneseOsloRatherProcess
+ParticularAnotherExplainSummer
+CaliforniaPleaseThoughSafety
+MarylandHandAwayBook
+WomenMelodyPluralMarch
+SentGuardDeathCase
+CoastWireHollandTable
+TellSpeedFinallyNear
 ~~~
 
 ~~~
 $ xpg -w 8
-SpeakAlongLaborGrassNailBattlePositionReach
+ConsiderVirginiaThereforeLoudCenterEasySeptemberCall
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-LostButterFellowWouldJoinedOfferEggsShine
-StreamFlowYardCountGeneralEffectSecondLearn
-SpeedGermanyCouldThinkMondayKissStrikeOctober
-DearStationWentLikeAfricaPerhapsBeenWomen
-CongoAgainstPlantEarlyGonePracticeAlabamaSail
-HeavenUncleSuggestedNoiseBurningPassedEtchingTrust
-FightColombiaJapanWillJoinedAgreedSentLabor
-RiddenReachSubjectEnemyAfraidGroupCompanySuppose
-NoneHouseBonesPastDressEffortBoatFellow
-NailIrelandTestCowsScoreLikelyWheatWorth
+PeacePickSoonDifferentSweetSuddenBelongMeeting
+BritainExcitingNeighborPolandAlreadyWillFineCopenhagen
+MountainConditionChildrenSenseTriesMaterialStayQueen
+TouchArizonaBetterProveSpentFullSailBeauty
+EtchingJamaicaTownChinaRushBuildExperienceArea
+SettleFellowEitherBelowExplainTrackNineBetween
+PulledOpinionCarefullyVisitStudyElementsHealthRhythm
+LightSaidBulgariaBeforeLakeNieceArrivedGarden
+CubaWorkersMaltaGoodbyeReportSailPushHigh
+SweetGivesIslandArrivedRepeatedRightSwimCall
 ~~~
 
 ~~~
@@ -130,6 +130,9 @@ Words | Permutations
 
 # Changelog
 
+* 0.2.0 (2019-09-09)
+    * expose `xpg!` macro
+    * improve documentation
 * 0.1.2 (2019-09-08)
     * minor fixes
 * 0.1.1 (2019-09-08)
@@ -156,6 +159,32 @@ Words | Permutations
   specifically
   [lib/Crypt/HSXKPasswd/Dictionary/EN.pm@1d88564:38](https://github.com/bbusschots/hsxkpasswd/blob/1d88564d5bf74cf48025b372bcb635fc022962dd/lib/Crypt/HSXKPasswd/Dictionary/EN.pm#L38)
 
+# Legal
+
+```
+Copyright 2019 qtfkwk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of 
+this software and associated documentation files (the "Software"), to deal in 
+the Software without restriction, including without limitation the rights to 
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+of the Software, and to permit persons to whom the Software is furnished to do 
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE.
+```
+
+[MIT License](https://opensource.org/licenses/MIT)
+
 # Tests
 
 ~~~
@@ -163,16 +192,16 @@ $ cargo test
 
 running 11 tests
 test tests::xpg_can_return_one_word ... ok
-test tests::xpg_can_return_four_words ... ok
 test tests::default_xpg_macro_returns_four_words ... ok
 test tests::xpg_can_return_five_words ... ok
+test tests::xpg_can_return_four_words ... ok
 test tests::xpg_cannot_return_zero_words ... ok
 test tests::xpg_can_return_three_words ... ok
 test tests::xpg_macro_can_return_five_words ... ok
-test tests::xpg_macro_cannot_return_zero_words ... ok
 test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_macro_can_return_three_words ... ok
+test tests::xpg_macro_cannot_return_zero_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
@@ -198,7 +227,7 @@ Benchmark | time
 
 ## Benchmark 1
 
-[src/lib.rs:1374](src/lib.rs#L1374)
+[src/lib.rs:1403](src/lib.rs#L1403)
 
 ~~~rust
 let mut wordlist: Vec<String> = Vec::new();
@@ -244,7 +273,7 @@ Found 18 outliers among 100 measurements (18.00%)
 
 ## Benchmark 2
 
-[src/lib.rs:1384](src/lib.rs#L1384)
+[src/lib.rs:1413](src/lib.rs#L1413)
 
 ~~~rust
 let p: Vec<&str> = WORDLIST.choose_multiple(&mut thread_rng(), words)
@@ -286,7 +315,7 @@ Found 6 outliers among 100 measurements (6.00%)
 
 ## Benchmark 3
 
-[src/lib.rs:1390](src/lib.rs#L1390)
+[src/lib.rs:1419](src/lib.rs#L1419)
 
 ~~~rust
 WORDLIST.choose_multiple(&mut thread_rng(), words)

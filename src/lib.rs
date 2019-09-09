@@ -1,4 +1,28 @@
-/// xkcd password generator
+//! xkcd-style password generator
+
+/*
+
+Copyright 2019 qtfkwk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of 
+this software and associated documentation files (the "Software"), to deal in 
+the Software without restriction, including without limitation the rights to 
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
+of the Software, and to permit persons to whom the Software is furnished to do 
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all 
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+SOFTWARE.
+
+*/
 
 // Crates
 
@@ -11,6 +35,9 @@ use num::bigint::BigUint;
 
 // Macros
 
+/// Generate xkcd-style password with a specified or the default number of
+/// words (4).
+#[macro_export]
 macro_rules! xpg {
     ($words: expr) => { xpg($words) };
     () => { xpg(4) } // default: 4 words
@@ -1363,7 +1390,9 @@ const WORDLIST: [&'static str; 1259] = [
     "Yourself",
 ];
 
-/// xkcd password generator
+/// Generate xkcd-style password with a specified number of words.
+///
+/// `words` must be at least one or it will panic.
 pub fn xpg(words: usize) -> String {
     if words < 1 {
         panic!();
@@ -1402,10 +1431,10 @@ fn permutations(n: u128, k: u128) -> u128 {
     return format!("{}", b / c).parse::<u128>().unwrap();
 }
 
-/// Command line interface
+/// Provides the command line interface
 pub fn cli() {
     let a = clap_app!(xpg =>
-        (version: "0.1.2")
+        (version: "0.2.0")
         (about: "xkcd-style password generator")
         (@arg analyze: --analyze "Analyze")
         (@arg words: -w --words +takes_value

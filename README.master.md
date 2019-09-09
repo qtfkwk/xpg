@@ -49,6 +49,9 @@ $$ xpg --analyze -w 8
 
 # Changelog
 
+* 0.2.0 (2019-09-09)
+    * expose `xpg!` macro
+    * improve documentation
 * 0.1.2 (2019-09-08)
     * minor fixes
 * 0.1.1 (2019-09-08)
@@ -75,6 +78,14 @@ $$ xpg --analyze -w 8
   specifically
   [lib/Crypt/HSXKPasswd/Dictionary/EN.pm@1d88564:38](https://github.com/bbusschots/hsxkpasswd/blob/1d88564d5bf74cf48025b372bcb635fc022962dd/lib/Crypt/HSXKPasswd/Dictionary/EN.pm#L38)
 
+# Legal
+
+```
+$ cat LICENSE.txt
+```
+
+[MIT License](https://opensource.org/licenses/MIT)
+
 # Tests
 
 ~~~
@@ -91,10 +102,10 @@ Benchmark | time
 
 ## Benchmark 1
 
-[src/lib.rs:1374](src/lib.rs#L1374)
+[src/lib.rs:1403](src/lib.rs#L1403)
 
 ~~~rust
-$ head -1381 src/lib.rs |tail -8 |sed 's/^    //'
+$ head -1410 src/lib.rs |tail -8 |sed 's/^    //'
 ~~~
 
 [benches/xpg.rs.1.log](benches/xpg.rs.1.log)
@@ -105,10 +116,10 @@ $ cat benches/xpg.rs.1.log
 
 ## Benchmark 2
 
-[src/lib.rs:1384](src/lib.rs#L1384)
+[src/lib.rs:1413](src/lib.rs#L1413)
 
 ~~~rust
-$ head -1386 src/lib.rs |tail -3 |sed 's/^    //'
+$ head -1415 src/lib.rs |tail -3 |sed 's/^    //'
 ~~~
 
 [benches/xpg.rs.2.log](benches/xpg.rs.2.log)
@@ -119,10 +130,10 @@ $ cat benches/xpg.rs.2.log
 
 ## Benchmark 3
 
-[src/lib.rs:1390](src/lib.rs#L1390)
+[src/lib.rs:1419](src/lib.rs#L1419)
 
 ~~~rust
-$ head -1391 src/lib.rs |tail -2 |sed 's/^    //'
+$ head -1420 src/lib.rs |tail -2 |sed 's/^    //'
 ~~~
 
 [benches/xpg.rs.3.log](benches/xpg.rs.3.log)
