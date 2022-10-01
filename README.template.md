@@ -39,17 +39,17 @@ $$ xpg -w 8
 $$ xpg -w 8 -c 10
 ~~~
 
-~~
+~~~
 $$ xpg -w 2 -d 3
-~~
+~~~
 
-~~
+~~~
 $$ xpg -w 2 -s 2
-~~
+~~~
 
-~~
+~~~
 $$ xpg -w 2 -d 1 -s 1
-~~
+~~~
 
 ~~~
 $$ xpg --analyze
@@ -61,6 +61,8 @@ $$ xpg --analyze -w 8
 
 # Changelog
 
+* 0.3.1 (2022-10-01)
+    * fix readme
 * 0.3.0 (2022-10-01)
     * update dependencies
     * add digits and symbols options

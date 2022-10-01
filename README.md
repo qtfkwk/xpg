@@ -31,63 +31,63 @@ Options:
 
 ~~~
 $ xpg -V
-xpg 0.3.0
+xpg 0.3.1
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-SceneOfficeNoiseLess
+DutyNeptuneBillExpress
 ~~~
 
 ~~~
 $ xpg -c 10
-PropertyEverythingSystemFour
-FinallyServiceWedgeHunger
-RoadProvePhraseHeld
-FranceWheelsExampleTwelve
-PleaseEquationWornDoctor
-AlmostCornYardGeneral
-SteelYearQuicklyStream
-ThereforeSeptemberMakeBeyond
-PeruCountElseServe
-ThenSyllablesSpeakIndia
+ControlPartialBesideCannot
+LaughedPickNorthernVery
+TemperatureStepFillFence
+LaughterDressSleptVowel
+SickMaterialSpokeRegion
+EarthStandCoolLook
+WonderCoveredLiveBusiness
+RomeWhereDealFamily
+ElementsStudyUnderlineTeach
+LastAlongOrderlyFeel
 ~~~
 
 ~~~
 $ xpg -w 8
-SectionIncreaseSmellMachineIronBirdsHighCopy
+GuessFrenchGreenDollarsEveningCommonCompanyMontana
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-EnterReadRomeBelowHurtSendBusinessBright
-DoesColumnShoesSeveralCallTasteCompoundMexico
-HoursShoutAreaPlaceSeptemberDifferentProbablyWhose
-BeginMarsFifteenArmyGrowHungerPageEdge
-BringColorScaleWhomChildrenPeopleObjectHang
-LikelyCentTurnPlainsFrenchStudentPlayFather
-GalaxyExampleKitchenDrawFingerShortExpectBarbados
-MatchFoolShortElectricityJoinedOppositeCommonStrike
-FeelJudgeFearEuropeQuiteLastTillGuard
-SafetyFavorFarmersCatchThousandsAlabamaNeptuneCentury
+CaughtWereJapaneseSurpriseAmongKillContinueObject
+SuddenlyIndiaSingleFireHeavenMarkAmsterdamEither
+ThisProcessSandGermanyKillBroadWishBuild
+JumpedDearDevelopedDirectionMachineInsideHoldCaptain
+AppearDriveHappySuccessChileBankSpentMind
+LearnTrackDelawareWishJudgeStreamSongGift
+SorryStoodBelieveTestSmellValueBuiltLead
+GuessSilverDiscoveredAfraidExperimentColdPrettyOther
+WonderFreeSomeoneTailNovemberHangProbableExplain
+ImportantHollandMisterSaltVenusVoiceWomanToday
 ~~~
 
-~~
+~~~
 $ xpg -w 2 -d 3
-GovernmentInformation946
-~~
+ListDollar001
+~~~
 
-~~
+~~~
 $ xpg -w 2 -s 2
-SoundWord>@
-~~
+TailDuring-*
+~~~
 
-~~
+~~~
 $ xpg -w 2 -d 1 -s 1
-ThinCurrent2=
-~~
+SinceKentucky1*
+~~~
 
 ~~~
 $ xpg --analyze
@@ -143,6 +143,8 @@ Words | Permutations
 
 # Changelog
 
+* 0.3.1 (2022-10-01)
+    * fix readme
 * 0.3.0 (2022-10-01)
     * update dependencies
     * add digits and symbols options
@@ -209,14 +211,14 @@ $ cargo test
 running 11 tests
 test tests::xpg_macro_cannot_return_zero_words - should panic ... ok
 test tests::xpg_cannot_return_zero_words - should panic ... ok
-test tests::xpg_can_return_five_words ... ok
 test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_can_return_one_word ... ok
 test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_can_return_three_words ... ok
-test tests::xpg_macro_can_return_three_words ... ok
 test tests::xpg_can_return_four_words ... ok
 test tests::default_xpg_macro_returns_four_words ... ok
+test tests::xpg_macro_can_return_three_words ... ok
+test tests::xpg_can_return_five_words ... ok
 test tests::xpg_macro_can_return_five_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
