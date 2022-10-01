@@ -1,4 +1,4 @@
-# Copyright 2019 qtfkwk
+# Copyright 2019-2022 qtfkwk
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of 
 # this software and associated documentation files (the "Software"), to deal in 
@@ -18,8 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-README.md: README.master.md src/lib.rs src/bin/xpg.rs
+README.md: README.template.md src/lib.rs src/bin/xpg.rs
 	PATH="$(shell pwd)/target/debug:${PATH}" \
 	perl -ne \
-	    'if(/^\$$\$$/){s/^\$$//;print;s/^\$$\s*//;s/\n$$//;system $$_}elsif(/^\$$/){s/^\$$\s*//;s/\n$$//;system $$_}else{print}' \
-		$< >$@ 2>/dev/null
+	    'if(/^\$$\$$/){s/^\$$//;print;s/^\$$\s*//;s/\n$$//;system $$_}elsif(/^\$$/){s/^\$$\s*//;\
+s/\n$$//;system $$_}else{print}' $< >$@ 2>/dev/null

@@ -2,36 +2,37 @@
 
 /*
 
-Copyright 2019 qtfkwk
+Copyright 2019-2022 qtfkwk
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
 
 // Crates
 
-use rand::thread_rng;
-use rand::seq::SliceRandom;
-use clap::clap_app;
-use separator::Separatable;
+use clap::Parser;
 use factorial::Factorial;
 use num::bigint::BigUint;
+use rand::seq::SliceRandom;
+use rand::thread_rng;
+use rand::Rng;
+use separator::Separatable;
 
 // Macros
 
@@ -39,8 +40,12 @@ use num::bigint::BigUint;
 /// words (4).
 #[macro_export]
 macro_rules! xpg {
-    ($words: expr) => { xpg($words) };
-    () => { xpg(4) } // default: 4 words
+    ($words: expr) => {
+        xpg($words)
+    };
+    () => {
+        xpg(4)
+    }; // default: 4 words
 }
 
 // Tests
@@ -1397,27 +1402,34 @@ pub fn xpg(words: usize) -> String {
     if words < 1 {
         panic!();
     }
-
-    /*
-    // 1
-    let mut wordlist: Vec<String> = Vec::new();
-    for word in &WORDLIST[..] {
-        wordlist.push(word.to_string());
-    }
-    let p: Vec<String> = wordlist.choose_multiple(&mut thread_rng(), words)
+    WORDLIST
+        .choose_multiple(&mut thread_rng(), words)
         .cloned()
-        .collect();
-    return p.join("");
+        .collect::<Vec<&str>>()
+        .join("")
+}
 
-    // 2
-    let p: Vec<&str> = WORDLIST.choose_multiple(&mut thread_rng(), words)
-        .cloned().collect::<Vec<&str>>();
-    return p.join("");
-    */
+/// Generate xkcd-style password with a specified number of words and append digits and/or random
+/// characters.
+///
+/// `words` must be at least one or it will panic.
+pub fn xpg_plus(words: usize, digits: usize, symbols: usize) -> String {
+    format!(
+        "{}{}{}",
+        xpg(words),
+        random_str(digits, "0123456789"),
+        random_str(symbols, "~!@#$%^&*-_=+;:,./?()[]{}<>"),
+    )
+}
 
-    // 3
-    WORDLIST.choose_multiple(&mut thread_rng(), words)
-        .cloned().collect::<Vec<&str>>().join("")
+fn random_str(n: usize, alphabet: &str) -> String {
+    let alphabet = alphabet.chars().collect::<Vec<char>>();
+    let len = alphabet.len();
+    let mut r = String::new();
+    for _ in 0..n {
+        r.push(alphabet[thread_rng().gen_range(0..len)]);
+    }
+    r
 }
 
 /// Calculate permutations without repetition
@@ -1431,41 +1443,60 @@ fn permutations(n: u128, k: u128) -> u128 {
     return format!("{}", b / c).parse::<u128>().unwrap();
 }
 
+/// xkcd-style password generator
+#[derive(Parser)]
+#[command(version, max_term_width = 80)]
+struct Cli {
+    /// Analyze
+    #[arg(long)]
+    analyze: bool,
+
+    /// Number of words in password
+    #[arg(short, long, default_value = "4")]
+    words: usize,
+
+    /// Number of passwords
+    #[arg(short, long, default_value = "1")]
+    count: usize,
+
+    /// Append digits
+    #[arg(short, long, default_value = "0")]
+    digits: usize,
+
+    /// Append symbols
+    #[arg(short, long, default_value = "0")]
+    symbols: usize,
+}
+
 /// Provides the command line interface
 pub fn cli() {
-    let a = clap_app!(xpg =>
-        (version: "0.2.0")
-        (about: "xkcd-style password generator")
-        (@arg analyze: --analyze "Analyze")
-        (@arg words: -w --words +takes_value
-            "Number of words in password; default: 4")
-        (@arg count: -c --count +takes_value
-            "Number of passwords; default: 1")
-    ).get_matches();
-
-    // Defaults
-    let words = a.value_of("words").unwrap_or("4").parse::<usize>().unwrap();
-    let count = a.value_of("count").unwrap_or("1").parse::<usize>().unwrap();
-    let analyze = a.is_present("analyze");
+    let a = Cli::parse();
 
     // Calculate total number of possible passwords for the specified number of
     // words
-    if analyze {
+    if a.analyze {
         let n = WORDLIST.len();
-        let p = permutations(n as u128, words as u128).separated_string();
-        let w = words.separated_string();
-        let d = (n - words).separated_string();
+        let p = permutations(n as u128, a.words as u128).separated_string();
+        let w = a.words.separated_string();
+        let d = (n - a.words).separated_string();
         let n_ = n.separated_string();
-        println!("* Word list length: {}", n_);
-        println!("* Words in password: {}", w);
-        println!("* Total permutations (without repetition): {}\n", p);
-        println!("    ```");
-        println!("    {}! / ({} - {})!", n_, n_, w);
-        println!("    {}! / {}!", n_, d);
-        println!("    {}", p);
-        println!("    ```\n");
-        println!("Words | Permutations");
-        println!("---|---:");
+        print!(
+            "\
+* Word list length: {n_}
+* Words in password: {w}
+* Total permutations (without repetition): {p}
+
+    ```
+    {n_}! / ({n_} - {w})!
+    {n_}! / {d}!
+    {p}
+    ```
+
+Words | Permutations
+---|---:
+\
+        "
+        );
         for k in 1..=8 {
             let p_ = permutations(n as u128, k as u128).separated_string();
             println!("{} | {}", k, p_);
@@ -1474,10 +1505,13 @@ pub fn cli() {
 
     // Generate password(s)
     } else {
-        for _ in 0..count {
-            let p = xpg!(words);
+        for _ in 0..a.count {
+            let p = if a.digits > 0 || a.symbols > 0{
+                xpg_plus(a.words, a.digits, a.symbols)
+            } else {
+                xpg!(a.words)
+            };
             println!("{}", p);
         }
     }
 }
-

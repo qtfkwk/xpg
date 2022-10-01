@@ -22,12 +22,12 @@
 name = "xpg"
 description = "xkcd-style password generator"
 categories = ["command-line-utilities"]
-version = "0.2.0"
+version = "0.3.0"
 license = "MIT"
 repository = "https://github.com/qtfkwk/xpg"
 readme = "README.md"
 authors = ["qtfkwk <qtfkwk+xpg@gmail.com>"]
-edition = "2018"
+edition = "2021"
 exclude = [
 	"Makefile",
 	"README.master.md",
@@ -35,15 +35,15 @@ exclude = [
 ]
 
 [dependencies]
-rand = "0.6.5"
-clap = "2.33.0"
-num = "0.2.0"
+num = "0.4.0"
 separator = "0.4.1"
-factorial = "0.1.1"
+factorial = "0.2.1"
+clap = { version = "4.0.8", features = ["derive", "wrap_help"] }
+rand = "0.8.5"
 
 [dev-dependencies]
 regex = "1.1.7"
-criterion = "0.3.0"
+criterion = "0.4.0"
 
 [[bench]]
 name = "xpg"

@@ -15,66 +15,79 @@ xkcd-style password generator
 
 ~~~
 $ xpg -h
-xpg 0.2.0
 xkcd-style password generator
 
-USAGE:
-    xpg [FLAGS] [OPTIONS]
+Usage: xpg [OPTIONS]
 
-FLAGS:
-        --analyze    Analyze
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-
-OPTIONS:
-    -c, --count <count>    Number of passwords; default: 1
-    -w, --words <words>    Number of words in password; default: 4
+Options:
+      --analyze            Analyze
+  -w, --words <WORDS>      Number of words in password [default: 4]
+  -c, --count <COUNT>      Number of passwords [default: 1]
+  -d, --digits <DIGITS>    Append digits [default: 0]
+  -s, --symbols <SYMBOLS>  Append symbols [default: 0]
+  -h, --help               Print help information
+  -V, --version            Print version information
 ~~~
 
 ~~~
 $ xpg -V
-xpg 0.2.0
+xpg 0.3.0
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-FastYardStoreExercise
+SceneOfficeNoiseLess
 ~~~
 
 ~~~
 $ xpg -c 10
-StoneShotMondayPlease
-DistantSeparateEdgeWait
-JapaneseOsloRatherProcess
-ParticularAnotherExplainSummer
-CaliforniaPleaseThoughSafety
-MarylandHandAwayBook
-WomenMelodyPluralMarch
-SentGuardDeathCase
-CoastWireHollandTable
-TellSpeedFinallyNear
+PropertyEverythingSystemFour
+FinallyServiceWedgeHunger
+RoadProvePhraseHeld
+FranceWheelsExampleTwelve
+PleaseEquationWornDoctor
+AlmostCornYardGeneral
+SteelYearQuicklyStream
+ThereforeSeptemberMakeBeyond
+PeruCountElseServe
+ThenSyllablesSpeakIndia
 ~~~
 
 ~~~
 $ xpg -w 8
-ConsiderVirginiaThereforeLoudCenterEasySeptemberCall
+SectionIncreaseSmellMachineIronBirdsHighCopy
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-PeacePickSoonDifferentSweetSuddenBelongMeeting
-BritainExcitingNeighborPolandAlreadyWillFineCopenhagen
-MountainConditionChildrenSenseTriesMaterialStayQueen
-TouchArizonaBetterProveSpentFullSailBeauty
-EtchingJamaicaTownChinaRushBuildExperienceArea
-SettleFellowEitherBelowExplainTrackNineBetween
-PulledOpinionCarefullyVisitStudyElementsHealthRhythm
-LightSaidBulgariaBeforeLakeNieceArrivedGarden
-CubaWorkersMaltaGoodbyeReportSailPushHigh
-SweetGivesIslandArrivedRepeatedRightSwimCall
+EnterReadRomeBelowHurtSendBusinessBright
+DoesColumnShoesSeveralCallTasteCompoundMexico
+HoursShoutAreaPlaceSeptemberDifferentProbablyWhose
+BeginMarsFifteenArmyGrowHungerPageEdge
+BringColorScaleWhomChildrenPeopleObjectHang
+LikelyCentTurnPlainsFrenchStudentPlayFather
+GalaxyExampleKitchenDrawFingerShortExpectBarbados
+MatchFoolShortElectricityJoinedOppositeCommonStrike
+FeelJudgeFearEuropeQuiteLastTillGuard
+SafetyFavorFarmersCatchThousandsAlabamaNeptuneCentury
 ~~~
+
+~~
+$ xpg -w 2 -d 3
+GovernmentInformation946
+~~
+
+~~
+$ xpg -w 2 -s 2
+SoundWord>@
+~~
+
+~~
+$ xpg -w 2 -d 1 -s 1
+ThinCurrent2=
+~~
 
 ~~~
 $ xpg --analyze
@@ -130,6 +143,9 @@ Words | Permutations
 
 # Changelog
 
+* 0.3.0 (2022-10-01)
+    * update dependencies
+    * add digits and symbols options
 * 0.2.0 (2019-09-09)
     * expose `xpg!` macro
     * improve documentation
@@ -162,7 +178,7 @@ Words | Permutations
 # Legal
 
 ```
-Copyright 2019 qtfkwk
+Copyright 2019-2022 qtfkwk
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 
@@ -191,166 +207,29 @@ SOFTWARE.
 $ cargo test
 
 running 11 tests
-test tests::xpg_can_return_one_word ... ok
-test tests::default_xpg_macro_returns_four_words ... ok
+test tests::xpg_macro_cannot_return_zero_words - should panic ... ok
+test tests::xpg_cannot_return_zero_words - should panic ... ok
 test tests::xpg_can_return_five_words ... ok
-test tests::xpg_can_return_four_words ... ok
-test tests::xpg_cannot_return_zero_words ... ok
-test tests::xpg_can_return_three_words ... ok
-test tests::xpg_macro_can_return_five_words ... ok
-test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_macro_can_return_one_word ... ok
+test tests::xpg_can_return_one_word ... ok
+test tests::xpg_macro_can_return_four_words ... ok
+test tests::xpg_can_return_three_words ... ok
 test tests::xpg_macro_can_return_three_words ... ok
-test tests::xpg_macro_cannot_return_zero_words ... ok
+test tests::xpg_can_return_four_words ... ok
+test tests::default_xpg_macro_returns_four_words ... ok
+test tests::xpg_macro_can_return_five_words ... ok
 
-test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
-
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
-
-~~~
-
-# Benchmarks
-
-Benchmark | time
----|---
-1 | 54.084 us 54.232 us 54.383 us
-2 | 191.25 ns 191.64 ns 192.26 ns
-3 | 190.73 ns 190.86 ns 191.03 ns
-
-## Benchmark 1
-
-[src/lib.rs:1403](src/lib.rs#L1403)
-
-~~~rust
-let mut wordlist: Vec<String> = Vec::new();
-for word in &WORDLIST[..] {
-    wordlist.push(word.to_string());
-}
-let p: Vec<String> = wordlist.choose_multiple(&mut thread_rng(), words)
-    .cloned()
-    .collect();
-return p.join("");
-~~~
-
-[benches/xpg.rs.1.log](benches/xpg.rs.1.log)
-
-~~~
-
-running 6 tests
-test tests::default_xpg_returns_four_words ... ignored
-test tests::xpg_can_return_five_words ... ignored
-test tests::xpg_can_return_four_words ... ignored
-test tests::xpg_can_return_one_word ... ignored
-test tests::xpg_can_return_three_words ... ignored
-test tests::xpg_cannot_return_zero_words ... ignored
-
-test result: ok. 0 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
-
-Benchmarking xpg
-Benchmarking xpg: Warming up for 3.0000 s
-Benchmarking xpg: Collecting 100 samples in estimated 5.1942 s (96k iterations)
-Benchmarking xpg: Analyzing
-xpg                     time:   [54.084 us 54.232 us 54.383 us]
-Found 18 outliers among 100 measurements (18.00%)
-  1 (1.00%) low severe
-  16 (16.00%) high mild
-  1 (1.00%) high severe
-
-~~~
-
-## Benchmark 2
-
-[src/lib.rs:1413](src/lib.rs#L1413)
-
-~~~rust
-let p: Vec<&str> = WORDLIST.choose_multiple(&mut thread_rng(), words)
-    .cloned().collect::<Vec<&str>>();
-return p.join("");
-~~~
-
-[benches/xpg.rs.2.log](benches/xpg.rs.2.log)
-
-~~~
-
-running 6 tests
-test tests::default_xpg_returns_four_words ... ignored
-test tests::xpg_can_return_five_words ... ignored
-test tests::xpg_can_return_four_words ... ignored
-test tests::xpg_can_return_one_word ... ignored
-test tests::xpg_can_return_three_words ... ignored
-test tests::xpg_cannot_return_zero_words ... ignored
-
-test result: ok. 0 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out
-
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
-
-Benchmarking xpg
-Benchmarking xpg: Warming up for 3.0000 s
-Benchmarking xpg: Collecting 100 samples in estimated 5.0002 s (24M iterations)
-Benchmarking xpg: Analyzing
-xpg                     time:   [191.25 ns 191.64 ns 192.26 ns]
-                        change: [-99.649% -99.648% -99.646%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 6 outliers among 100 measurements (6.00%)
-  2 (2.00%) high mild
-  4 (4.00%) high severe
-
-~~~
-
-## Benchmark 3
-
-[src/lib.rs:1419](src/lib.rs#L1419)
-
-~~~rust
-WORDLIST.choose_multiple(&mut thread_rng(), words)
-    .cloned().collect::<Vec<&str>>().join("")
-~~~
-
-[benches/xpg.rs.3.log](benches/xpg.rs.3.log)
-
-~~~
-
-running 6 tests
-test tests::default_xpg_returns_four_words ... ignored
-test tests::xpg_can_return_five_words ... ignored
-test tests::xpg_can_return_four_words ... ignored
-test tests::xpg_can_return_one_word ... ignored
-test tests::xpg_can_return_three_words ... ignored
-test tests::xpg_cannot_return_zero_words ... ignored
-
-test result: ok. 0 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out
-
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
-
-Benchmarking xpg
-Benchmarking xpg: Warming up for 3.0000 s
-Benchmarking xpg: Collecting 100 samples in estimated 5.0003 s (25M iterations)
-Benchmarking xpg: Analyzing
-xpg                     time:   [190.73 ns 190.86 ns 191.03 ns]
-                        change: [-0.5139% -0.1940% +0.1608%] (p = 0.27 > 0.05)
-                        No change in performance detected.
-Found 8 outliers among 100 measurements (8.00%)
-  2 (2.00%) high mild
-  6 (6.00%) high severe
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 ~~~
 
