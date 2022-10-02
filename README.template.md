@@ -52,6 +52,22 @@ $$ xpg -w 2 -d 1 -s 1
 ~~~
 
 ~~~
+$$ xpg -l 2
+~~~
+
+~~~
+$$ xpg -u 2
+~~~
+
+~~~
+$$ xpg -a 5
+~~~
+
+~~~
+$$ xpg -w 0 -a 20
+~~~
+
+~~~
 $$ xpg --analyze
 ~~~
 
@@ -61,6 +77,10 @@ $$ xpg --analyze -w 8
 
 # Changelog
 
+* 0.4.0 (2022-10-02)
+    * add --lowercase, --uppercase, and --any options
+    * enable --words option to be zero if --any option is greater than zero
+    * enable infinite passwords via `-c 0`
 * 0.3.1 (2022-10-01)
     * fix readme
 * 0.3.0 (2022-10-01)

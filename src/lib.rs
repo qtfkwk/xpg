@@ -1409,17 +1409,23 @@ pub fn xpg(words: usize) -> String {
         .join("")
 }
 
-/// Generate xkcd-style password with a specified number of words and append digits and/or random
-/// characters.
-///
-/// `words` must be at least one or it will panic.
-pub fn xpg_plus(words: usize, digits: usize, symbols: usize) -> String {
-    format!(
-        "{}{}{}",
-        xpg(words),
-        random_str(digits, "0123456789"),
-        random_str(symbols, "~!@#$%^&*-_=+;:,./?()[]{}<>"),
-    )
+/// Generate xkcd-style password with a specified number of words and append random digits, symbols,
+/// lowercase, uppercase and/or any characters.
+pub fn xpg_plus(words: usize, digits: usize, symbols: usize, lc: usize, uc: usize, any: usize) -> String {
+    let a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*-_=+;:,./?()[]{}<>";
+    if words > 0 {
+        format!(
+            "{}{}{}{}{}{}",
+            xpg(words),
+            random_str(digits, "0123456789"),
+            random_str(symbols, "~!@#$%^&*-_=+;:,./?()[]{}<>"),
+            random_str(lc, "abcdefghijklmnopqrstuvwxyz"),
+            random_str(uc, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+            random_str(any, a),
+        )
+    } else {
+        random_str(any, a)
+    }
 }
 
 fn random_str(n: usize, alphabet: &str) -> String {
@@ -1452,25 +1458,42 @@ struct Cli {
     analyze: bool,
 
     /// Number of words in password
-    #[arg(short, long, default_value = "4")]
+    #[arg(short, long, value_name = "NUMBER", default_value = "4")]
     words: usize,
 
     /// Number of passwords
-    #[arg(short, long, default_value = "1")]
+    #[arg(short, long, value_name = "NUMBER", default_value = "1")]
     count: usize,
 
     /// Append digits
-    #[arg(short, long, default_value = "0")]
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
     digits: usize,
 
     /// Append symbols
-    #[arg(short, long, default_value = "0")]
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
     symbols: usize,
+
+    /// Append lowercase letters
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    lowercase: usize,
+
+    /// Append uppercase letters
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    uppercase: usize,
+
+    /// Append *any* characters (digits, symbols, lowercase, uppercase)
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    any: usize,
 }
 
 /// Provides the command line interface
 pub fn cli() {
     let a = Cli::parse();
+
+    // Error if --words and --any are both zero
+    if a.words == 0 && a.any == 0 {
+        exit(101, "Either --words or --any must be greater than zero!");
+    }
 
     // Calculate total number of possible passwords for the specified number of
     // words
@@ -1505,13 +1528,25 @@ Words | Permutations
 
     // Generate password(s)
     } else {
-        for _ in 0..a.count {
-            let p = if a.digits > 0 || a.symbols > 0{
-                xpg_plus(a.words, a.digits, a.symbols)
-            } else {
-                xpg!(a.words)
-            };
-            println!("{}", p);
+        let mut c = 0;
+        loop {
+            println!(
+                "{}",
+                if a.digits + a.symbols + a.lowercase + a.uppercase + a.any > 0 {
+                    xpg_plus(a.words, a.digits, a.symbols, a.lowercase, a.uppercase, a.any)
+                } else {
+                    xpg!(a.words)
+                },
+            );
+            c += 1;
+            if c == a.count {
+                break;
+            }
         }
     }
+}
+
+fn exit(code: i32, msg: &str) {
+    eprintln!("Error: {msg}");
+    std::process::exit(code);
 }

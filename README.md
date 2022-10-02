@@ -20,73 +20,97 @@ xkcd-style password generator
 Usage: xpg [OPTIONS]
 
 Options:
-      --analyze            Analyze
-  -w, --words <WORDS>      Number of words in password [default: 4]
-  -c, --count <COUNT>      Number of passwords [default: 1]
-  -d, --digits <DIGITS>    Append digits [default: 0]
-  -s, --symbols <SYMBOLS>  Append symbols [default: 0]
-  -h, --help               Print help information
-  -V, --version            Print version information
+      --analyze             Analyze
+  -w, --words <NUMBER>      Number of words in password [default: 4]
+  -c, --count <NUMBER>      Number of passwords [default: 1]
+  -d, --digits <NUMBER>     Append digits [default: 0]
+  -s, --symbols <NUMBER>    Append symbols [default: 0]
+  -l, --lowercase <NUMBER>  Append lowercase letters [default: 0]
+  -u, --uppercase <NUMBER>  Append uppercase letters [default: 0]
+  -a, --any <NUMBER>        Append *any* characters (digits, symbols, lowercase,
+                            uppercase) [default: 0]
+  -h, --help                Print help information
+  -V, --version             Print version information
 ~~~
 
 ~~~
 $ xpg -V
-xpg 0.3.1
+xpg 0.4.0
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-DutyNeptuneBillExpress
+ConditionResentDreamReason
 ~~~
 
 ~~~
 $ xpg -c 10
-ControlPartialBesideCannot
-LaughedPickNorthernVery
-TemperatureStepFillFence
-LaughterDressSleptVowel
-SickMaterialSpokeRegion
-EarthStandCoolLook
-WonderCoveredLiveBusiness
-RomeWhereDealFamily
-ElementsStudyUnderlineTeach
-LastAlongOrderlyFeel
+PoleInchesHuntFish
+SingHoursRockEnough
+StrengthHopeFootTall
+TubeDaughterFastBrown
+SceneMoveGrassFeed
+LanguageArmyPossibleDublin
+OhioKenyaElectricStore
+BusinessEnemyFriendFifteen
+WestEnemySouthTeacher
+RainUsuallySeveralReady
 ~~~
 
 ~~~
 $ xpg -w 8
-GuessFrenchGreenDollarsEveningCommonCompanyMontana
+CertainThoughtSpringStarPlanetBecameForeignMiddle
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-CaughtWereJapaneseSurpriseAmongKillContinueObject
-SuddenlyIndiaSingleFireHeavenMarkAmsterdamEither
-ThisProcessSandGermanyKillBroadWishBuild
-JumpedDearDevelopedDirectionMachineInsideHoldCaptain
-AppearDriveHappySuccessChileBankSpentMind
-LearnTrackDelawareWishJudgeStreamSongGift
-SorryStoodBelieveTestSmellValueBuiltLead
-GuessSilverDiscoveredAfraidExperimentColdPrettyOther
-WonderFreeSomeoneTailNovemberHangProbableExplain
-ImportantHollandMisterSaltVenusVoiceWomanToday
+FancyShoesCellsCouldBothLittleSpecialMinute
+LadyFoolBestProveChiefMileCertainPlains
+InterestThenSoldierWideDifficultHurtEveryoneSouth
+ReadWalesBirdsAustraliaVeryPossibleYoungWomen
+ArriveIndeedThinkSideSignJoinedShapeJoin
+AnotherWrongExampleLoudWhetherReportStateDirect
+TwentyWomanSafetyHelpFinishedPersonEnteredParis
+AfraidUponFebruaryPresidentsChargeOuterDareCity
+DearFlierUsualLeaderPublicBelongDesireTrip
+DutyScotlandExperienceProudWinterNeverWalesAmerica
 ~~~
 
 ~~~
 $ xpg -w 2 -d 3
-ListDollar001
+QuarterDied802
 ~~~
 
 ~~~
 $ xpg -w 2 -s 2
-TailDuring-*
+StandAustralia!%
 ~~~
 
 ~~~
 $ xpg -w 2 -d 1 -s 1
-SinceKentucky1*
+ThemPluto4{
+~~~
+
+~~~
+$ xpg -l 2
+TimeSuchSweetMorningxu
+~~~
+
+~~~
+$ xpg -u 2
+EspeciallyMarketNearTellPU
+~~~
+
+~~~
+$ xpg -a 5
+LanguagePleasantAcrossPosition?Wj0o
+~~~
+
+~~~
+$ xpg -w 0 -a 20
+0!+Cr)w&BAvA9#o749j~
 ~~~
 
 ~~~
@@ -143,6 +167,10 @@ Words | Permutations
 
 # Changelog
 
+* 0.4.0 (2022-10-02)
+    * add --lowercase, --uppercase, and --any options
+    * enable --words option to be zero if --any option is greater than zero
+    * enable infinite passwords via `-c 0`
 * 0.3.1 (2022-10-01)
     * fix readme
 * 0.3.0 (2022-10-01)
@@ -209,17 +237,17 @@ SOFTWARE.
 $ cargo test
 
 running 11 tests
-test tests::xpg_macro_cannot_return_zero_words - should panic ... ok
 test tests::xpg_cannot_return_zero_words - should panic ... ok
+test tests::xpg_macro_cannot_return_zero_words - should panic ... ok
 test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_can_return_one_word ... ok
-test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_can_return_three_words ... ok
-test tests::xpg_can_return_four_words ... ok
-test tests::default_xpg_macro_returns_four_words ... ok
+test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_macro_can_return_three_words ... ok
-test tests::xpg_can_return_five_words ... ok
+test tests::default_xpg_macro_returns_four_words ... ok
+test tests::xpg_can_return_four_words ... ok
 test tests::xpg_macro_can_return_five_words ... ok
+test tests::xpg_can_return_five_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
