@@ -68,6 +68,14 @@ $$ xpg -w 0 -a 20
 ~~~
 
 ~~~
+$$ xpg --keychain
+~~~
+
+~~~
+$$ xpg --code-name
+~~~
+
+~~~
 $$ xpg --analyze
 ~~~
 
@@ -77,6 +85,8 @@ $$ xpg --analyze -w 8
 
 # Changelog
 
+* 0.5.0 (2022-10-13)
+    * add --keychain and --code-name options
 * 0.4.0 (2022-10-02)
     * add --lowercase, --uppercase, and --any options
     * enable --words option to be zero if --any option is greater than zero

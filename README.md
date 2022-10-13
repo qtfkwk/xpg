@@ -29,88 +29,100 @@ Options:
   -u, --uppercase <NUMBER>  Append uppercase letters [default: 0]
   -a, --any <NUMBER>        Append *any* characters (digits, symbols, lowercase,
                             uppercase) [default: 0]
+      --keychain            Generate keychain-style password(s)
+      --code-name           Generate code name(s)
   -h, --help                Print help information
   -V, --version             Print version information
 ~~~
 
 ~~~
 $ xpg -V
-xpg 0.4.0
+xpg 0.5.0
 ~~~
 
 ### Examples
 
 ~~~
 $ xpg
-ConditionResentDreamReason
+DoesFlowersStateSeptember
 ~~~
 
 ~~~
 $ xpg -c 10
-PoleInchesHuntFish
-SingHoursRockEnough
-StrengthHopeFootTall
-TubeDaughterFastBrown
-SceneMoveGrassFeed
-LanguageArmyPossibleDublin
-OhioKenyaElectricStore
-BusinessEnemyFriendFifteen
-WestEnemySouthTeacher
-RainUsuallySeveralReady
+FenceWhichYellowGreece
+HawaiiUranusValueMoscow
+DistantMaybeFamilyCents
+DifferentInsteadCommonWheels
+FurtherDreamGoodbyeService
+MeatSettledRememberThrow
+SubstancesItselfRushEscape
+IndeedShoutedGrownWill
+BlockPerhapsUranusLess
+DoubleNeitherActionHunger
 ~~~
 
 ~~~
 $ xpg -w 8
-CertainThoughtSpringStarPlanetBecameForeignMiddle
+ColombiaPartyFourSceneEffortListenCornShore
 ~~~
 
 ~~~
 $ xpg -w 8 -c 10
-FancyShoesCellsCouldBothLittleSpecialMinute
-LadyFoolBestProveChiefMileCertainPlains
-InterestThenSoldierWideDifficultHurtEveryoneSouth
-ReadWalesBirdsAustraliaVeryPossibleYoungWomen
-ArriveIndeedThinkSideSignJoinedShapeJoin
-AnotherWrongExampleLoudWhetherReportStateDirect
-TwentyWomanSafetyHelpFinishedPersonEnteredParis
-AfraidUponFebruaryPresidentsChargeOuterDareCity
-DearFlierUsualLeaderPublicBelongDesireTrip
-DutyScotlandExperienceProudWinterNeverWalesAmerica
+ShortBecauseFirmNeedlePeopleHungerPlainAnother
+MainPressSmallLordLakeTookTellWrote
+DesertRaisedMonthHouseDropWornPromiseNumeral
+BranchesSouthTouchTakeAfterBreakJumpedSimilar
+AcrossJamaicaExerciseAlongPageStudentsStudySpeak
+RockWagonBerlinColombiaItselfFourContainManner
+LeftToneAlaskaElementsReceivedHistoryMainReturn
+CourseJulyMatterRaceParticularHeavySuddenSpring
+ChildhoodDollarAdjectiveKeptGreenForeverGaveSuppose
+JumpedLowerDoubleGraveBearThinAllowSeven
 ~~~
 
 ~~~
 $ xpg -w 2 -d 3
-QuarterDied802
+DuskSpecial597
 ~~~
 
 ~~~
 $ xpg -w 2 -s 2
-StandAustralia!%
+GovernChief(!
 ~~~
 
 ~~~
 $ xpg -w 2 -d 1 -s 1
-ThemPluto4{
+SuccessDoctor1[
 ~~~
 
 ~~~
 $ xpg -l 2
-TimeSuchSweetMorningxu
+CopenhagenTravelLondonBirdqc
 ~~~
 
 ~~~
 $ xpg -u 2
-EspeciallyMarketNearTellPU
+AngryKnowSurfaceTillLT
 ~~~
 
 ~~~
 $ xpg -a 5
-LanguagePleasantAcrossPosition?Wj0o
+WindInsideEastServeT>l<N
 ~~~
 
 ~~~
 $ xpg -w 0 -a 20
-0!+Cr)w&BAvA9#o749j~
+f5@I%_CP@&{Q@(?E*t.1
+~~~
+
+~~~
+$ xpg --keychain
+rml4uu-dclvzu-fotlQs
+~~~
+
+~~~
+$ xpg --code-name
+ROOM TABLE
 ~~~
 
 ~~~
@@ -167,6 +179,8 @@ Words | Permutations
 
 # Changelog
 
+* 0.5.0 (2022-10-13)
+    * add --keychain and --code-name options
 * 0.4.0 (2022-10-02)
     * add --lowercase, --uppercase, and --any options
     * enable --words option to be zero if --any option is greater than zero
@@ -239,15 +253,15 @@ $ cargo test
 running 11 tests
 test tests::xpg_cannot_return_zero_words - should panic ... ok
 test tests::xpg_macro_cannot_return_zero_words - should panic ... ok
-test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_can_return_one_word ... ok
+test tests::xpg_macro_can_return_one_word ... ok
 test tests::xpg_can_return_three_words ... ok
+test tests::xpg_can_return_four_words ... ok
+test tests::default_xpg_macro_returns_four_words ... ok
 test tests::xpg_macro_can_return_four_words ... ok
 test tests::xpg_macro_can_return_three_words ... ok
-test tests::default_xpg_macro_returns_four_words ... ok
-test tests::xpg_can_return_four_words ... ok
-test tests::xpg_macro_can_return_five_words ... ok
 test tests::xpg_can_return_five_words ... ok
+test tests::xpg_macro_can_return_five_words ... ok
 
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 

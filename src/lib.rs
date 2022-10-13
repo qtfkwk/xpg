@@ -48,6 +48,15 @@ macro_rules! xpg {
     }; // default: 4 words
 }
 
+// Constants
+
+const DIGITS: &str = "0123456789";
+const SYMBOLS: &str = "~!@#$%^&*-_=+;:,./?()[]{}<>";
+const LOWERCASE: &str = "abcdefghijklmnopqrstuvwxyz";
+const UPPERCASE: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ALL: &str = "\
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*-_=+;:,./?()[]{}<>";
+
 // Tests
 
 #[cfg(test)]
@@ -1412,22 +1421,22 @@ pub fn xpg(words: usize) -> String {
 /// Generate xkcd-style password with a specified number of words and append random digits, symbols,
 /// lowercase, uppercase and/or any characters.
 pub fn xpg_plus(words: usize, digits: usize, symbols: usize, lc: usize, uc: usize, any: usize) -> String {
-    let a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*-_=+;:,./?()[]{}<>";
     if words > 0 {
         format!(
             "{}{}{}{}{}{}",
             xpg(words),
-            random_str(digits, "0123456789"),
-            random_str(symbols, "~!@#$%^&*-_=+;:,./?()[]{}<>"),
-            random_str(lc, "abcdefghijklmnopqrstuvwxyz"),
-            random_str(uc, "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-            random_str(any, a),
+            random_str(digits, DIGITS),
+            random_str(symbols, SYMBOLS),
+            random_str(lc, LOWERCASE),
+            random_str(uc, UPPERCASE),
+            random_str(any, ALL),
         )
     } else {
-        random_str(any, a)
+        random_str(any, ALL)
     }
 }
 
+/// Generate a random string of length `n` from `alphabet`
 fn random_str(n: usize, alphabet: &str) -> String {
     let alphabet = alphabet.chars().collect::<Vec<char>>();
     let len = alphabet.len();
@@ -1436,6 +1445,39 @@ fn random_str(n: usize, alphabet: &str) -> String {
         r.push(alphabet[thread_rng().gen_range(0..len)]);
     }
     r
+}
+
+/// Generate a "Keychain-style" password like `nfucns-gnOcap-utpw9r`
+fn keychain() -> String {
+    let mut rng = thread_rng();
+    let mut words = [
+        random_str(6, LOWERCASE),
+        format!(
+            "{}{}",
+            random_str(5, LOWERCASE),
+            random_str(1, DIGITS),
+        ),
+        format!(
+            "{}{}",
+            random_str(5, LOWERCASE),
+            random_str(1, UPPERCASE),
+        ),
+    ].iter().map(|x| {
+        let mut x = x.chars().collect::<Vec<char>>();
+        x.shuffle(&mut rng);
+        x.into_iter().collect()
+    }).collect::<Vec<String>>();
+    words.shuffle(&mut rng);
+    words.join("-")
+}
+
+/// Generate a "code name" like `BLUE STEEL`
+pub fn code_name() -> String {
+    WORDLIST
+        .choose_multiple(&mut thread_rng(), 2)
+        .map(|x| x.to_uppercase())
+        .collect::<Vec<String>>()
+        .join(" ")
 }
 
 /// Calculate permutations without repetition
@@ -1484,6 +1526,14 @@ struct Cli {
     /// Append *any* characters (digits, symbols, lowercase, uppercase)
     #[arg(short, long, value_name = "NUMBER", default_value = "0")]
     any: usize,
+
+    /// Generate keychain-style password(s)
+    #[arg(long, conflicts_with_all = ["code_name", "analyze"])]
+    keychain: bool,
+
+    /// Generate code name(s)
+    #[arg(long, conflicts_with_all = ["keychain", "analyze"])]
+    code_name: bool,
 }
 
 /// Provides the command line interface
@@ -1532,7 +1582,11 @@ Words | Permutations
         loop {
             println!(
                 "{}",
-                if a.digits + a.symbols + a.lowercase + a.uppercase + a.any > 0 {
+                if a.keychain {
+                    keychain()
+                } else if a.code_name {
+                    code_name()
+                } else if a.digits + a.symbols + a.lowercase + a.uppercase + a.any > 0 {
                     xpg_plus(a.words, a.digits, a.symbols, a.lowercase, a.uppercase, a.any)
                 } else {
                     xpg!(a.words)
