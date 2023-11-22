@@ -1,31 +1,95 @@
-/// xkcd-style password generator
-///
-/// command-line utility
-/*
+use anyhow::Result;
+use clap::Parser;
+use xpg::*;
 
-Copyright 2019-2022 qtfkwk
+#[derive(Parser)]
+#[command(about, version, max_term_width = 80)]
+struct Cli {
+    /// Calculate total number of possible passwords for the specified number of words
+    #[arg(long)]
+    analyze: bool,
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
+    /// Number of words in password
+    #[arg(short, long, value_name = "NUMBER", default_value = "4")]
+    words: usize,
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+    /// Number of passwords
+    #[arg(short, long, value_name = "NUMBER", default_value = "1")]
+    count: usize,
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+    /// Append digits
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    digits: usize,
+
+    /// Append symbols
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    symbols: usize,
+
+    /// Append lowercase letters
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    lowercase: usize,
+
+    /// Append uppercase letters
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    uppercase: usize,
+
+    /// Append *any* characters (digits, symbols, lowercase, uppercase)
+    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
+    any: usize,
+
+    /// Generate keychain-style password(s)
+    #[arg(long, conflicts_with_all = ["code_name", "analyze"])]
+    keychain: bool,
+
+    /// Generate code name(s)
+    #[arg(long, conflicts_with_all = ["keychain", "analyze"])]
+    code_name: bool,
+}
+
+/**
+
+Provides the command line interface
 
 */
-use xpg::cli;
+fn main() -> Result<()> {
+    let a = Cli::parse();
 
-fn main() {
-    cli();
+    if a.words == 0 && a.any == 0 {
+        exit(101, "Either --words or --any must be greater than zero!");
+    }
+
+    if a.analyze {
+        print!("{}", analyze(a.words)?);
+        return Ok(());
+    }
+
+    // Generate password(s)
+    for _ in 0..a.count {
+        println!(
+            "{}",
+            if a.keychain {
+                keychain()
+            } else if a.code_name {
+                code_name()
+            } else if a.digits + a.symbols + a.lowercase + a.uppercase + a.any > 0 {
+                xpg_plus(
+                    a.words,
+                    a.digits,
+                    a.symbols,
+                    a.lowercase,
+                    a.uppercase,
+                    a.any,
+                )
+            } else {
+                xpg!(a.words)
+            },
+        );
+    }
+
+    Ok(())
+}
+
+fn exit(code: i32, msg: &str) {
+    eprintln!("ERROR: {msg}");
+    std::process::exit(code);
 }

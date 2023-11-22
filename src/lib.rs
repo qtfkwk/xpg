@@ -1,43 +1,24 @@
-//! xkcd-style password generator
+/*!
 
-/*
-
-Copyright 2019-2022 qtfkwk
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+xkcd-style password generator
 
 */
 
-// Crates
-
-use clap::Parser;
-use factorial::Factorial;
-use num::bigint::BigUint;
+use anyhow::Result;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 use rand::Rng;
 use separator::Separatable;
+use std::fmt::Write;
 
-// Macros
+#[cfg(test)]
+mod tests;
 
-/// Generate xkcd-style password with a specified or the default number of
-/// words (4).
+/**
+
+Generate xkcd-style password with the given or default number of words (4).
+
+*/
 #[macro_export]
 macro_rules! xpg {
     ($words: expr) => {
@@ -48,101 +29,19 @@ macro_rules! xpg {
     }; // default: 4 words
 }
 
-// Constants
+pub const DIGITS: &str = "0123456789";
+pub const SYMBOLS: &str = "~!@#$%^&*-_=+;:,./?()[]{}<>";
+pub const LOWERCASE: &str = "abcdefghijklmnopqrstuvwxyz";
+pub const UPPERCASE: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-const DIGITS: &str = "0123456789";
-const SYMBOLS: &str = "~!@#$%^&*-_=+;:,./?()[]{}<>";
-const LOWERCASE: &str = "abcdefghijklmnopqrstuvwxyz";
-const UPPERCASE: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const ALL: &str = "\
-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*-_=+;:,./?()[]{}<>";
+pub const ALL: &str = "\
+abcdefghijklmnopqrstuvwxyz\
+ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+0123456789\
+~!@#$%^&*-_=+;:,./?()[]{}<>\
+";
 
-// Tests
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use regex::Regex;
-
-    #[test]
-    fn default_xpg_macro_returns_four_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){4}$").unwrap();
-        let result = xpg!();
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_macro_can_return_three_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){3}$").unwrap();
-        let result = xpg!(3);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_macro_can_return_four_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){4}$").unwrap();
-        let result = xpg!(4);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_macro_can_return_five_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){5}$").unwrap();
-        let result = xpg!(5);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    #[should_panic]
-    fn xpg_macro_cannot_return_zero_words() {
-        let _result = xpg!(0);
-    }
-
-    #[test]
-    fn xpg_macro_can_return_one_word() {
-        let re = Regex::new(r"^([A-Z][a-z]+)$").unwrap();
-        let result = xpg!(1);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_can_return_three_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){3}$").unwrap();
-        let result = xpg(3);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_can_return_four_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){4}$").unwrap();
-        let result = xpg(4);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    fn xpg_can_return_five_words() {
-        let re = Regex::new(r"^([A-Z][a-z]+){5}$").unwrap();
-        let result = xpg(5);
-        assert!(re.is_match(&result));
-    }
-
-    #[test]
-    #[should_panic]
-    fn xpg_cannot_return_zero_words() {
-        let _result = xpg(0);
-    }
-
-    #[test]
-    fn xpg_can_return_one_word() {
-        let re = Regex::new(r"^([A-Z][a-z]+)$").unwrap();
-        let result = xpg(1);
-        assert!(re.is_match(&result));
-    }
-}
-
-// Variables
-
-const WORDLIST: [&'static str; 1259] = [
+pub const WORDLIST: [&str; 1259] = [
     "Africa",
     "Alabama",
     "Alaska",
@@ -1404,9 +1303,13 @@ const WORDLIST: [&'static str; 1259] = [
     "Yourself",
 ];
 
-/// Generate xkcd-style password with a specified number of words.
-///
-/// `words` must be at least one or it will panic.
+/**
+
+Generate xkcd-style password with a specified number of words.
+
+`words` must be at least one or it will panic.
+
+*/
 pub fn xpg(words: usize) -> String {
     if words < 1 {
         panic!();
@@ -1418,9 +1321,20 @@ pub fn xpg(words: usize) -> String {
         .join("")
 }
 
-/// Generate xkcd-style password with a specified number of words and append random digits, symbols,
-/// lowercase, uppercase and/or any characters.
-pub fn xpg_plus(words: usize, digits: usize, symbols: usize, lc: usize, uc: usize, any: usize) -> String {
+/**
+
+Generate xkcd-style password with a specified number of words and append random digits, symbols,
+lowercase, uppercase and/or any characters.
+
+*/
+pub fn xpg_plus(
+    words: usize,
+    digits: usize,
+    symbols: usize,
+    lc: usize,
+    uc: usize,
+    any: usize,
+) -> String {
     if words > 0 {
         format!(
             "{}{}{}{}{}{}",
@@ -1436,8 +1350,12 @@ pub fn xpg_plus(words: usize, digits: usize, symbols: usize, lc: usize, uc: usiz
     }
 }
 
-/// Generate a random string of length `n` from `alphabet`
-fn random_str(n: usize, alphabet: &str) -> String {
+/**
+
+Generate a random string of length `n` from `alphabet`
+
+*/
+pub fn random_str(n: usize, alphabet: &str) -> String {
     let alphabet = alphabet.chars().collect::<Vec<char>>();
     let len = alphabet.len();
     let mut r = String::new();
@@ -1447,31 +1365,34 @@ fn random_str(n: usize, alphabet: &str) -> String {
     r
 }
 
-/// Generate a "Keychain-style" password like `nfucns-gnOcap-utpw9r`
-fn keychain() -> String {
+/**
+
+Generate a "Keychain-style" password like `nfucns-gnOcap-utpw9r`
+
+*/
+pub fn keychain() -> String {
     let mut rng = thread_rng();
     let mut words = [
         random_str(6, LOWERCASE),
-        format!(
-            "{}{}",
-            random_str(5, LOWERCASE),
-            random_str(1, DIGITS),
-        ),
-        format!(
-            "{}{}",
-            random_str(5, LOWERCASE),
-            random_str(1, UPPERCASE),
-        ),
-    ].iter().map(|x| {
+        format!("{}{}", random_str(5, LOWERCASE), random_str(1, DIGITS),),
+        format!("{}{}", random_str(5, LOWERCASE), random_str(1, UPPERCASE),),
+    ]
+    .iter()
+    .map(|x| {
         let mut x = x.chars().collect::<Vec<char>>();
         x.shuffle(&mut rng);
         x.into_iter().collect()
-    }).collect::<Vec<String>>();
+    })
+    .collect::<Vec<String>>();
     words.shuffle(&mut rng);
     words.join("-")
 }
 
-/// Generate a "code name" like `BLUE STEEL`
+/**
+
+Generate a "code name" like `BLUE STEEL`
+
+*/
 pub fn code_name() -> String {
     WORDLIST
         .choose_multiple(&mut thread_rng(), 2)
@@ -1480,127 +1401,65 @@ pub fn code_name() -> String {
         .join(" ")
 }
 
-/// Calculate permutations without repetition
-///
-/// `P(n, k) = n! / (n - k)!`
-///
-/// https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
-fn permutations(n: u128, k: u128) -> u128 {
-    let b = BigUint::from(n).factorial();
-    let c = BigUint::from(n - k).factorial();
-    return format!("{}", b / c).parse::<u128>().unwrap();
-}
+/**
 
-/// xkcd-style password generator
-#[derive(Parser)]
-#[command(version, max_term_width = 80)]
-struct Cli {
-    /// Analyze
-    #[arg(long)]
-    analyze: bool,
+Calculate permutations without repetition
 
-    /// Number of words in password
-    #[arg(short, long, value_name = "NUMBER", default_value = "4")]
-    words: usize,
+`P(n, k) = n! / (n - k)!`
 
-    /// Number of passwords
-    #[arg(short, long, value_name = "NUMBER", default_value = "1")]
-    count: usize,
+https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
 
-    /// Append digits
-    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
-    digits: usize,
-
-    /// Append symbols
-    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
-    symbols: usize,
-
-    /// Append lowercase letters
-    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
-    lowercase: usize,
-
-    /// Append uppercase letters
-    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
-    uppercase: usize,
-
-    /// Append *any* characters (digits, symbols, lowercase, uppercase)
-    #[arg(short, long, value_name = "NUMBER", default_value = "0")]
-    any: usize,
-
-    /// Generate keychain-style password(s)
-    #[arg(long, conflicts_with_all = ["code_name", "analyze"])]
-    keychain: bool,
-
-    /// Generate code name(s)
-    #[arg(long, conflicts_with_all = ["keychain", "analyze"])]
-    code_name: bool,
-}
-
-/// Provides the command line interface
-pub fn cli() {
-    let a = Cli::parse();
-
-    // Error if --words and --any are both zero
-    if a.words == 0 && a.any == 0 {
-        exit(101, "Either --words or --any must be greater than zero!");
+*/
+pub fn permutations(mut n: u128, mut k: u128) -> u128 {
+    let mut p = n;
+    k -= 1;
+    while k > 0 {
+        n -= 1;
+        p *= n;
+        k -= 1;
     }
+    p
+}
 
-    // Calculate total number of possible passwords for the specified number of
-    // words
-    if a.analyze {
-        let n = WORDLIST.len();
-        let p = permutations(n as u128, a.words as u128).separated_string();
-        let w = a.words.separated_string();
-        let d = (n - a.words).separated_string();
-        let n_ = n.separated_string();
-        print!(
-            "\
+/**
+
+Generate a report of the possible permutations of passwords with a given number of words
+
+*/
+pub fn analyze(words: usize) -> Result<String> {
+    let n = WORDLIST.len() as u128;
+    let w = words as u128;
+    let d = n - w;
+    let p = permutations(n, w);
+    let n_ = n.separated_string();
+    let w_ = words.separated_string();
+    let d_ = d.separated_string();
+    let p_ = p.separated_string();
+    let mut r = format!(
+        "\
 * Word list length: {n_}
-* Words in password: {w}
-* Total permutations (without repetition): {p}
+* Words in password: {w_}
+* Total permutations (without repetition): {p_}
 
     ```
     {n_}! / ({n_} - {w})!
-    {n_}! / {d}!
-    {p}
+    {n_}! / {d_}!
+    {p_}
     ```
 
 Words | Permutations
 ---|---:
 \
         "
-        );
-        for k in 1..=8 {
-            let p_ = permutations(n as u128, k as u128).separated_string();
-            println!("{} | {}", k, p_);
-        }
-        println!("... | ...\n");
-
-    // Generate password(s)
-    } else {
-        let mut c = 0;
-        loop {
-            println!(
-                "{}",
-                if a.keychain {
-                    keychain()
-                } else if a.code_name {
-                    code_name()
-                } else if a.digits + a.symbols + a.lowercase + a.uppercase + a.any > 0 {
-                    xpg_plus(a.words, a.digits, a.symbols, a.lowercase, a.uppercase, a.any)
-                } else {
-                    xpg!(a.words)
-                },
-            );
-            c += 1;
-            if c == a.count {
-                break;
-            }
-        }
+    );
+    let (mut n, mut k, mut p) = (n, 1, permutations(n, 1));
+    while k <= 8 {
+        let p_ = p.separated_string();
+        writeln!(r, "{k} | {p_}")?;
+        n -= 1;
+        k += 1;
+        p *= n;
     }
-}
-
-fn exit(code: i32, msg: &str) {
-    eprintln!("Error: {msg}");
-    std::process::exit(code);
+    writeln!(r, "... | ...\n")?;
+    Ok(r)
 }
