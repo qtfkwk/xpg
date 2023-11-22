@@ -33,92 +33,92 @@ Options:
 
 ```text
 $ xpg -V
-xpg 0.6.0
+xpg 0.6.1
 ```
 
 ### Examples
 
 ```text
 $ xpg
-SpeedStrengthMajorMake
+MatchCareGibraltarWorld
 ```
 
 ```text
 $ xpg -c 10
-ValleyWarmBeyondHappen
-ThrewBecomeWereBecame
-WelcomeGroundCattleYear
-MostFingersWoreLocated
-PatternDifferentContinuedDream
-MarkWingsControlDried
-ReceiveShownTradeChoose
-DeepGlassIndianFelt
-HoursWireContinuePretty
-CriedRestBelowReply
+CopenhagenSupposePleaseContinued
+PassedGoesWorthFinished
+HappyRememberColourWeather
+TwentySingPossibleLead
+HeardFreeMarkTried
+AdvanceTasteFirstAbout
+TogetherEnemyBeyondEggs
+RingSuccessGatherWheat
+MelodyEastDrinkDevice
+PresidentConditionHealthElectricity
 ```
 
 ```text
 $ xpg -w 8
-PlayTheyPromiseDriedNorwayInsectsDrawJust
+KnewPickBecauseDutyWriteSouthReceiveHavana
 ```
 
 ```text
 $ xpg -w 8 -c 10
-DistantTriedEggsDetailsCentOpenShirtDecember
-LisbonSharpSomeonePaperYearThoseWinterWhat
-PortugalWhileRollNothingHappyLaterJordanVerb
-DestroyGuardStoneIndustryWalkThreeVenusElements
-AmericaWarmBlackParisIndeedAnswerBreadAction
-DailyNameThusToreFightAgreeHeartKitchen
-DoorBarbadosFruitStateWiseCheckComeKilled
-WordAustriaCigarettePerfectOsloInchesSteelAfter
-TuesdayPolandHighPeaceForwardDishEightDifficult
-WingDoesKnewSaltCopyDistanceCropsExercise
+SystemPrettyWorkEverythingSpentAboveWelcomeGives
+ConsiderableLastBesideKeepEtchingDenmarkResentAustria
+FruitSuffixCongoEnteredControlMontanaRoadBusiness
+NeitherAloneGrayPainSaysKnowIncludeUnderstand
+FridayVerbNightGibraltarCakeCongoBoardSlowly
+ProductsOtherWomenBetweenTookForestJapaneseReceive
+MailJerusalemWestBelgiumTriangleFinallyAboutMiss
+GameForwardMotherLeastShapeReachNeckDeep
+RussiaFriendJudgePerhapsEtchingIndiaFancyStudy
+DriedBeautifulContinueDifferenceGroupSellRainWhen
 ```
 
 ```text
 $ xpg -w 2 -d 3
-PriceGlass826
+WinterLate168
 ```
 
 ```text
 $ xpg -w 2 -s 2
-TruckDrop%{
+FoundDifferent&-
 ```
 
 ```text
 $ xpg -w 2 -d 1 -s 1
-SpotClean5<
+FiftyWide3]
 ```
 
 ```text
 $ xpg -l 2
-SeedServiceLearnEachiq
+SinceNoiseQuestionParticularqj
 ```
 
 ```text
 $ xpg -u 2
-GatherFigureWhileListXL
+CubaDoesBlueBottleSV
 ```
 
 ```text
 $ xpg -a 5
-ToneBrokenHangGiftcddZ1
+StrangeHorseForeignStorm=!q/+
 ```
 
 ```text
 $ xpg -w 0 -a 20
-xWTln$)(0^*T^=]zz*ZG
+[dry_&IO_-u*/~4.rN%&
 ```
 
 ```text
 $ xpg --keychain
-1afjvh-vyaJug-whmmwt
+wszj4d-avdkks-piqcyU
 ```
 
 ```text
 $ xpg --code-name
-PLACE PLUTO
+SPOT CONDITION
 ```
 
 ```text
@@ -191,6 +191,7 @@ Words | Permutations
 * 0.6.0 (2023-11-22): remove num and factorial crate dependencies; improve
   permutations function; update dependencies; apply clippy fixes and cargo fmt;
   reorganize
+* 0.6.1 (2023-11-22): fix readme
 
 # References
 

@@ -16,4 +16,5 @@
 * 0.6.0 (2023-11-22): remove num and factorial crate dependencies; improve
   permutations function; update dependencies; apply clippy fixes and cargo fmt;
   reorganize
+* 0.6.1 (2023-11-22): fix readme
 
