@@ -31,48 +31,58 @@ $ xpg -c 10
 ```
 
 ```text
-$ xpg -w 8
-!run:../target/release/xpg -w 8
+$ xpg -p wwwwwwww
+!run:../target/release/xpg -p wwwwwwww
 ```
 
 ```text
-$ xpg -w 8 -c 10
-!run:../target/release/xpg -w 8 -c 10
+$ xpg -p wwwwwwww -c 10
+!run:../target/release/xpg -p wwwwwwww -c 10
 ```
 
 ```text
-$ xpg -w 2 -d 3
-!run:../target/release/xpg -w 2 -d 3
+$ xpg -p wwddd
+!run:../target/release/xpg -p wwddd
 ```
 
 ```text
-$ xpg -w 2 -s 2
-!run:../target/release/xpg -w 2 -s 2
+$ xpg -p wwss
+!run:../target/release/xpg -p wwss
 ```
 
 ```text
-$ xpg -w 2 -d 1 -s 1
-!run:../target/release/xpg -w 2 -d 1 -s 1
+$ xpg -p wwds
+!run:../target/release/xpg -p wwds
 ```
 
 ```text
-$ xpg -l 2
-!run:../target/release/xpg -l 2
+$ xpg -p wwwwcc
+!run:../target/release/xpg -p wwwwcc
 ```
 
 ```text
-$ xpg -u 2
-!run:../target/release/xpg -u 2
+$ xpg -p wwwwCC
+!run:../target/release/xpg -p wwwwCC
 ```
 
 ```text
-$ xpg -a 5
-!run:../target/release/xpg -a 5
+$ xpg -p TTTT
+!run:../target/release/xpg -p TTTT
 ```
 
 ```text
-$ xpg -w 0 -a 20
-!run:../target/release/xpg -w 0 -a 20
+$ xpg -p WWWW
+!run:../target/release/xpg -p WWWW
+```
+
+```text
+$ xpg -p wwwwaaaaa
+!run:../target/release/xpg -p wwwwaaaaa
+```
+
+```text
+$ xpg -p aaaaaaaaaaaaaaaaaaaa
+!run:../target/release/xpg -p aaaaaaaaaaaaaaaaaaaa
 ```
 
 ```text
@@ -85,21 +95,11 @@ $ xpg --code-name
 !run:../target/release/xpg --code-name
 ```
 
-```text
-$ xpg --analyze
-!run:../target/release/xpg --analyze
-```
-
-```text
-$ xpg --analyze -w 8
-!run:../target/release/xpg --analyze -w 8
-```
-
 !inc:../CHANGELOG.md
 
 # References
 
-* Word list comes from Bart Busschots'
+* Word list originates from Bart Busschots'
   [HSXKPasswd](https://www.bartbusschots.ie/s/publications/software/xkpasswd/)
   Perl module ([GitHub](https://github.com/bbusschots/hsxkpasswd),
   [CPAN: Crypt::HSXKPasswd](http://search.cpan.org/perldoc?Crypt%3A%3AHSXKPasswd)),

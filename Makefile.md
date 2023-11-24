@@ -2,7 +2,6 @@
 
 * clippy
 * `README.md`
-* test
 
 ```
 cargo build --release

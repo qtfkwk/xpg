@@ -15,162 +15,120 @@ xkcd-style password generator
 Usage: xpg [OPTIONS]
 
 Options:
-      --analyze             Calculate total number of possible passwords for the
-                            specified number of words
-  -w, --words <NUMBER>      Number of words in password [default: 4]
-  -c, --count <NUMBER>      Number of passwords [default: 1]
-  -d, --digits <NUMBER>     Append digits [default: 0]
-  -s, --symbols <NUMBER>    Append symbols [default: 0]
-  -l, --lowercase <NUMBER>  Append lowercase letters [default: 0]
-  -u, --uppercase <NUMBER>  Append uppercase letters [default: 0]
-  -a, --any <NUMBER>        Append *any* characters (digits, symbols, lowercase,
-                            uppercase) [default: 0]
-      --keychain            Generate keychain-style password(s)
-      --code-name           Generate code name(s)
-  -h, --help                Print help
-  -V, --version             Print version
+  -p, --pattern <PATTERN>  Password pattern (`W`: WORD, `w`: word, `T`: Word,
+                           `k`: `shuffle(cccc(c|d)(C|c))` `C`: A-Z, `c`: a-z,
+                           `d`: 0-9, `s`: `~!@#$%^&*-_=+;:,./?()[]{}<>`, `a`:
+                           `C|c|d|s`) [default: wwww]
+      --keychain           Generate keychain-style password(s); equivalent to
+                           `-p 'k-k-k'`
+      --code-name          Generate code name(s); equivalent to `-p 'W W'`
+  -c, --count <NUMBER>     Number of passwords [default: 1]
+      --length <NUMBER>    Length
+      --minimum <NUMBER>   Minimum length
+      --maximum <NUMBER>   Maximum length
+      --attempts <NUMBER>  Attempts [default: 10]
+  -h, --help               Print help
+  -V, --version            Print version
 ```
 
 ```text
 $ xpg -V
-xpg 0.6.1
+xpg 0.7.0
 ```
 
 ### Examples
 
 ```text
 $ xpg
-MatchCareGibraltarWorld
+monthsuccessmisswelcome
 ```
 
 ```text
 $ xpg -c 10
-CopenhagenSupposePleaseContinued
-PassedGoesWorthFinished
-HappyRememberColourWeather
-TwentySingPossibleLead
-HeardFreeMarkTried
-AdvanceTasteFirstAbout
-TogetherEnemyBeyondEggs
-RingSuccessGatherWheat
-MelodyEastDrinkDevice
-PresidentConditionHealthElectricity
+grassamericaunderlinestranger
+periodsinglethrowpeace
+shoredeepfoolturn
+intolastusuallyhurt
+gentlehusbandcoatdetails
+increaseherefoodtogether
+heavythrowngreatcapital
+passeddividemodernquite
+readthoughtclockforget
+realizeladychildrenstand
 ```
 
 ```text
-$ xpg -w 8
-KnewPickBecauseDutyWriteSouthReceiveHavana
+$ xpg -p wwwwwwww
+saturdaypushgibraltarhourreportmouthdistantcarry
 ```
 
 ```text
-$ xpg -w 8 -c 10
-SystemPrettyWorkEverythingSpentAboveWelcomeGives
-ConsiderableLastBesideKeepEtchingDenmarkResentAustria
-FruitSuffixCongoEnteredControlMontanaRoadBusiness
-NeitherAloneGrayPainSaysKnowIncludeUnderstand
-FridayVerbNightGibraltarCakeCongoBoardSlowly
-ProductsOtherWomenBetweenTookForestJapaneseReceive
-MailJerusalemWestBelgiumTriangleFinallyAboutMiss
-GameForwardMotherLeastShapeReachNeckDeep
-RussiaFriendJudgePerhapsEtchingIndiaFancyStudy
-DriedBeautifulContinueDifferenceGroupSellRainWhen
+$ xpg -p wwwwwwww -c 10
+romeropewriteyardshoesexampleringmaterial
+sceneperugiftoverrollsingpasslast
+niececouldaprilfinlandbrothercharacterwillthick
+dollarsfinishedalthoughchancedinnerbankerhersmorning
+usuallylevelfridayafraidlistplainplanewore
+repeatednieceeffortobservevaluetherediscoverring
+certainworkerswithinslowlynotelanguageescapewrite
+staymachinequestionscakepresidenthopedesertdelight
+escapemonthpushstarsegyptsmokewhilesettled
+lightsubstancesalthoughbelowamongrockclockpark
 ```
 
 ```text
-$ xpg -w 2 -d 3
-WinterLate168
+$ xpg -p wwddd
+manylast811
 ```
 
 ```text
-$ xpg -w 2 -s 2
-FoundDifferent&-
+$ xpg -p wwss
+ableright]{
 ```
 
 ```text
-$ xpg -w 2 -d 1 -s 1
-FiftyWide3]
+$ xpg -p wwds
+musicenergy2(
 ```
 
 ```text
-$ xpg -l 2
-SinceNoiseQuestionParticularqj
+$ xpg -p wwwwcc
+whilelakegeneralfrenchsf
 ```
 
 ```text
-$ xpg -u 2
-CubaDoesBlueBottleSV
+$ xpg -p wwwwCC
+theycamestudystreamUL
 ```
 
 ```text
-$ xpg -a 5
-StrangeHorseForeignStorm=!q/+
+$ xpg -p TTTT
+StrongFlowersLargeAsia
 ```
 
 ```text
-$ xpg -w 0 -a 20
-[dry_&IO_-u*/~4.rN%&
+$ xpg -p WWWW
+SIZESENSENECKHEAR
+```
+
+```text
+$ xpg -p wwwwaaaaa
+everygivesmarchcoatuuopw
+```
+
+```text
+$ xpg -p aaaaaaaaaaaaaaaaaaaa
+sY@UHF1FoV~$FIoNp,pC
 ```
 
 ```text
 $ xpg --keychain
-wszj4d-avdkks-piqcyU
+mx7myy-ghbanl-mhLalq
 ```
 
 ```text
 $ xpg --code-name
-SPOT CONDITION
-```
-
-```text
-$ xpg --analyze
-* Word list length: 1,259
-* Words in password: 4
-* Total permutations (without repetition): 2,500,525,503,024
-
-    ```
-    1,259! / (1,259 - 4)!
-    1,259! / 1,255!
-    2,500,525,503,024
-    ```
-
-Words | Permutations
----|---:
-1 | 1,259
-2 | 1,583,822
-3 | 1,990,864,254
-4 | 2,500,525,503,024
-5 | 3,138,159,506,295,120
-6 | 3,935,252,020,894,080,480
-7 | 4,930,870,782,180,282,841,440
-8 | 6,173,450,219,289,714,117,482,880
-... | ...
-
-```
-
-```text
-$ xpg --analyze -w 8
-* Word list length: 1,259
-* Words in password: 8
-* Total permutations (without repetition): 6,173,450,219,289,714,117,482,880
-
-    ```
-    1,259! / (1,259 - 8)!
-    1,259! / 1,251!
-    6,173,450,219,289,714,117,482,880
-    ```
-
-Words | Permutations
----|---:
-1 | 1,259
-2 | 1,583,822
-3 | 1,990,864,254
-4 | 2,500,525,503,024
-5 | 3,138,159,506,295,120
-6 | 3,935,252,020,894,080,480
-7 | 4,930,870,782,180,282,841,440
-8 | 6,173,450,219,289,714,117,482,880
-... | ...
-
+FRESH HISTORY
 ```
 
 # Changelog
@@ -192,10 +150,11 @@ Words | Permutations
   permutations function; update dependencies; apply clippy fixes and cargo fmt;
   reorganize
 * 0.6.1 (2023-11-22): fix readme
+* 0.7.0 (2023-11-24): complete redesign
 
 # References
 
-* Word list comes from Bart Busschots'
+* Word list originates from Bart Busschots'
   [HSXKPasswd](https://www.bartbusschots.ie/s/publications/software/xkpasswd/)
   Perl module ([GitHub](https://github.com/bbusschots/hsxkpasswd),
   [CPAN: Crypt::HSXKPasswd](http://search.cpan.org/perldoc?Crypt%3A%3AHSXKPasswd)),

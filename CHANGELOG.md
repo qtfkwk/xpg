@@ -17,4 +17,5 @@
   permutations function; update dependencies; apply clippy fixes and cargo fmt;
   reorganize
 * 0.6.1 (2023-11-22): fix readme
+* 0.7.0 (2023-11-24): complete redesign
 
