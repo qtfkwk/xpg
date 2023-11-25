@@ -1,0 +1,4472 @@
+{
+  "characters": {
+    "C": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "a": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*-_=+;:,./?()[]{}<>",
+    "c": "abcdefghijklmnopqrstuvwxyz",
+    "d": "0123456789",
+    "s": "~!@#$%^&*-_=+;:,./?()[]{}<>"
+  },
+  "words": {
+    "able": [
+      "Adjective"
+    ],
+    "about": [
+      "Preposition",
+      "Adverb",
+      "Adjective"
+    ],
+    "above": [
+      "Adverb",
+      "Preposition",
+      "Noun",
+      "Adjective"
+    ],
+    "across": [
+      "Preposition",
+      "Adverb",
+      "Noun"
+    ],
+    "action": [
+      "SingularNoun",
+      "Interjection",
+      "Adjective",
+      "Verb"
+    ],
+    "actually": [
+      "Adverb"
+    ],
+    "addition": [
+      "SingularNoun"
+    ],
+    "adjective": [
+      "SingularNoun"
+    ],
+    "advance": [
+      "Verb",
+      "SingularNoun",
+      "Adjective"
+    ],
+    "afraid": [
+      "Adjective"
+    ],
+    "africa": [
+      "Country"
+    ],
+    "after": [
+      "Adverb",
+      "Preposition",
+      "Conjunction",
+      "Adjective"
+    ],
+    "again": [
+      "Adverb",
+      "Preposition"
+    ],
+    "against": [
+      "Preposition",
+      "Conjunction"
+    ],
+    "agree": [
+      "Verb"
+    ],
+    "agreed": [
+      "VerbPast",
+      "Adjective",
+      "Interjection"
+    ],
+    "ahead": [
+      "Adverb"
+    ],
+    "airplane": [
+      "SingularNoun"
+    ],
+    "alabama": [
+      "UsState"
+    ],
+    "alaska": [
+      "UsState"
+    ],
+    "allow": [
+      "Verb"
+    ],
+    "almost": [
+      "Adverb"
+    ],
+    "alone": [
+      "Adjective",
+      "Adverb"
+    ],
+    "along": [
+      "Preposition",
+      "Adverb"
+    ],
+    "already": [
+      "Adverb"
+    ],
+    "also": [
+      "Adverb",
+      "Conjunction"
+    ],
+    "although": [
+      "Conjunction"
+    ],
+    "always": [
+      "Adverb"
+    ],
+    "america": [
+      "Continent"
+    ],
+    "among": [
+      "Preposition"
+    ],
+    "amount": [
+      "SingularNoun"
+    ],
+    "amsterdam": [
+      "Country"
+    ],
+    "anger": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "angle": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "angry": [
+      "Adjective"
+    ],
+    "animal": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "another": [
+      "Adjective",
+      "Pronoun"
+    ],
+    "answer": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "anything": [
+      "Pronoun",
+      "SingularNoun"
+    ],
+    "appear": [
+      "IntransitiveVerb"
+    ],
+    "apple": [
+      "SingularNoun"
+    ],
+    "april": [
+      "Month"
+    ],
+    "area": [
+      "SingularNoun"
+    ],
+    "arizona": [
+      "UsState"
+    ],
+    "arms": [
+      "PluralNoun"
+    ],
+    "army": [
+      "SingularNoun"
+    ],
+    "around": [
+      "Adverb",
+      "Preposition",
+      "Adjective"
+    ],
+    "arrive": [
+      "IntransitiveVerb"
+    ],
+    "arrived": [
+      "IntransitiveVerb",
+      "VerbPast"
+    ],
+    "article": [
+      "SingularNoun"
+    ],
+    "asia": [
+      "Continent"
+    ],
+    "athens": [
+      "City"
+    ],
+    "attempt": [
+      "TransitiveVerb",
+      "SingularNoun"
+    ],
+    "august": [
+      "Month"
+    ],
+    "aunt": [
+      "SingularNoun"
+    ],
+    "australia": [
+      "Country"
+    ],
+    "austria": [
+      "Country"
+    ],
+    "away": [
+      "Adverb",
+      "Adjective"
+    ],
+    "baby": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "back": [
+      "SingularNoun",
+      "Verb",
+      "Adjective",
+      "Adverb"
+    ],
+    "ball": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "bank": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "banker": [
+      "SingularNoun"
+    ],
+    "barbados": [
+      "Country"
+    ],
+    "base": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "basket": [
+      "SingularNoun"
+    ],
+    "battery": [
+      "SingularNoun"
+    ],
+    "battle": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "bean": [
+      "SingularNoun"
+    ],
+    "bear": [
+      "Verb",
+      "SingularNoun",
+      "Adjective"
+    ],
+    "beat": [
+      "Verb",
+      "SingularNoun",
+      "Adjective"
+    ],
+    "beautiful": [
+      "Adjective"
+    ],
+    "beauty": [
+      "SingularNoun"
+    ],
+    "became": [
+      "VerbPast"
+    ],
+    "because": [
+      "Conjunction"
+    ],
+    "become": [
+      "Verb"
+    ],
+    "been": [
+      "VerbPast"
+    ],
+    "before": [
+      "Adverb",
+      "Preposition",
+      "Conjunction"
+    ],
+    "began": [
+      "VerbPast"
+    ],
+    "begin": [
+      "Verb"
+    ],
+    "behind": [
+      "Adverb",
+      "Preposition",
+      "SingularNoun"
+    ],
+    "being": [
+      "SingularNoun",
+      "Conjunction"
+    ],
+    "belfast": [
+      "City"
+    ],
+    "belgium": [
+      "Country"
+    ],
+    "believe": [
+      "Verb"
+    ],
+    "bell": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "belong": [
+      "IntransitiveVerb"
+    ],
+    "below": [
+      "Adverb",
+      "Preposition"
+    ],
+    "berlin": [
+      "City"
+    ],
+    "beside": [
+      "Preposition",
+      "Adverb"
+    ],
+    "best": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "better": [
+      "Adjective",
+      "SingularNoun",
+      "Verb"
+    ],
+    "between": [
+      "Preposition",
+      "Adverb"
+    ],
+    "beyond": [
+      "Preposition",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "bicycle": [
+      "SingularNoun",
+      "IntransitiveVerb"
+    ],
+    "bill": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "bird": [
+      "SingularNoun",
+      "IntransitiveVerb"
+    ],
+    "birds": [
+      "PluralNoun"
+    ],
+    "black": [
+      "Color",
+      "Verb"
+    ],
+    "block": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "blood": [
+      "SingularNoun"
+    ],
+    "blow": [
+      "Verb"
+    ],
+    "blue": [
+      "Color"
+    ],
+    "board": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "boat": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "body": [
+      "SingularNoun"
+    ],
+    "bone": [
+      "SingularNoun"
+    ],
+    "bones": [
+      "PluralNoun"
+    ],
+    "book": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "born": [
+      "VerbPast"
+    ],
+    "borrow": [
+      "Verb"
+    ],
+    "both": [
+      "Adverb"
+    ],
+    "botswana": [
+      "Country"
+    ],
+    "bottle": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "bottom": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "branch": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "branches": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "brazil": [
+      "Country"
+    ],
+    "bread": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "break": [
+      "Verb"
+    ],
+    "bridge": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "bright": [
+      "Adjective"
+    ],
+    "bring": [
+      "TransitiveVerb"
+    ],
+    "britain": [
+      "Country"
+    ],
+    "british": [
+      "Nationality"
+    ],
+    "broad": [
+      "Adjective"
+    ],
+    "broke": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "broken": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "brother": [
+      "SingularNoun"
+    ],
+    "brought": [
+      "VerbPast"
+    ],
+    "brown": [
+      "Color",
+      "TransitiveVerb"
+    ],
+    "build": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "building": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "built": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "bulgaria": [
+      "Country"
+    ],
+    "burn": [
+      "Verb"
+    ],
+    "burning": [
+      "Adjective"
+    ],
+    "business": [
+      "SingularNoun"
+    ],
+    "busy": [
+      "Adjective"
+    ],
+    "butter": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "cake": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "california": [
+      "UsState"
+    ],
+    "call": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "came": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "canada": [
+      "Country"
+    ],
+    "cannot": [
+      "AuxiliaryVerb"
+    ],
+    "capital": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "captain": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "care": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "carefully": [
+      "Adverb"
+    ],
+    "carry": [
+      "Verb"
+    ],
+    "case": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "catch": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "cattle": [
+      "PluralNoun"
+    ],
+    "caught": [
+      "VerbPast"
+    ],
+    "cause": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "cells": [
+      "PluralNoun"
+    ],
+    "cent": [
+      "SingularNoun"
+    ],
+    "center": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "cents": [
+      "PluralNoun"
+    ],
+    "century": [
+      "SingularNoun"
+    ],
+    "certain": [
+      "Adjective"
+    ],
+    "chair": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "chance": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "change": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "character": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "charge": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "chart": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "check": [
+      "SingularNoun",
+      "Verb",
+      "Interjection"
+    ],
+    "chief": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "child": [
+      "SingularNoun"
+    ],
+    "childhood": [
+      "SingularNoun"
+    ],
+    "children": [
+      "PluralNoun"
+    ],
+    "chile": [
+      "Country"
+    ],
+    "china": [
+      "Country"
+    ],
+    "choose": [
+      "Verb"
+    ],
+    "church": [
+      "SingularNoun"
+    ],
+    "cigarette": [
+      "SingularNoun"
+    ],
+    "circle": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "city": [
+      "SingularNoun"
+    ],
+    "class": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "clean": [
+      "Adjective",
+      "Verb"
+    ],
+    "clear": [
+      "Adjective",
+      "Verb"
+    ],
+    "climbed": [
+      "VerbPast"
+    ],
+    "clock": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "close": [
+      "Adjective",
+      "Verb"
+    ],
+    "cloth": [
+      "SingularNoun"
+    ],
+    "clothes": [
+      "PluralNoun"
+    ],
+    "cloud": [
+      "SingularNoun"
+    ],
+    "coast": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "coat": [
+      "SingularNoun"
+    ],
+    "cold": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "college": [
+      "SingularNoun"
+    ],
+    "colombia": [
+      "Country"
+    ],
+    "color": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "colour": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "column": [
+      "SingularNoun"
+    ],
+    "come": [
+      "IntransitiveVerb"
+    ],
+    "common": [
+      "Adjective"
+    ],
+    "company": [
+      "SingularNoun"
+    ],
+    "compare": [
+      "Verb"
+    ],
+    "complete": [
+      "Adjective",
+      "TransitiveVerb"
+    ],
+    "compound": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "condition": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "conditions": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "congo": [
+      "Country"
+    ],
+    "consider": [
+      "Verb"
+    ],
+    "considerable": [
+      "Adjective"
+    ],
+    "consonant": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "contain": [
+      "TransitiveVerb"
+    ],
+    "continue": [
+      "Verb"
+    ],
+    "continued": [
+      "VerbPast"
+    ],
+    "control": [
+      "TransitiveVerb",
+      "SingularNoun"
+    ],
+    "cook": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "cool": [
+      "Adjective",
+      "Adverb",
+      "Verb"
+    ],
+    "copenhagen": [
+      "City"
+    ],
+    "copy": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "corn": [
+      "SingularNoun"
+    ],
+    "corner": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "correct": [
+      "Verb",
+      "Adjective"
+    ],
+    "cost": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "cotton": [
+      "SingularNoun"
+    ],
+    "could": [
+      "AuxiliaryVerb"
+    ],
+    "count": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "country": [
+      "SingularNoun"
+    ],
+    "course": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "cover": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "covered": [
+      "VerbPast"
+    ],
+    "cows": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "create": [
+      "TransitiveVerb"
+    ],
+    "cried": [
+      "VerbPast"
+    ],
+    "crops": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "cross": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "crowd": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "cuba": [
+      "Country"
+    ],
+    "current": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "daily": [
+      "Adjective",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "damascus": [
+      "City"
+    ],
+    "dance": [
+      "Verb"
+    ],
+    "dare": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "dark": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "date": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "daughter": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "dead": [
+      "Adjective",
+      "SingularNoun",
+      "Adverb"
+    ],
+    "deal": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "dear": [
+      "Adjective",
+      "SingularNoun",
+      "Adverb",
+      "Interjection"
+    ],
+    "death": [
+      "SingularNoun"
+    ],
+    "december": [
+      "Month"
+    ],
+    "decide": [
+      "Verb"
+    ],
+    "decided": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "decimal": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "deep": [
+      "Adjective",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "degree": [
+      "SingularNoun"
+    ],
+    "delaware": [
+      "UsState"
+    ],
+    "delight": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "demand": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "denmark": [
+      "Country"
+    ],
+    "describe": [
+      "TransitiveVerb"
+    ],
+    "desert": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "design": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "desire": [
+      "TransitiveVerb",
+      "SingularNoun"
+    ],
+    "destroy": [
+      "Verb"
+    ],
+    "details": [
+      "PluralNoun",
+      "TransitiveVerb"
+    ],
+    "determine": [
+      "Verb"
+    ],
+    "developed": [
+      "Adjective"
+    ],
+    "device": [
+      "SingularNoun"
+    ],
+    "dictionary": [
+      "SingularNoun"
+    ],
+    "died": [
+      "VerbPast",
+      "IntransitiveVerb"
+    ],
+    "difference": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "different": [
+      "Adjective"
+    ],
+    "difficult": [
+      "Adjective"
+    ],
+    "dinner": [
+      "SingularNoun"
+    ],
+    "direct": [
+      "Verb",
+      "Adjective",
+      "Adverb"
+    ],
+    "direction": [
+      "SingularNoun"
+    ],
+    "discover": [
+      "TransitiveVerb"
+    ],
+    "discovered": [
+      "TransitiveVerb",
+      "VerbPast"
+    ],
+    "dish": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "distance": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "distant": [
+      "Adjective"
+    ],
+    "divide": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "divided": [
+      "Adjective"
+    ],
+    "division": [
+      "SingularNoun"
+    ],
+    "doctor": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "does": [
+      "Verb"
+    ],
+    "dollar": [
+      "SingularNoun"
+    ],
+    "dollars": [
+      "PluralNoun"
+    ],
+    "done": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "door": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "double": [
+      "Adjective",
+      "SingularNoun",
+      "Verb"
+    ],
+    "doubt": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "down": [
+      "Adverb",
+      "Adjective",
+      "Preposition",
+      "SingularNoun",
+      "Verb"
+    ],
+    "draw": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "drawing": [
+      "SingularNoun"
+    ],
+    "dream": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "dress": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "dried": [
+      "VerbPast"
+    ],
+    "drink": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "drive": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "drop": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "dublin": [
+      "City"
+    ],
+    "duck": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "during": [
+      "Preposition"
+    ],
+    "dusk": [
+      "SingularNoun"
+    ],
+    "duty": [
+      "SingularNoun"
+    ],
+    "each": [
+      "Adjective",
+      "Adverb"
+    ],
+    "early": [
+      "Adjective",
+      "Adverb"
+    ],
+    "ears": [
+      "PluralNoun"
+    ],
+    "earth": [
+      "Planet",
+      "Verb"
+    ],
+    "east": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "easy": [
+      "Adjective",
+      "Adverb"
+    ],
+    "edge": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "effect": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "effort": [
+      "SingularNoun"
+    ],
+    "eggs": [
+      "PluralNoun"
+    ],
+    "egypt": [
+      "Country"
+    ],
+    "eight": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "either": [
+      "Pronoun"
+    ],
+    "electric": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "electricity": [
+      "SingularNoun"
+    ],
+    "elements": [
+      "PluralNoun"
+    ],
+    "else": [
+      "Adjective",
+      "Adverb"
+    ],
+    "enemy": [
+      "SingularNoun"
+    ],
+    "energy": [
+      "SingularNoun"
+    ],
+    "engine": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "england": [
+      "Country"
+    ],
+    "english": [
+      "Nationality"
+    ],
+    "enjoy": [
+      "Verb"
+    ],
+    "enough": [
+      "Adjective"
+    ],
+    "enter": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "entered": [
+      "VerbPast"
+    ],
+    "entire": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "equal": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "equation": [
+      "SingularNoun"
+    ],
+    "escape": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "especially": [
+      "Adverb"
+    ],
+    "etching": [
+      "SingularNoun"
+    ],
+    "europe": [
+      "Continent"
+    ],
+    "even": [
+      "Adjective",
+      "Adverb",
+      "TransitiveVerb",
+      "IntransitiveVerb"
+    ],
+    "evening": [
+      "SingularNoun"
+    ],
+    "ever": [
+      "Adverb"
+    ],
+    "every": [
+      "Adjective"
+    ],
+    "everyone": [
+      "Pronoun"
+    ],
+    "everything": [
+      "Pronoun"
+    ],
+    "exactly": [
+      "Adverb"
+    ],
+    "example": [
+      "SingularNoun"
+    ],
+    "except": [
+      "SingularNoun"
+    ],
+    "exciting": [
+      "Adjective"
+    ],
+    "exercise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "expect": [
+      "Verb"
+    ],
+    "experience": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "experiment": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "explain": [
+      "Verb"
+    ],
+    "express": [
+      "TransitiveVerb",
+      "Adjective",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "face": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fact": [
+      "SingularNoun"
+    ],
+    "factories": [
+      "PluralNoun"
+    ],
+    "factors": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "fail": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "fair": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "fall": [
+      "Verb",
+      "SingularNoun",
+      "Adjective"
+    ],
+    "family": [
+      "SingularNoun"
+    ],
+    "famous": [
+      "Adjective"
+    ],
+    "fancy": [
+      "Adjective",
+      "TransitiveVerb"
+    ],
+    "farm": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "farmers": [
+      "PluralNoun"
+    ],
+    "fast": [
+      "Adjective"
+    ],
+    "father": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "favor": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fear": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "february": [
+      "Month"
+    ],
+    "feed": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "feel": [
+      "Verb"
+    ],
+    "feeling": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "feet": [
+      "PluralNoun"
+    ],
+    "fell": [
+      "TransitiveVerb",
+      "VerbPast"
+    ],
+    "fellow": [
+      "SingularNoun"
+    ],
+    "felt": [
+      "SingularNoun",
+      "Adjective",
+      "VerbPast"
+    ],
+    "fence": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "field": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fifteen": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "fifth": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "fifty": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "fight": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "figure": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fiji": [
+      "Country"
+    ],
+    "fill": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "filled": [
+      "VerbPast"
+    ],
+    "finally": [
+      "Adjective",
+      "Interjection"
+    ],
+    "find": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fine": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "finger": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fingers": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "finish": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "finished": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "finland": [
+      "Country"
+    ],
+    "fire": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "firm": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "first": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "fish": [
+      "SingularNoun",
+      "PluralNoun",
+      "Verb"
+    ],
+    "five": [
+      "SingularNoun"
+    ],
+    "flat": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "flier": [
+      "SingularNoun"
+    ],
+    "floor": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "florida": [
+      "UsState"
+    ],
+    "flow": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "flower": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "flowers": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "follow": [
+      "Verb"
+    ],
+    "food": [
+      "SingularNoun"
+    ],
+    "fool": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "foot": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "force": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "foreign": [
+      "Adjective"
+    ],
+    "forest": [
+      "SingularNoun"
+    ],
+    "forever": [
+      "Adjective"
+    ],
+    "forget": [
+      "Verb"
+    ],
+    "form": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "fortieth": [
+      "Adjective"
+    ],
+    "forty": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "forward": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "found": [
+      "VerbPast"
+    ],
+    "four": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "fraction": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "france": [
+      "Country"
+    ],
+    "free": [
+      "Adjective",
+      "Adverb",
+      "TransitiveVerb",
+      "SingularNoun"
+    ],
+    "french": [
+      "Nationality"
+    ],
+    "fresh": [
+      "Adjective",
+      "Adverb"
+    ],
+    "friday": [
+      "Day"
+    ],
+    "friend": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "friends": [
+      "PluralNoun"
+    ],
+    "from": [
+      "Preposition"
+    ],
+    "front": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "fruit": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "full": [
+      "Adjective",
+      "Adverb",
+      "Verb"
+    ],
+    "further": [
+      "Adjective"
+    ],
+    "future": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "gain": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "galaxy": [
+      "SingularNoun"
+    ],
+    "game": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "garden": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "gate": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "gather": [
+      "Verb"
+    ],
+    "gave": [
+      "VerbPast"
+    ],
+    "general": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "gentle": [
+      "Adjective"
+    ],
+    "gentleman": [
+      "SingularNoun"
+    ],
+    "germany": [
+      "Country"
+    ],
+    "gibraltar": [
+      "Country"
+    ],
+    "gift": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "girl": [
+      "SingularNoun"
+    ],
+    "give": [
+      "Verb"
+    ],
+    "gives": [
+      "Verb"
+    ],
+    "glad": [
+      "Adjective"
+    ],
+    "glass": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "glossary": [
+      "SingularNoun"
+    ],
+    "goes": [
+      "Verb"
+    ],
+    "gold": [
+      "Element",
+      "Adjective"
+    ],
+    "gone": [
+      "Adjective"
+    ],
+    "good": [
+      "Adjective"
+    ],
+    "goodbye": [
+      "Interjection",
+      "SingularNoun"
+    ],
+    "govern": [
+      "Verb"
+    ],
+    "government": [
+      "SingularNoun"
+    ],
+    "grain": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "grass": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "grave": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "gray": [
+      "Color"
+    ],
+    "great": [
+      "Adjective"
+    ],
+    "greece": [
+      "Country"
+    ],
+    "greek": [
+      "Nationality"
+    ],
+    "green": [
+      "Color"
+    ],
+    "grew": [
+      "VerbPast"
+    ],
+    "ground": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "group": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "grow": [
+      "Verb"
+    ],
+    "grown": [
+      "Adjective"
+    ],
+    "guard": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "guess": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "guide": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hair": [
+      "SingularNoun"
+    ],
+    "half": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "hall": [
+      "SingularNoun"
+    ],
+    "halt": [
+      "Verb"
+    ],
+    "hand": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hang": [
+      "Verb"
+    ],
+    "happen": [
+      "Verb"
+    ],
+    "happened": [
+      "VerbPast"
+    ],
+    "happy": [
+      "Adjective"
+    ],
+    "hard": [
+      "Adjective",
+      "Adverb"
+    ],
+    "havana": [
+      "City"
+    ],
+    "have": [
+      "Verb"
+    ],
+    "hawaii": [
+      "UsState"
+    ],
+    "head": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "health": [
+      "SingularNoun"
+    ],
+    "hear": [
+      "Verb"
+    ],
+    "heard": [
+      "VerbPast"
+    ],
+    "heart": [
+      "SingularNoun"
+    ],
+    "heat": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "heaven": [
+      "SingularNoun"
+    ],
+    "heavy": [
+      "Adjective"
+    ],
+    "height": [
+      "SingularNoun"
+    ],
+    "held": [
+      "VerbPast"
+    ],
+    "hello": [
+      "Interjection",
+      "SingularNoun"
+    ],
+    "help": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "here": [
+      "Pronoun"
+    ],
+    "hers": [
+      "Pronoun"
+    ],
+    "high": [
+      "Adjective"
+    ],
+    "hill": [
+      "SingularNoun"
+    ],
+    "himself": [
+      "Pronoun"
+    ],
+    "history": [
+      "SingularNoun"
+    ],
+    "hold": [
+      "Verb"
+    ],
+    "hole": [
+      "SingularNoun"
+    ],
+    "holland": [
+      "Country"
+    ],
+    "home": [
+      "SingularNoun"
+    ],
+    "honor": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "hope": [
+      "SingularNoun"
+    ],
+    "horse": [
+      "SingularNoun"
+    ],
+    "hour": [
+      "SingularNoun"
+    ],
+    "hours": [
+      "PluralNoun"
+    ],
+    "house": [
+      "SingularNoun"
+    ],
+    "however": [
+      "Adjective",
+      "Conjunction"
+    ],
+    "huge": [
+      "Adjective"
+    ],
+    "human": [
+      "SingularNoun"
+    ],
+    "hundred": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "hunger": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hunt": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hunting": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hurry": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "hurt": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "husband": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "iceland": [
+      "Country"
+    ],
+    "idea": [
+      "SingularNoun"
+    ],
+    "important": [
+      "Adjective"
+    ],
+    "inch": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "inches": [
+      "PluralNoun"
+    ],
+    "include": [
+      "TransitiveVerb"
+    ],
+    "increase": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "indeed": [
+      "Interjection"
+    ],
+    "india": [
+      "Country"
+    ],
+    "indian": [
+      "Nationality"
+    ],
+    "indicate": [
+      "TransitiveVerb"
+    ],
+    "industry": [
+      "SingularNoun"
+    ],
+    "information": [
+      "SingularNoun"
+    ],
+    "insects": [
+      "PluralNoun"
+    ],
+    "inside": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb",
+      "Preposition"
+    ],
+    "instead": [
+      "Adverb"
+    ],
+    "instruments": [
+      "PluralNoun",
+      "TransitiveVerb"
+    ],
+    "interest": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "into": [
+      "Preposition"
+    ],
+    "ireland": [
+      "Country"
+    ],
+    "iron": [
+      "Element",
+      "Adjective"
+    ],
+    "island": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "italy": [
+      "Country"
+    ],
+    "itself": [
+      "Pronoun"
+    ],
+    "jamaica": [
+      "Country"
+    ],
+    "japan": [
+      "Country"
+    ],
+    "japanese": [
+      "Nationality"
+    ],
+    "jerusalem": [
+      "City"
+    ],
+    "join": [
+      "Verb"
+    ],
+    "joined": [
+      "VerbPast"
+    ],
+    "jordan": [
+      "Country",
+      "Name"
+    ],
+    "journey": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "judge": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "july": [
+      "Month"
+    ],
+    "jump": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "jumped": [
+      "VerbPast"
+    ],
+    "june": [
+      "Month"
+    ],
+    "jupiter": [
+      "Planet",
+      "RomanDeity"
+    ],
+    "just": [
+      "Adjective"
+    ],
+    "keep": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "kentucky": [
+      "UsState"
+    ],
+    "kenya": [
+      "Country"
+    ],
+    "kept": [
+      "VerbPast"
+    ],
+    "kill": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "killed": [
+      "VerbPast"
+    ],
+    "kind": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "king": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "kiss": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "kitchen": [
+      "SingularNoun"
+    ],
+    "knew": [
+      "VerbPast"
+    ],
+    "know": [
+      "Verb"
+    ],
+    "known": [
+      "Adjective",
+      "VerbPast",
+      "SingularNoun"
+    ],
+    "korea": [
+      "Country"
+    ],
+    "labor": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "ladder": [
+      "SingularNoun"
+    ],
+    "lady": [
+      "SingularNoun"
+    ],
+    "lake": [
+      "SingularNoun"
+    ],
+    "land": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "language": [
+      "SingularNoun"
+    ],
+    "large": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "last": [
+      "Adjective",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "late": [
+      "Adjective"
+    ],
+    "later": [
+      "Adjective"
+    ],
+    "laugh": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "laughed": [
+      "VerbPast"
+    ],
+    "laughter": [
+      "SingularNoun"
+    ],
+    "lead": [
+      "Element",
+      "Verb",
+      "Adjective"
+    ],
+    "leader": [
+      "SingularNoun"
+    ],
+    "learn": [
+      "Verb"
+    ],
+    "least": [
+      "Adjective"
+    ],
+    "leave": [
+      "Verb",
+      "SingularNoun",
+      "Verb"
+    ],
+    "left": [
+      "VerbPast",
+      "Adjective",
+      "Adverb"
+    ],
+    "legs": [
+      "PluralNoun"
+    ],
+    "lend": [
+      "Verb"
+    ],
+    "length": [
+      "SingularNoun"
+    ],
+    "less": [
+      "Adjective"
+    ],
+    "letter": [
+      "SingularNoun"
+    ],
+    "level": [
+      "SingularNoun",
+      "Adjective",
+      "Verb"
+    ],
+    "liar": [
+      "SingularNoun"
+    ],
+    "life": [
+      "SingularNoun"
+    ],
+    "lift": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "lifted": [
+      "VerbPast"
+    ],
+    "light": [
+      "Adjective",
+      "SingularNoun",
+      "Verb"
+    ],
+    "like": [
+      "Verb"
+    ],
+    "likely": [
+      "Adjective",
+      "Adverb"
+    ],
+    "line": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "lisbon": [
+      "City"
+    ],
+    "list": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "listen": [
+      "Verb"
+    ],
+    "little": [
+      "Adjective"
+    ],
+    "live": [
+      "Verb",
+      "Adjective"
+    ],
+    "located": [
+      "VerbPast"
+    ],
+    "london": [
+      "City"
+    ],
+    "lone": [
+      "Adjective"
+    ],
+    "long": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "look": [
+      "Verb"
+    ],
+    "lord": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "lose": [
+      "Verb"
+    ],
+    "loss": [
+      "SingularNoun"
+    ],
+    "lost": [
+      "VerbPast"
+    ],
+    "loud": [
+      "Adjective"
+    ],
+    "love": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "lower": [
+      "IntransitiveVerb",
+      "Adjective"
+    ],
+    "machine": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "made": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "madrid": [
+      "City"
+    ],
+    "mail": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "main": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "major": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "make": [
+      "Verb"
+    ],
+    "malta": [
+      "Country"
+    ],
+    "manner": [
+      "SingularNoun"
+    ],
+    "many": [
+      "Adjective"
+    ],
+    "march": [
+      "Month",
+      "Verb",
+      "SingularNoun"
+    ],
+    "mark": [
+      "MaleName",
+      "SingularNoun",
+      "Verb"
+    ],
+    "market": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "marry": [
+      "Verb"
+    ],
+    "mars": [
+      "Planet",
+      "Verb",
+      "RomanDeity"
+    ],
+    "maryland": [
+      "UsState"
+    ],
+    "master": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "match": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "material": [
+      "SingularNoun"
+    ],
+    "matter": [
+      "SingularNoun",
+      "IntransitiveVerb"
+    ],
+    "maybe": [
+      "Interjection"
+    ],
+    "mayor": [
+      "SingularNoun"
+    ],
+    "mean": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "measure": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "meat": [
+      "SingularNoun"
+    ],
+    "meet": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "meeting": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "melody": [
+      "SingularNoun"
+    ],
+    "member": [
+      "SingularNoun"
+    ],
+    "members": [
+      "PluralNoun"
+    ],
+    "mercury": [
+      "Planet",
+      "Element",
+      "RomanDeity"
+    ],
+    "metal": [
+      "SingularNoun"
+    ],
+    "method": [
+      "SingularNoun"
+    ],
+    "mexico": [
+      "Country"
+    ],
+    "middle": [
+      "Adjective"
+    ],
+    "might": [
+      "SingularNoun",
+      "AuxiliaryVerb"
+    ],
+    "mile": [
+      "SingularNoun"
+    ],
+    "milk": [
+      "SingularNoun"
+    ],
+    "million": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "mind": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "mine": [
+      "SingularNoun",
+      "Verb",
+      "Pronoun"
+    ],
+    "minute": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "minutes": [
+      "PluralNoun"
+    ],
+    "miss": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "mister": [
+      "SingularNoun"
+    ],
+    "modern": [
+      "Adjective"
+    ],
+    "molecules": [
+      "PluralNoun"
+    ],
+    "moment": [
+      "SingularNoun"
+    ],
+    "monday": [
+      "Day"
+    ],
+    "money": [
+      "SingularNoun"
+    ],
+    "montana": [
+      "UsState"
+    ],
+    "month": [
+      "SingularNoun"
+    ],
+    "months": [
+      "PluralNoun"
+    ],
+    "moon": [
+      "Moon"
+    ],
+    "more": [
+      "Adjective",
+      "Adverb"
+    ],
+    "morning": [
+      "SingularNoun"
+    ],
+    "moscow": [
+      "City"
+    ],
+    "most": [
+      "Adjective"
+    ],
+    "mother": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "mountain": [
+      "SingularNoun"
+    ],
+    "mouth": [
+      "SingularNoun"
+    ],
+    "move": [
+      "Verb"
+    ],
+    "movement": [
+      "SingularNoun"
+    ],
+    "much": [
+      "Adjective"
+    ],
+    "music": [
+      "SingularNoun"
+    ],
+    "must": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "nail": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "name": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "nation": [
+      "SingularNoun"
+    ],
+    "natural": [
+      "Adjective"
+    ],
+    "nature": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "near": [
+      "Adjective"
+    ],
+    "nearly": [
+      "Adverb"
+    ],
+    "necessary": [
+      "Adjective"
+    ],
+    "neck": [
+      "SingularNoun"
+    ],
+    "need": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "needle": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "neighbor": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "neither": [
+      "Adjective"
+    ],
+    "nepal": [
+      "Country"
+    ],
+    "neptune": [
+      "Planet"
+    ],
+    "nerve": [
+      "SingularNoun"
+    ],
+    "netherlands": [
+      "Country"
+    ],
+    "nevada": [
+      "UsState"
+    ],
+    "never": [
+      "Adjective"
+    ],
+    "news": [
+      "SingularNoun"
+    ],
+    "next": [
+      "Adjective"
+    ],
+    "nice": [
+      "Adjective"
+    ],
+    "niece": [
+      "SingularNoun"
+    ],
+    "night": [
+      "SingularNoun"
+    ],
+    "nine": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "noise": [
+      "SingularNoun"
+    ],
+    "none": [
+      "Pronoun",
+      "Adverb"
+    ],
+    "noon": [
+      "SingularNoun"
+    ],
+    "north": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "northern": [
+      "Adjective"
+    ],
+    "norway": [
+      "Country"
+    ],
+    "nose": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "note": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "nothing": [
+      "Pronoun",
+      "SingularNoun",
+      "Adjective"
+    ],
+    "notice": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "noun": [
+      "SingularNoun"
+    ],
+    "november": [
+      "Month"
+    ],
+    "number": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "numeral": [
+      "SingularNoun"
+    ],
+    "object": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "observe": [
+      "Verb"
+    ],
+    "ocean": [
+      "SingularNoun"
+    ],
+    "october": [
+      "Month"
+    ],
+    "offer": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "office": [
+      "SingularNoun"
+    ],
+    "often": [
+      "Adjective",
+      "Adverb"
+    ],
+    "ohio": [
+      "UsState"
+    ],
+    "once": [
+      "Adjective",
+      "Adverb"
+    ],
+    "only": [
+      "Adjective",
+      "Adverb"
+    ],
+    "open": [
+      "Adjective",
+      "Verb"
+    ],
+    "opinion": [
+      "SingularNoun"
+    ],
+    "opposite": [
+      "SingularNoun"
+    ],
+    "order": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "orderly": [
+      "Adverb"
+    ],
+    "oslo": [
+      "City"
+    ],
+    "other": [
+      "Adjective",
+      "SingularNoun",
+      "Pronoun",
+      "Adverb"
+    ],
+    "ought": [
+      "Verb"
+    ],
+    "outer": [
+      "Adjective"
+    ],
+    "outside": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "over": [
+      "Preposition",
+      "Adverb"
+    ],
+    "oxygen": [
+      "Element"
+    ],
+    "page": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "paid": [
+      "VerbPast"
+    ],
+    "pain": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "paint": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "pair": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "panama": [
+      "Country"
+    ],
+    "paper": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "paragraph": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "paris": [
+      "City"
+    ],
+    "park": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "part": [
+      "SingularNoun"
+    ],
+    "partial": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "particular": [
+      "Adjective"
+    ],
+    "party": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "pass": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "passed": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "past": [
+      "SingularNoun"
+    ],
+    "pattern": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "peace": [
+      "SingularNoun"
+    ],
+    "people": [
+      "SingularNoun"
+    ],
+    "perfect": [
+      "Adjective"
+    ],
+    "perhaps": [
+      "Interjection"
+    ],
+    "period": [
+      "SingularNoun"
+    ],
+    "person": [
+      "SingularNoun"
+    ],
+    "peru": [
+      "Country"
+    ],
+    "phrase": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "pick": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "picked": [
+      "VerbPast"
+    ],
+    "picture": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "piece": [
+      "SingularNoun",
+      "TransitiveVerb"
+    ],
+    "place": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "plain": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "plains": [
+      "PluralNoun",
+      "SingularNoun"
+    ],
+    "plan": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "plane": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "planet": [
+      "SingularNoun"
+    ],
+    "plant": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "plants": [
+      "PluralNoun",
+      "Verb"
+    ],
+    "play": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "pleasant": [
+      "Adjective"
+    ],
+    "please": [
+      "Verb"
+    ],
+    "pleasure": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "plural": [
+      "Adjective"
+    ],
+    "pluto": [
+      "Astronomy"
+    ],
+    "poem": [
+      "SingularNoun"
+    ],
+    "point": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "poland": [
+      "Country"
+    ],
+    "pole": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "poor": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "portugal": [
+      "Country"
+    ],
+    "position": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "possible": [
+      "Adjective"
+    ],
+    "pounds": [
+      "PluralNoun"
+    ],
+    "power": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "practice": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "prepare": [
+      "Verb"
+    ],
+    "prepared": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "present": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "president": [
+      "SingularNoun"
+    ],
+    "presidents": [
+      "PluralNoun"
+    ],
+    "press": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "pretty": [
+      "Adjective"
+    ],
+    "price": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "printed": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "probable": [
+      "Adjective"
+    ],
+    "probably": [
+      "Adjective"
+    ],
+    "problem": [
+      "SingularNoun"
+    ],
+    "process": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "produce": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "products": [
+      "PluralNoun"
+    ],
+    "promise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "property": [
+      "SingularNoun"
+    ],
+    "proud": [
+      "Adjective"
+    ],
+    "prove": [
+      "Verb"
+    ],
+    "provide": [
+      "Verb"
+    ],
+    "public": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "pull": [
+      "Verb"
+    ],
+    "pulled": [
+      "VerbPast"
+    ],
+    "pure": [
+      "Adjective"
+    ],
+    "push": [
+      "Verb"
+    ],
+    "pushed": [
+      "VerbPast"
+    ],
+    "quarter": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "queen": [
+      "SingularNoun"
+    ],
+    "question": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "questions": [
+      "PluralNoun"
+    ],
+    "quick": [
+      "Adverb",
+      "Adjective"
+    ],
+    "quickly": [
+      "Adverb"
+    ],
+    "quiet": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "quite": [
+      "Adjective",
+      "Adverb"
+    ],
+    "race": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "radio": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rain": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "raise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "raised": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "rather": [
+      "Adjective"
+    ],
+    "reach": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "reached": [
+      "VerbPast"
+    ],
+    "read": [
+      "Verb",
+      "VerbPast"
+    ],
+    "ready": [
+      "Adjective",
+      "Verb"
+    ],
+    "real": [
+      "Adjective"
+    ],
+    "realize": [
+      "Verb"
+    ],
+    "really": [
+      "Adjective"
+    ],
+    "reason": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "receive": [
+      "Verb"
+    ],
+    "received": [
+      "VerbPast"
+    ],
+    "record": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "region": [
+      "SingularNoun"
+    ],
+    "remain": [
+      "Verb"
+    ],
+    "remember": [
+      "Verb"
+    ],
+    "repeated": [
+      "VerbPast"
+    ],
+    "reply": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "report": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "represent": [
+      "Verb"
+    ],
+    "require": [
+      "Verb"
+    ],
+    "resent": [
+      "Verb"
+    ],
+    "rest": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "result": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "return": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rhythm": [
+      "SingularNoun"
+    ],
+    "rich": [
+      "Adjective"
+    ],
+    "ridden": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "ride": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "right": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "ring": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "river": [
+      "SingularNoun"
+    ],
+    "road": [
+      "SingularNoun"
+    ],
+    "rock": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "roll": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rolled": [
+      "VerbPast"
+    ],
+    "rome": [
+      "City"
+    ],
+    "room": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "root": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rope": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rose": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "round": [
+      "Adjective",
+      "Verb"
+    ],
+    "rule": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "rush": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "russia": [
+      "Country"
+    ],
+    "safe": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "safety": [
+      "SingularNoun"
+    ],
+    "said": [
+      "VerbPast"
+    ],
+    "sail": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "salt": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "same": [
+      "Adjective"
+    ],
+    "sand": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "saturday": [
+      "Day"
+    ],
+    "saturn": [
+      "Planet",
+      "RomanDeity"
+    ],
+    "save": [
+      "Verb"
+    ],
+    "says": [
+      "Verb"
+    ],
+    "scale": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "scene": [
+      "SingularNoun"
+    ],
+    "school": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "science": [
+      "SingularNoun"
+    ],
+    "scientists": [
+      "PluralNoun"
+    ],
+    "score": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "scotland": [
+      "Country"
+    ],
+    "season": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "seat": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "second": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "section": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "seed": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "seeds": [
+      "PluralNoun"
+    ],
+    "seem": [
+      "Verb"
+    ],
+    "seen": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "self": [
+      "Pronoun"
+    ],
+    "sell": [
+      "Verb"
+    ],
+    "send": [
+      "Verb"
+    ],
+    "sense": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sent": [
+      "VerbPast"
+    ],
+    "sentence": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "separate": [
+      "Adjective",
+      "Verb"
+    ],
+    "september": [
+      "Month"
+    ],
+    "serve": [
+      "Verb"
+    ],
+    "service": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "settle": [
+      "Verb"
+    ],
+    "settled": [
+      "VerbPast"
+    ],
+    "seven": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "several": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "shade": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shake": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shall": [
+      "Adjective"
+    ],
+    "shape": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "share": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sharp": [
+      "Adjective"
+    ],
+    "shine": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "ship": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shirt": [
+      "SingularNoun"
+    ],
+    "shoe": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shoes": [
+      "PluralNoun"
+    ],
+    "shop": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shore": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "short": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shot": [
+      "SingularNoun",
+      "VerbPast"
+    ],
+    "should": [
+      "Adjective"
+    ],
+    "shoulder": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shout": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shouted": [
+      "VerbPast"
+    ],
+    "show": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "shown": [
+      "VerbPast"
+    ],
+    "sick": [
+      "Adjective"
+    ],
+    "side": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sight": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sign": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "signal": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "silent": [
+      "Adjective"
+    ],
+    "silver": [
+      "Element",
+      "Verb"
+    ],
+    "similar": [
+      "Adjective"
+    ],
+    "simple": [
+      "Adjective"
+    ],
+    "since": [
+      "Preposition"
+    ],
+    "sing": [
+      "Verb"
+    ],
+    "singapore": [
+      "Country"
+    ],
+    "single": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sister": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "size": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "skin": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sleep": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "slept": [
+      "VerbPast"
+    ],
+    "slow": [
+      "Adjective",
+      "Verb"
+    ],
+    "slowly": [
+      "Adverb"
+    ],
+    "small": [
+      "Adjective"
+    ],
+    "smell": [
+      "Verb",
+      "SingularNoun"
+    ],
+    "smiled": [
+      "VerbPast"
+    ],
+    "smoke": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "snow": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "soft": [
+      "Adjective"
+    ],
+    "soil": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sold": [
+      "VerbPast"
+    ],
+    "soldier": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "soldiers": [
+      "PluralNoun"
+    ],
+    "solution": [
+      "SingularNoun"
+    ],
+    "some": [
+      "Adjective"
+    ],
+    "someone": [
+      "Pronoun"
+    ],
+    "something": [
+      "Pronoun"
+    ],
+    "sometimes": [
+      "Adverb"
+    ],
+    "song": [
+      "SingularNoun"
+    ],
+    "soon": [
+      "Adverb"
+    ],
+    "sorry": [
+      "Interjection"
+    ],
+    "sort": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sound": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "south": [
+      "SingularNoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "southern": [
+      "Adjective"
+    ],
+    "space": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "spain": [
+      "Country"
+    ],
+    "speak": [
+      "Verb"
+    ],
+    "special": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "speed": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "spell": [
+      "Verb"
+    ],
+    "spend": [
+      "Verb"
+    ],
+    "spent": [
+      "VerbPast"
+    ],
+    "spoke": [
+      "VerbPast"
+    ],
+    "spot": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "spread": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "spring": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "square": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stand": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "staple": [
+      "SingularNoun"
+    ],
+    "star": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stars": [
+      "PluralNoun"
+    ],
+    "start": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "state": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "statement": [
+      "SingularNoun"
+    ],
+    "station": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stay": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "steel": [
+      "SingularNoun",
+      "Verb",
+      "Adjective"
+    ],
+    "step": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stick": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "still": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stock": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stone": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "stood": [
+      "VerbPast"
+    ],
+    "stop": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "store": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "storm": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "story": [
+      "SingularNoun"
+    ],
+    "straight": [
+      "Adjective"
+    ],
+    "strange": [
+      "Adjective"
+    ],
+    "stranger": [
+      "SingularNoun"
+    ],
+    "stream": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "street": [
+      "SingularNoun"
+    ],
+    "strength": [
+      "SingularNoun"
+    ],
+    "stretched": [
+      "VerbPast"
+    ],
+    "strike": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "string": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "strong": [
+      "Adjective"
+    ],
+    "student": [
+      "SingularNoun"
+    ],
+    "students": [
+      "PluralNoun"
+    ],
+    "study": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "subject": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "substances": [
+      "PluralNoun"
+    ],
+    "succeed": [
+      "Verb"
+    ],
+    "success": [
+      "SingularNoun"
+    ],
+    "such": [
+      "Adjective"
+    ],
+    "sudden": [
+      "Adjective"
+    ],
+    "suddenly": [
+      "Adverb"
+    ],
+    "suffer": [
+      "Verb"
+    ],
+    "suffix": [
+      "SingularNoun"
+    ],
+    "sugar": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "suggested": [
+      "VerbPast"
+    ],
+    "suit": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "summer": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sunday": [
+      "Day"
+    ],
+    "supply": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "suppose": [
+      "Verb"
+    ],
+    "sure": [
+      "Adjective"
+    ],
+    "surface": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "surprise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "sweden": [
+      "Country"
+    ],
+    "sweet": [
+      "Adjective"
+    ],
+    "swim": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "syllables": [
+      "PluralNoun"
+    ],
+    "symbols": [
+      "PluralNoun"
+    ],
+    "system": [
+      "SingularNoun"
+    ],
+    "table": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tail": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "take": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "taken": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "talk": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tall": [
+      "Adjective"
+    ],
+    "taste": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "teach": [
+      "Verb"
+    ],
+    "teacher": [
+      "SingularNoun"
+    ],
+    "team": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tear": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tell": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "temperature": [
+      "SingularNoun"
+    ],
+    "terms": [
+      "PluralNoun"
+    ],
+    "test": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "texas": [
+      "UsState"
+    ],
+    "than": [
+      "Preposition"
+    ],
+    "thank": [
+      "Verb"
+    ],
+    "that": [
+      "Pronoun"
+    ],
+    "their": [
+      "Adjective"
+    ],
+    "them": [
+      "Pronoun"
+    ],
+    "themselves": [
+      "Pronoun"
+    ],
+    "then": [
+      "Preposition",
+      "Conjunction",
+      "Noun",
+      "Adjective"
+    ],
+    "there": [
+      "Adverb",
+      "Pronoun",
+      "Adjective",
+      "SingularNoun",
+      "Interjection"
+    ],
+    "therefore": [
+      "Adverb"
+    ],
+    "these": [
+      "Pronoun",
+      "Adjective"
+    ],
+    "they": [
+      "Pronoun"
+    ],
+    "thick": [
+      "Adjective"
+    ],
+    "thin": [
+      "Adjective"
+    ],
+    "thing": [
+      "SingularNoun"
+    ],
+    "think": [
+      "Verb"
+    ],
+    "third": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "thirteen": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "this": [
+      "Pronoun",
+      "Adjective",
+      "Adverb"
+    ],
+    "those": [
+      "Pronoun",
+      "Adjective"
+    ],
+    "though": [
+      "Conjunction",
+      "Adverb"
+    ],
+    "thought": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "thousand": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "thousands": [
+      "PluralNoun"
+    ],
+    "three": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "threw": [
+      "VerbPast"
+    ],
+    "through": [
+      "Preposition",
+      "Adverb",
+      "Adjective"
+    ],
+    "throw": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "thrown": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "thus": [
+      "Adverb"
+    ],
+    "tied": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "till": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "time": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tiny": [
+      "Adjective"
+    ],
+    "today": [
+      "SingularNoun",
+      "Adverb",
+      "Adjective"
+    ],
+    "together": [
+      "Adverb",
+      "Adjective"
+    ],
+    "tokyo": [
+      "City"
+    ],
+    "told": [
+      "VerbPast"
+    ],
+    "tomorrow": [
+      "SingularNoun",
+      "Adverb"
+    ],
+    "tone": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "took": [
+      "VerbPast"
+    ],
+    "tools": [
+      "PluralNoun"
+    ],
+    "tore": [
+      "VerbPast"
+    ],
+    "total": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "touch": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "toward": [
+      "Preposition"
+    ],
+    "town": [
+      "SingularNoun"
+    ],
+    "track": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "trade": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "train": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "training": [
+      "SingularNoun"
+    ],
+    "travel": [
+      "Verb"
+    ],
+    "tree": [
+      "SingularNoun"
+    ],
+    "triangle": [
+      "SingularNoun"
+    ],
+    "tried": [
+      "VerbPast"
+    ],
+    "tries": [
+      "Verb",
+      "PluralNoun"
+    ],
+    "trip": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "trouble": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "truck": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "true": [
+      "Adjective",
+      "Verb"
+    ],
+    "trust": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "tube": [
+      "SingularNoun"
+    ],
+    "tuesday": [
+      "Day"
+    ],
+    "turn": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "twelve": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "twenty": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "type": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "uncle": [
+      "SingularNoun"
+    ],
+    "under": [
+      "Preposition",
+      "Adverb",
+      "Adjective"
+    ],
+    "underline": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "understand": [
+      "Verb"
+    ],
+    "understood": [
+      "VerbPast"
+    ],
+    "unit": [
+      "SingularNoun"
+    ],
+    "until": [
+      "Preposition",
+      "Conjunction"
+    ],
+    "upon": [
+      "Preposition"
+    ],
+    "uranus": [
+      "Planet",
+      "GreekDeity"
+    ],
+    "usual": [
+      "Adjective"
+    ],
+    "usually": [
+      "Adjective"
+    ],
+    "valley": [
+      "SingularNoun"
+    ],
+    "value": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "various": [
+      "Adjective",
+      "Pronoun"
+    ],
+    "venus": [
+      "Planet",
+      "RomanDeity"
+    ],
+    "verb": [
+      "SingularNoun"
+    ],
+    "vermont": [
+      "UsState"
+    ],
+    "very": [
+      "Adjective",
+      "Adverb"
+    ],
+    "view": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "village": [
+      "SingularNoun"
+    ],
+    "virginia": [
+      "UsState"
+    ],
+    "visit": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "voice": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "vowel": [
+      "SingularNoun"
+    ],
+    "wagon": [
+      "SingularNoun"
+    ],
+    "wait": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wales": [
+      "Country"
+    ],
+    "walk": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wall": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "want": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wants": [
+      "Verb"
+    ],
+    "warm": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "warsaw": [
+      "City"
+    ],
+    "wash": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "washington": [
+      "UsState",
+      "City"
+    ],
+    "watch": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "water": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wave": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "waves": [
+      "PluralNoun"
+    ],
+    "weak": [
+      "SingularNoun"
+    ],
+    "wear": [
+      "Verb"
+    ],
+    "weather": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wedge": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wednesday": [
+      "Day"
+    ],
+    "week": [
+      "SingularNoun"
+    ],
+    "weight": [
+      "SingularNoun"
+    ],
+    "welcome": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "well": [
+      "Preposition",
+      "SingularNoun"
+    ],
+    "went": [
+      "VerbPast"
+    ],
+    "were": [
+      "VerbPast"
+    ],
+    "west": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "western": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "what": [
+      "Pronoun",
+      "Adjective",
+      "Adverb",
+      "Conjunction",
+      "Interjection"
+    ],
+    "wheat": [
+      "SingularNoun"
+    ],
+    "wheel": [
+      "SingularNoun"
+    ],
+    "wheels": [
+      "PluralNoun"
+    ],
+    "when": [
+      "Adverb",
+      "Conjunction",
+      "Pronoun",
+      "SingularNoun"
+    ],
+    "where": [
+      "Adverb",
+      "Conjunction",
+      "Pronoun",
+      "SingularNoun"
+    ],
+    "whether": [
+      "Conjunction"
+    ],
+    "which": [
+      "Pronoun",
+      "Adjective"
+    ],
+    "while": [
+      "SingularNoun",
+      "Conjunction",
+      "TransitiveVerb"
+    ],
+    "white": [
+      "Color"
+    ],
+    "whole": [
+      "Adjective",
+      "SingularNoun"
+    ],
+    "whom": [
+      "Pronoun"
+    ],
+    "whose": [
+      "Adjective"
+    ],
+    "wide": [
+      "Adjective",
+      "Adverb"
+    ],
+    "wife": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wild": [
+      "Adjective",
+      "Adverb",
+      "SingularNoun"
+    ],
+    "will": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wind": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "window": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wing": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wings": [
+      "PluralNoun"
+    ],
+    "winter": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wire": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wise": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wish": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "with": [
+      "Preposition"
+    ],
+    "within": [
+      "Adverb",
+      "Preposition",
+      "SingularNoun"
+    ],
+    "without": [
+      "Adverb",
+      "Preposition",
+      "SingularNoun"
+    ],
+    "woman": [
+      "SingularNoun"
+    ],
+    "women": [
+      "PluralNoun"
+    ],
+    "wonder": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "wood": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "word": [
+      "SingularNoun"
+    ],
+    "wore": [
+      "VerbPast"
+    ],
+    "work": [
+      "SingularNoun",
+      "Verb"
+    ],
+    "workers": [
+      "PluralNoun"
+    ],
+    "world": [
+      "SingularNoun"
+    ],
+    "worn": [
+      "Adjective",
+      "VerbPast"
+    ],
+    "worth": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "would": [
+      "AuxiliaryVerb"
+    ],
+    "write": [
+      "Verb"
+    ],
+    "written": [
+      "VerbPast",
+      "Adjective"
+    ],
+    "wrong": [
+      "Adjective",
+      "Verb"
+    ],
+    "wrote": [
+      "VerbPast"
+    ],
+    "yard": [
+      "SingularNoun"
+    ],
+    "year": [
+      "SingularNoun"
+    ],
+    "yellow": [
+      "Adjective",
+      "Verb"
+    ],
+    "yesterday": [
+      "SingularNoun"
+    ],
+    "young": [
+      "SingularNoun",
+      "Adjective"
+    ],
+    "your": [
+      "Adjective"
+    ],
+    "yourself": [
+      "Pronoun"
+    ]
+  }
+}

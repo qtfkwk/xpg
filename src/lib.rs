@@ -4,24 +4,31 @@ xkcd-style password generator
 
 */
 
+use anyhow::Result;
 use lazy_static::lazy_static;
 use rand::{seq::SliceRandom, thread_rng, Rng};
-use std::collections::{HashMap, HashSet};
+use serde::{Deserialize, Serialize};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::fs::File;
+use std::io::BufReader;
+use std::path::Path;
+use std::str::FromStr;
 use ucfirst::ucfirst;
 
-const LOWERCASE_STR: &str = "abcdefghijklmnopqrstuvwxyz";
-const UPPERCASE_STR: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const DIGITS_STR: &str = "0123456789";
-const SYMBOLS_STR: &str = "~!@#$%^&*-_=+;:,./?()[]{}<>";
-const ALL_STR: &str = "\
-abcdefghijklmnopqrstuvwxyz\
-ABCDEFGHIJKLMNOPQRSTUVWXYZ\
-0123456789\
-~!@#$%^&*-_=+;:,./?()[]{}<>\
-";
+//--------------------------------------------------------------------------------------------------
 
-#[derive(Clone, Eq, Hash, PartialEq)]
-enum WordKind {
+const CONFIG_JSON: &str = include_str!("../config.json");
+
+lazy_static! {
+    pub static ref CONFIG: Config = Config::from_str(CONFIG_JSON).unwrap();
+    pub static ref WORD_KIND_SUBS: Vec<(String, WordKind)> =
+        WORD_KIND_LIST.iter().map(|x| (x.sub(), *x)).collect();
+}
+
+//--------------------------------------------------------------------------------------------------
+
+#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+pub enum WordKind {
     Astronomy,
     Planet,
     Moon,
@@ -36,9 +43,11 @@ enum WordKind {
     Name,
     Element,
     Mythology,
-    RomanGod,
+    RomanDeity,
+    GreekDeity,
     Month,
     Day,
+    Color,
     Noun,
     Pronoun,
     ProperNoun,
@@ -59,7 +68,7 @@ enum WordKind {
 
 use WordKind::*;
 
-const WORD_KINDS: [WordKind; 33] = [
+const WORD_KIND_LIST: [WordKind; 35] = [
     Astronomy,
     Planet,
     Moon,
@@ -74,9 +83,11 @@ const WORD_KINDS: [WordKind; 33] = [
     Name,
     Element,
     Mythology,
-    RomanGod,
+    RomanDeity,
+    GreekDeity,
     Month,
     Day,
+    Color,
     Noun,
     Pronoun,
     ProperNoun,
@@ -97,7 +108,7 @@ const WORD_KINDS: [WordKind; 33] = [
 
 impl WordKind {
     fn enumerate(&self) -> Vec<WordKind> {
-        let mut r = vec![All, self.clone()];
+        let mut r = vec![All, *self];
         match self {
             Astronomy => r.append(&mut vec![SingularNoun, Noun]),
             Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
@@ -112,9 +123,11 @@ impl WordKind {
             Name => r.push(ProperNoun),
             Element => r.append(&mut vec![ProperNoun, Noun]),
             Mythology => r.append(&mut vec![ProperNoun, Noun]),
-            RomanGod => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            RomanDeity => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            GreekDeity => r.append(&mut vec![Mythology, ProperNoun, Noun]),
             Month => r.append(&mut vec![SingularNoun, Noun]),
             Day => r.append(&mut vec![SingularNoun, Noun]),
+            Color => r.append(&mut vec![SingularNoun, Noun, Verb]),
             IntransitiveVerb => r.push(Verb),
             TransitiveVerb => r.push(Verb),
             AuxiliaryVerb => r.push(Verb),
@@ -125,33 +138,117 @@ impl WordKind {
         }
         r
     }
+
+    fn sub(&self) -> String {
+        match self {
+            Adjective => "{adj}",
+            Adverb => "{adv}",
+            All => "{a}",
+            Astronomy => "{ast}",
+            AuxiliaryVerb => "{v.aux}",
+            City => "{city}",
+            Color => "{color}",
+            Conjunction => "{conj}",
+            Continent => "{cont}",
+            Country => "{country}",
+            Day => "{day}",
+            Element => "{el}",
+            FemaleName => "{fname}",
+            GreekDeity => "{greekdeity}",
+            Interjection => "{i}",
+            IntransitiveVerb => "{v.int}",
+            MaleName => "{mname}",
+            Month => "{mon}",
+            Moon => "{moon}",
+            Mythology => "{myth}",
+            Name => "{name}",
+            Nationality => "{nat}",
+            Noun => "{n}",
+            Place => "{place}",
+            Planet => "{planet}",
+            PluralNoun => "{n.pl}",
+            Preposition => "{prep}",
+            Pronoun => "{n.pro}",
+            ProperNoun => "{n.prop}",
+            RomanDeity => "{romandeity}",
+            SingularNoun => "{n.s}",
+            TransitiveVerb => "{v.tr}",
+            UsState => "{us-state}",
+            Verb => "{v}",
+            VerbPast => "{v.past}",
+        }
+        .to_string()
+    }
 }
 
-struct Words {
+//--------------------------------------------------------------------------------------------------
+
+#[derive(Clone, Deserialize, Serialize)]
+pub struct Config {
+    characters: BTreeMap<char, String>,
+    words: BTreeMap<String, Vec<WordKind>>,
+
+    #[serde(skip)]
     kinds: HashMap<WordKind, Vec<String>>,
+
+    #[serde(skip)]
+    alphabets: BTreeMap<char, Vec<char>>,
 }
 
-impl Words {
-    fn new(list: &[(&str, Vec<WordKind>)]) -> Words {
-        let mut kinds: HashMap<WordKind, HashSet<String>> = WORD_KINDS
-            .iter()
-            .map(|x| (x.clone(), HashSet::new()))
-            .collect();
+#[derive(Debug, PartialEq, Eq)]
+pub struct ConfigParseError;
 
-        for (w, vk) in list {
-            for k in vk {
-                for k in k.enumerate() {
-                    kinds.get_mut(&k).unwrap().insert(w.to_string());
+impl FromStr for Config {
+    type Err = ConfigParseError;
+
+    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
+        match serde_json::from_str::<Config>(s) {
+            Ok(cfg) => Ok(cfg.build()),
+            Err(e) => {
+                eprintln!("ERROR: {e:?}");
+                Err(ConfigParseError)
+            }
+        }
+    }
+}
+
+impl Config {
+    pub fn from_path(path: &Path) -> Result<Config> {
+        let r: Config = serde_json::from_reader(BufReader::new(File::open(path)?))?;
+        Ok(r.build())
+    }
+
+    pub fn dump(&self) -> Result<String> {
+        Ok(serde_json::to_string_pretty(self)?)
+    }
+
+    fn build(mut self) -> Config {
+        // Build word lists for each kind
+        let mut kinds: HashMap<WordKind, BTreeSet<String>> = WORD_KIND_LIST
+            .iter()
+            .map(|x| (*x, BTreeSet::new()))
+            .collect();
+        for (word, word_kinds) in &self.words {
+            for kind in word_kinds {
+                for k in kind.enumerate() {
+                    let s = kinds.get_mut(&k).unwrap();
+                    if !s.contains(word) {
+                        s.insert(word.to_string());
+                    }
                 }
             }
         }
-
-        let kinds = kinds
+        self.kinds = kinds
             .into_iter()
             .map(|(k, v)| (k, v.into_iter().collect()))
             .collect();
 
-        Words { kinds }
+        // Build alphabets
+        for (c, s) in &self.characters {
+            self.alphabets.insert(*c, s.chars().collect());
+        }
+
+        self
     }
 
     fn get_n(&self, n: usize, kind: WordKind) -> Vec<String> {
@@ -171,1292 +268,271 @@ impl Words {
             .unwrap()
             .clone()
     }
+
+    /**
+    Generate a keychain word type 1 (5 lowercase letters, 1 uppercase letter)
+    */
+    fn keychain_word_1(&self) -> String {
+        shuffle(&format!(
+            "{}{}",
+            random_str(5, self.alphabets.get(&'c').unwrap()),
+            random_str(1, self.alphabets.get(&'C').unwrap()),
+        ))
+    }
+
+    /**
+    Generate a keychain word type 2 (5 lowercase letters, 1 digit)
+    */
+    fn keychain_word_2(&self) -> String {
+        shuffle(&format!(
+            "{}{}",
+            random_str(5, self.alphabets.get(&'c').unwrap()),
+            random_str(1, self.alphabets.get(&'d').unwrap()),
+        ))
+    }
+
+    /**
+    Generate a keychain word type 3 (6 lowercase letters)
+    */
+    fn keychain_word_3(&self) -> String {
+        random_str(6, self.alphabets.get(&'c').unwrap())
+    }
+
+    /**
+    Generate a keychain-style password with `n` "words"
+
+    First 3 "words" are types 1, 2, and 3.
+    Additional words are of random type.
+    Words are shuffled.
+    */
+    fn keychain_words(&self, n: usize) -> Vec<String> {
+        let mut words = vec![];
+        if n == 0 {
+            return words;
+        }
+        words.push(self.keychain_word_1());
+        if n >= 2 {
+            words.push(self.keychain_word_2());
+        }
+        if n >= 3 {
+            words.push(self.keychain_word_3());
+        }
+        let mut rng = thread_rng();
+        for _ in 4..=n {
+            words.push(match KEYCHAIN_WORDS.choose(&mut rng).unwrap() {
+                KeychainWord1 => self.keychain_word_1(),
+                KeychainWord2 => self.keychain_word_2(),
+                KeychainWord3 => self.keychain_word_3(),
+            });
+        }
+        words.shuffle(&mut rng);
+        words
+    }
+
+    /**
+    Generate a keychain-style password like `plvifc-z9kedn-imcbDp`
+    */
+    pub fn keychain(&self) -> String {
+        self.keychain_words(3).join("-")
+    }
+
+    /**
+    Generate a "code name" like `BLUE STEEL`
+    */
+    pub fn codename(&self) -> String {
+        format!(
+            "{} {}",
+            self.get(Adjective).to_uppercase(),
+            self.get(Noun).to_uppercase(),
+        )
+    }
+
+    /**
+    Generate a "code name series"
+
+    ```text
+    TAKENSTAR PRINTEDBOARD
+    TAKENSTAR GONEWAGON
+    TAKENSTAR PROUDCOOK
+    TAKENSTAR YOURLEAVE
+    TAKENSTAR DONEPARTY
+    TAKENSTAR USUALENTER
+    TAKENSTAR FOURBOAT
+    TAKENSTAR NICEABOVE
+    TAKENSTAR FRENCHPASS
+    TAKENSTAR FINEWAVE
+    ```
+    */
+    pub fn codename_series(&self, n: usize) -> String {
+        let f = || {
+            format!(
+                "{}{}",
+                self.get(Adjective).to_uppercase(),
+                self.get(Noun).to_uppercase(),
+            )
+        };
+        let umbrella = f();
+        let mut r = vec![];
+        while r.len() < n {
+            r.push(format!("{umbrella} {}", f()));
+        }
+        r.join("\n")
+    }
+
+    /**
+    Generate a password from the given pattern
+
+    * Characters
+        * `C`: Uppercase letter (A-Z)
+        * `c`: Lowercase letter (a-z)
+        * `d`: Digit (0-9)
+        * `s`: Symbol (`~!@#$%^&*-_=+;:,./?()[]{}<>`)
+        * `a`: Any of the above
+    * Words
+        * `W`: Uppercase word
+        * `w`: Lowercase word
+        * `T`: Title case word
+        * `k`: Keychain-style "word" `shuffle(cccc(c|d)(C|c))`
+        * `{adj}`: Adjective
+        * `{adv}`: Adverb
+        * `{a}`: All
+        * `{ast}`: Astronomy
+        * `{v.aux}`: AuxiliaryVerb
+        * `{city}`: City
+        * `{color}`: Color
+        * `{conj}`: Conjunction
+        * `{cont}`: Continent
+        * `{country}`: Country
+        * `{day}`: Day
+        * `{el}`: Element
+        * `{fname}`: FemaleName
+        * `{greekdeity}`: GreekDeity
+        * `{i}`: Interjection
+        * `{v.intr}`: IntransitiveVerb
+        * `{mname}`: MaleName
+        * `{mon}`: Month
+        * `{moon}`: Moon
+        * `{myth}`: Mythology
+        * `{name}`: Name
+        * `{nat}`: Nationality
+        * `{n}`: Noun
+        * `{place}`: Place
+        * `{planet}`: Planet
+        * `{n.pl}`: PluralNoun
+        * `{prep}`: Preposition
+        * `{n.pro}`: Pronoun
+        * `{n.prop}`: ProperNoun
+        * `{romandeity}`: RomanDeity
+        * `{n.s}`: SingularNoun
+        * `{tv}`: TransitiveVerb
+        * `{us-state}`: UsState
+        * `{v}`: Verb
+        * `{v.past}`: VerbPast
+    */
+    pub fn generate(&self, pattern: &str) -> String {
+        let j = pattern.len();
+        let mut subs = vec![];
+        let mut words = 0;
+        let mut kc_words = 0;
+        let mut pre = BTreeMap::new();
+        'outer: for (sub, kind) in WORD_KIND_SUBS.iter() {
+            let mut i = 0;
+            while i < j {
+                if let Some(p) = pattern[i..].find(sub) {
+                    let p = i + p;
+                    pre.insert(p, (sub, *kind));
+                    i = p + sub.len();
+                } else {
+                    continue 'outer;
+                }
+            }
+        }
+        let mut i = 0;
+        for (p, (sub, kind)) in pre.iter() {
+            let s = &pattern[i..*p];
+            if *p > i {
+                words += s
+                    .chars()
+                    .map(|c| if ['w', 'W', 'T'].contains(&c) { 1 } else { 0 })
+                    .sum::<usize>();
+                kc_words += s
+                    .chars()
+                    .map(|c| if c == 'k' { 1 } else { 0 })
+                    .sum::<usize>();
+                subs.push(Sub::Pattern(s));
+            }
+            subs.push(Sub::Special(*kind));
+            i = *p + sub.len();
+        }
+        if subs.is_empty() {
+            words += pattern
+                .chars()
+                .map(|c| if ['w', 'W', 'T'].contains(&c) { 1 } else { 0 })
+                .sum::<usize>();
+            kc_words += pattern
+                .chars()
+                .map(|c| if c == 'k' { 1 } else { 0 })
+                .sum::<usize>();
+            subs.push(Sub::Pattern(pattern));
+        } else if i < j {
+            subs.push(Sub::Pattern(&pattern[i..j]));
+        }
+
+        let mut words = self.get_n(words, All);
+        let mut kc_words = self.keychain_words(kc_words);
+
+        let mut rng = thread_rng();
+        let mut r = String::new();
+
+        for sub in subs {
+            match sub {
+                Sub::Pattern(s) => {
+                    for c in s.chars() {
+                        match c {
+                            'W' => r.push_str(&words.remove(0).to_uppercase()),
+                            'w' => r.push_str(&words.remove(0)),
+                            'T' => r.push_str(&ucfirst(&words.remove(0))),
+                            'k' => r.push_str(&kc_words.remove(0)),
+                            _ => {
+                                if let Some(alphabet) = self.alphabets.get(&c) {
+                                    r.push(*alphabet.choose(&mut rng).unwrap());
+                                } else {
+                                    r.push(c);
+                                }
+                            }
+                        }
+                    }
+                }
+                Sub::Special(kind) => {
+                    r.push_str(&self.get(kind));
+                }
+            }
+        }
+        r
+    }
 }
 
-lazy_static! {
-    static ref LOWERCASE: Vec<char> = LOWERCASE_STR.chars().collect();
-    static ref UPPERCASE: Vec<char> = UPPERCASE_STR.chars().collect();
-    static ref DIGITS: Vec<char> = DIGITS_STR.chars().collect();
-    static ref SYMBOLS: Vec<char> = SYMBOLS_STR.chars().collect();
-    static ref ALL: Vec<char> = ALL_STR.chars().collect();
-    static ref WORDS: Words = Words::new(&[
-        ("able", vec![Adjective]),
-        ("about", vec![Preposition, Adverb, Adjective]),
-        ("above", vec![Adverb, Preposition, Noun, Adjective]),
-        ("across", vec![Preposition, Adverb, Noun]),
-        ("action", vec![SingularNoun, Interjection, Adjective, Verb]),
-        ("actually", vec![Adverb]),
-        ("addition", vec![SingularNoun]),
-        ("adjective", vec![SingularNoun, Adjective, Verb]),
-        ("advance", vec![Verb, SingularNoun, Adjective]),
-        ("afraid", vec![Adjective]),
-        ("africa", vec![Country]),
-        ("after", vec![Adverb, Preposition, Conjunction, Adjective]),
-        ("against", vec![Preposition, Conjunction]),
-        ("again", vec![Adverb, Preposition]),
-        ("agree", vec![Verb]),
-        ("agreed", vec![VerbPast, Adjective, Interjection]),
-        ("ahead", vec![Adverb]),
-        ("airplane", vec![SingularNoun]),
-        ("alabama", vec![UsState]),
-        ("alaska", vec![UsState]),
-        ("allow", vec![Verb]),
-        ("almost", vec![Adverb]),
-        ("alone", vec![Adjective, Adverb]),
-        ("along", vec![Preposition, Adverb]),
-        ("already", vec![Adverb]),
-        ("also", vec![Adverb, Conjunction]),
-        ("although", vec![Conjunction]),
-        ("always", vec![Adverb]),
-        ("america", vec![Continent]),
-        ("among", vec![Preposition]),
-        ("amount", vec![SingularNoun]),
-        ("amsterdam", vec![Country]),
-        ("anger", vec![SingularNoun, Verb]),
-        ("angle", vec![SingularNoun, Verb]),
-        ("angry", vec![Adjective]),
-        ("animal", vec![SingularNoun, Adjective]),
-        ("another", vec![Adjective, Pronoun]),
-        ("answer", vec![SingularNoun, Verb]),
-        ("anything", vec![Pronoun, SingularNoun]),
-        ("appear", vec![IntransitiveVerb]),
-        ("apple", vec![SingularNoun]),
-        ("april", vec![Month]),
-        ("area", vec![SingularNoun]),
-        ("arizona", vec![UsState]),
-        ("arms", vec![PluralNoun]),
-        ("army", vec![SingularNoun]),
-        ("around", vec![Adverb, Preposition, Adjective]),
-        ("arrived", vec![IntransitiveVerb, VerbPast]),
-        ("arrive", vec![IntransitiveVerb]),
-        ("article", vec![SingularNoun]),
-        ("asia", vec![Continent]),
-        ("athens", vec![City]),
-        ("attempt", vec![TransitiveVerb, SingularNoun]),
-        ("august", vec![Month]),
-        ("aunt", vec![SingularNoun]),
-        ("australia", vec![Country]),
-        ("austria", vec![Country]),
-        ("away", vec![Adverb, Adjective]),
-        ("baby", vec![SingularNoun, Verb]),
-        ("back", vec![SingularNoun, Verb, Adjective, Adverb]),
-        ("ball", vec![SingularNoun, Verb]),
-        ("banker", vec![SingularNoun]),
-        ("bank", vec![SingularNoun, Verb]),
-        ("barbados", vec![Country]),
-        ("base", vec![SingularNoun, Adjective]),
-        ("basket", vec![SingularNoun]),
-        ("battery", vec![SingularNoun]),
-        ("battle", vec![SingularNoun, Verb]),
-        ("bean", vec![SingularNoun]),
-        ("bear", vec![Verb, SingularNoun, Adjective]),
-        ("beat", vec![Verb, SingularNoun, Adjective]),
-        ("beautiful", vec![Adjective]),
-        ("beauty", vec![SingularNoun]),
-        ("became", vec![VerbPast]),
-        ("because", vec![Conjunction]),
-        ("become", vec![Verb]),
-        ("been", vec![VerbPast]),
-        ("before", vec![Adverb, Preposition, Conjunction]),
-        ("began", vec![VerbPast]),
-        ("begin", vec![Verb]),
-        ("behind", vec![Adverb, Preposition, SingularNoun]),
-        ("being", vec![SingularNoun, Conjunction]),
-        ("belfast", vec![City]),
-        ("belgium", vec![Country]),
-        ("believe", vec![Verb]),
-        ("bell", vec![SingularNoun, Verb]),
-        ("belong", vec![IntransitiveVerb]),
-        ("below", vec![Adverb, Preposition]),
-        ("berlin", vec![City]),
-        ("beside", vec![Preposition, Adverb]),
-        ("best", vec![Adjective, SingularNoun]),
-        ("better", vec![Adjective, SingularNoun, Verb]),
-        ("between", vec![Preposition, Adverb]),
-        ("beyond", vec![Preposition, Adverb, SingularNoun]),
-        ("bicycle", vec![SingularNoun, IntransitiveVerb]),
-        ("bill", vec![SingularNoun, TransitiveVerb]),
-        ("bird", vec![SingularNoun, IntransitiveVerb]),
-        ("birds", vec![PluralNoun]),
-        ("black", vec![Adjective, SingularNoun, Verb]),
-        ("block", vec![SingularNoun, Verb]),
-        ("blood", vec![SingularNoun]),
-        ("blow", vec![Verb]),
-        ("blue", vec![SingularNoun, Adjective]),
-        ("board", vec![SingularNoun, Verb]),
-        ("boat", vec![SingularNoun, Verb]),
-        ("body", vec![SingularNoun]),
-        ("bone", vec![SingularNoun]),
-        ("bones", vec![PluralNoun]),
-        ("book", vec![SingularNoun, Verb]),
-        ("born", vec![VerbPast]),
-        ("borrow", vec![Verb]),
-        ("both", vec![Adverb]),
-        ("botswana", vec![Country]),
-        ("bottle", vec![SingularNoun, TransitiveVerb]),
-        ("bottom", vec![SingularNoun, Adjective, Verb]),
-        ("branches", vec![PluralNoun, Verb]),
-        ("branch", vec![SingularNoun, Verb]),
-        ("brazil", vec![Country]),
-        ("bread", vec![SingularNoun, TransitiveVerb]),
-        ("break", vec![Verb]),
-        ("bridge", vec![SingularNoun, TransitiveVerb]),
-        ("bright", vec![Adjective]),
-        ("bring", vec![TransitiveVerb]),
-        ("britain", vec![Country]),
-        ("british", vec![Nationality]),
-        ("broad", vec![Adjective]),
-        ("broke", vec![VerbPast, Adjective]),
-        ("broken", vec![VerbPast, Adjective]),
-        ("brother", vec![SingularNoun]),
-        ("brought", vec![VerbPast]),
-        ("brown", vec![SingularNoun, TransitiveVerb]),
-        ("building", vec![SingularNoun, Verb]),
-        ("build", vec![Verb, SingularNoun]),
-        ("built", vec![VerbPast, Adjective]),
-        ("bulgaria", vec![Country]),
-        ("burn", vec![Verb]),
-        ("burning", vec![Adjective]),
-        ("business", vec![SingularNoun]),
-        ("busy", vec![Adjective]),
-        ("butter", vec![SingularNoun, TransitiveVerb]),
-        ("cake", vec![SingularNoun, Verb]),
-        ("california", vec![UsState]),
-        ("call", vec![Verb, SingularNoun]),
-        ("came", vec![SingularNoun, Verb]),
-        ("canada", vec![Country]),
-        ("cannot", vec![AuxiliaryVerb]),
-        ("capital", vec![SingularNoun, Adjective]),
-        ("captain", vec![SingularNoun, TransitiveVerb]),
-        ("carefully", vec![Adverb]),
-        ("care", vec![SingularNoun, Verb]),
-        ("carry", vec![Verb]),
-        ("case", vec![SingularNoun, TransitiveVerb]),
-        ("catch", vec![Verb, SingularNoun]),
-        ("cattle", vec![PluralNoun]),
-        ("caught", vec![VerbPast]),
-        ("cause", vec![SingularNoun, TransitiveVerb]),
-        ("cells", vec![PluralNoun]),
-        ("cent", vec![SingularNoun]),
-        ("center", vec![SingularNoun, Verb]),
-        ("cents", vec![PluralNoun]),
-        ("century", vec![SingularNoun]),
-        ("certain", vec![Adjective]),
-        ("chair", vec![SingularNoun, TransitiveVerb]),
-        ("chance", vec![SingularNoun, Adjective]),
-        ("change", vec![Verb, SingularNoun]),
-        ("character", vec![SingularNoun, Adjective]),
-        ("charge", vec![Verb, SingularNoun]),
-        ("chart", vec![SingularNoun, Verb]),
-        ("check", vec![SingularNoun, Verb, Interjection]),
-        ("chief", vec![SingularNoun, Adjective]),
-        ("childhood", vec![SingularNoun]),
-        ("children", vec![PluralNoun]),
-        ("child", vec![SingularNoun]),
-        ("chile", vec![Country]),
-        ("china", vec![Country]),
-        ("choose", vec![Verb]),
-        ("church", vec![SingularNoun]),
-        ("cigarette", vec![SingularNoun]),
-        ("circle", vec![SingularNoun, Verb]),
-        ("city", vec![SingularNoun]),
-        ("class", vec![SingularNoun, TransitiveVerb]),
-        ("clean", vec![Adjective, Verb]),
-        ("clear", vec![Adjective, Verb]),
-        ("climbed", vec![VerbPast]),
-        ("clock", vec![SingularNoun, Verb]),
-        ("close", vec![Adjective, Verb]),
-        ("cloth", vec![SingularNoun]),
-        ("clothes", vec![PluralNoun]),
-        ("cloud", vec![SingularNoun]),
-        ("coast", vec![SingularNoun, Verb]),
-        ("coat", vec![SingularNoun]),
-        ("cold", vec![Adjective, SingularNoun]),
-        ("college", vec![SingularNoun]),
-        ("colombia", vec![Country]),
-        ("color", vec![SingularNoun, Verb]),
-        ("colour", vec![SingularNoun, Verb]),
-        ("column", vec![SingularNoun]),
-        ("come", vec![IntransitiveVerb]),
-        ("common", vec![Adjective]),
-        ("company", vec![SingularNoun]),
-        ("compare", vec![Verb]),
-        ("complete", vec![Adjective, TransitiveVerb]),
-        ("compound", vec![Verb, SingularNoun]),
-        ("condition", vec![SingularNoun, TransitiveVerb]),
-        ("conditions", vec![PluralNoun, Verb]),
-        ("congo", vec![Country]),
-        ("consider", vec![Verb]),
-        ("considerable", vec![Adjective]),
-        ("consonant", vec![Adjective, SingularNoun]),
-        ("contain", vec![TransitiveVerb]),
-        ("continue", vec![Verb]),
-        ("continued", vec![VerbPast]),
-        ("control", vec![TransitiveVerb, SingularNoun]),
-        ("cook", vec![Verb, SingularNoun]),
-        ("cool", vec![Adjective, Adverb, Verb]),
-        ("copenhagen", vec![City]),
-        ("copy", vec![SingularNoun, Verb]),
-        ("corn", vec![SingularNoun]),
-        ("corner", vec![SingularNoun, Verb]),
-        ("correct", vec![Verb, Adjective]),
-        ("cost", vec![SingularNoun, Verb]),
-        ("cotton", vec![SingularNoun]),
-        ("could", vec![AuxiliaryVerb]),
-        ("country", vec![SingularNoun]),
-        ("count", vec![Verb, SingularNoun]),
-        ("course", vec![SingularNoun, Verb]),
-        ("cover", vec![Verb, SingularNoun]),
-        ("covered", vec![VerbPast]),
-        ("cows", vec![PluralNoun, Verb]),
-        ("create", vec![TransitiveVerb]),
-        ("cried", vec![VerbPast]),
-        ("crops", vec![PluralNoun, Verb]),
-        ("cross", vec![SingularNoun, Verb]),
-        ("crowd", vec![SingularNoun, Verb]),
-        ("cuba", vec![Country]),
-        ("current", vec![Adjective, SingularNoun]),
-        ("daily", vec![Adjective, Adverb, SingularNoun]),
-        ("damascus", vec![City]),
-        ("dance", vec![Verb]),
-        ("dare", vec![Verb, SingularNoun]),
-        ("dark", vec![Adjective, SingularNoun]),
-        ("date", vec![SingularNoun, Verb]),
-        ("daughter", vec![SingularNoun, Adjective]),
-        ("dead", vec![Adjective, SingularNoun, Adverb]),
-        ("deal", vec![Verb, SingularNoun]),
-        ("dear", vec![Adjective, SingularNoun, Adverb, Interjection]),
-        ("death", vec![SingularNoun]),
-        ("december", vec![Month]),
-        ("decide", vec![Verb]),
-        ("decided", vec![Adjective, VerbPast]),
-        ("decimal", vec![SingularNoun, Adjective]),
-        ("deep", vec![Adjective, Adverb, SingularNoun]),
-        ("degree", vec![SingularNoun]),
-        ("delaware", vec![UsState]),
-        ("delight", vec![SingularNoun, Verb]),
-        ("demand", vec![Verb, SingularNoun]),
-        ("denmark", vec![Country]),
-        ("describe", vec![TransitiveVerb]),
-        ("desert", vec![SingularNoun, Adjective, Verb]),
-        ("design", vec![Verb, SingularNoun]),
-        ("desire", vec![TransitiveVerb, SingularNoun]),
-        ("destroy", vec![Verb]),
-        ("details", vec![PluralNoun, TransitiveVerb]),
-        ("determine", vec![Verb]),
-        ("developed", vec![Adjective]),
-        ("device", vec![SingularNoun]),
-        ("dictionary", vec![SingularNoun]),
-        ("died", vec![VerbPast, IntransitiveVerb]),
-        ("difference", vec![SingularNoun, TransitiveVerb]),
-        ("different", vec![Adjective]),
-        ("difficult", vec![Adjective]),
-        ("dinner", vec![SingularNoun]),
-        ("direction", vec![SingularNoun]),
-        ("direct", vec![Verb, Adjective, Adverb]),
-        ("discover", vec![TransitiveVerb]),
-        ("discovered", vec![TransitiveVerb, VerbPast]),
-        ("dish", vec![SingularNoun, Verb]),
-        ("distance", vec![SingularNoun, TransitiveVerb]),
-        ("distant", vec![Adjective]),
-        ("divide", vec![Verb, SingularNoun]),
-        ("divided", vec![Adjective]),
-        ("division", vec![SingularNoun]),
-        ("doctor", vec![SingularNoun, Verb]),
-        ("does", vec![Verb]),
-        ("dollar", vec![SingularNoun]),
-        ("dollars", vec![PluralNoun]),
-        ("done", vec![VerbPast, Adjective]),
-        ("door", vec![SingularNoun, TransitiveVerb]),
-        ("double", vec![Adjective, SingularNoun, Verb]),
-        ("doubt", vec![Verb, SingularNoun]),
-        (
-            "down",
-            vec![Adverb, Adjective, Preposition, SingularNoun, Verb]
-        ),
-        ("draw", vec![Verb, SingularNoun]),
-        ("drawing", vec![SingularNoun]),
-        ("dream", vec![SingularNoun, Verb]),
-        ("dress", vec![Verb, SingularNoun]),
-        ("dried", vec![VerbPast]),
-        ("drink", vec![Verb, SingularNoun]),
-        ("drive", vec![Verb, SingularNoun]),
-        ("drop", vec![SingularNoun, Verb]),
-        ("dublin", vec![City]),
-        ("duck", vec![SingularNoun, Verb]),
-        ("during", vec![Preposition]),
-        ("dusk", vec![SingularNoun]),
-        ("duty", vec![SingularNoun]),
-        ("each", vec![Adjective, Adverb]),
-        ("early", vec![Adjective, Adverb]),
-        ("ears", vec![PluralNoun]),
-        ("earth", vec![Planet, Verb]),
-        ("east", vec![SingularNoun, Adjective, Adverb]),
-        ("easy", vec![Adjective, Adverb]),
-        ("edge", vec![SingularNoun, Verb]),
-        ("effect", vec![SingularNoun, TransitiveVerb]),
-        ("effort", vec![SingularNoun]),
-        ("eggs", vec![PluralNoun]),
-        ("egypt", vec![Country]),
-        ("eight", vec![SingularNoun, Adjective]),
-        ("either", vec![Pronoun]),
-        ("electric", vec![Adjective, SingularNoun]),
-        ("electricity", vec![SingularNoun]),
-        ("elements", vec![PluralNoun]),
-        ("else", vec![Adjective, Adverb]),
-        ("enemy", vec![SingularNoun]),
-        ("energy", vec![SingularNoun]),
-        ("engine", vec![SingularNoun, TransitiveVerb]),
-        ("england", vec![Country]),
-        ("english", vec![Nationality]),
-        ("enjoy", vec![Verb]),
-        ("enough", vec![Adjective]),
-        ("entered", vec![VerbPast]),
-        ("enter", vec![Verb, SingularNoun]),
-        ("entire", vec![Adjective, SingularNoun]),
-        ("equal", vec![Adjective, SingularNoun]),
-        ("equation", vec![SingularNoun]),
-        ("escape", vec![Verb, SingularNoun]),
-        ("especially", vec![Adverb]),
-        ("etching", vec![SingularNoun]),
-        ("europe", vec![Continent]),
-        ("evening", vec![SingularNoun]),
-        (
-            "even",
-            vec![Adjective, Adverb, TransitiveVerb, IntransitiveVerb]
-        ),
-        ("ever", vec![Adverb]),
-        ("every", vec![Adjective]),
-        ("everyone", vec![Pronoun]),
-        ("everything", vec![Pronoun]),
-        ("exactly", vec![Adverb]),
-        ("example", vec![SingularNoun]),
-        ("except", vec![SingularNoun]),
-        ("exciting", vec![Adjective]),
-        ("exercise", vec![SingularNoun, Verb]),
-        ("expect", vec![Verb]),
-        ("experience", vec![SingularNoun, Verb]),
-        ("experiment", vec![SingularNoun, Verb]),
-        ("explain", vec![Verb]),
-        (
-            "express",
-            vec![TransitiveVerb, Adjective, Adverb, SingularNoun]
-        ),
-        ("face", vec![SingularNoun, Verb]),
-        ("factories", vec![PluralNoun]),
-        ("factors", vec![PluralNoun, Verb]),
-        ("fact", vec![SingularNoun]),
-        ("fail", vec![Verb, SingularNoun]),
-        ("fair", vec![Adjective, SingularNoun]),
-        ("fall", vec![Verb, SingularNoun, Adjective]),
-        ("family", vec![SingularNoun]),
-        ("famous", vec![Adjective]),
-        ("fancy", vec![Adjective, TransitiveVerb]),
-        ("farm", vec![SingularNoun, Verb]),
-        ("farmers", vec![PluralNoun]),
-        ("fast", vec![Adjective]),
-        ("father", vec![SingularNoun, Verb]),
-        ("favor", vec![SingularNoun, Verb]),
-        ("fear", vec![SingularNoun, Verb]),
-        ("february", vec![Month]),
-        ("feed", vec![Verb, SingularNoun]),
-        ("feel", vec![Verb]),
-        ("feeling", vec![SingularNoun, Adjective]),
-        ("feet", vec![PluralNoun]),
-        ("fell", vec![TransitiveVerb, VerbPast]),
-        ("fellow", vec![SingularNoun]),
-        ("felt", vec![SingularNoun, Adjective, VerbPast]),
-        ("fence", vec![SingularNoun, Verb]),
-        ("field", vec![SingularNoun, Verb]),
-        ("fifteen", vec![SingularNoun, Adjective]),
-        ("fifth", vec![Adjective, SingularNoun]),
-        ("fifty", vec![Adjective, SingularNoun]),
-        ("fight", vec![SingularNoun, Verb]),
-        ("figure", vec![SingularNoun, Verb]),
-        ("fiji", vec![Country]),
-        ("fill", vec![SingularNoun, Verb]),
-        ("filled", vec![VerbPast]),
-        ("finally", vec![Adjective, Interjection]),
-        ("find", vec![SingularNoun, Verb]),
-        ("fine", vec![Adjective, SingularNoun]),
-        ("finger", vec![SingularNoun, Verb]),
-        ("fingers", vec![PluralNoun, Verb]),
-        ("finish", vec![Verb, SingularNoun]),
-        ("finished", vec![Adjective, VerbPast]),
-        ("finland", vec![Country]),
-        ("fire", vec![SingularNoun, Verb]),
-        ("firm", vec![Adjective, SingularNoun]),
-        ("first", vec![SingularNoun, Adjective, Adverb]),
-        ("fish", vec![SingularNoun, PluralNoun, Verb]),
-        ("five", vec![SingularNoun]),
-        ("flat", vec![Adjective, SingularNoun]),
-        ("flier", vec![SingularNoun]),
-        ("floor", vec![SingularNoun, Verb]),
-        ("florida", vec![UsState]),
-        ("flower", vec![SingularNoun, Verb]),
-        ("flowers", vec![PluralNoun, Verb]),
-        ("flow", vec![Verb, SingularNoun]),
-        ("follow", vec![Verb]),
-        ("food", vec![SingularNoun]),
-        ("fool", vec![SingularNoun, Verb]),
-        ("foot", vec![SingularNoun, Verb]),
-        ("force", vec![SingularNoun, Verb]),
-        ("foreign", vec![Adjective]),
-        ("forest", vec![SingularNoun]),
-        ("forever", vec![Adjective]),
-        ("forget", vec![Verb]),
-        ("form", vec![SingularNoun, Verb]),
-        ("fortieth", vec![Adjective]),
-        ("forty", vec![Adjective, SingularNoun]),
-        ("forward", vec![SingularNoun, Verb]),
-        ("found", vec![VerbPast]),
-        ("four", vec![Adjective, SingularNoun]),
-        ("fraction", vec![SingularNoun, Verb]),
-        ("france", vec![Country]),
-        (
-            "free",
-            vec![Adjective, Adverb, TransitiveVerb, SingularNoun]
-        ),
-        ("french", vec![Nationality]),
-        ("fresh", vec![Adjective, Adverb]),
-        ("friday", vec![Day]),
-        ("friend", vec![SingularNoun, TransitiveVerb]),
-        ("friends", vec![PluralNoun]),
-        ("from", vec![Preposition]),
-        ("front", vec![SingularNoun, Adjective, Verb]),
-        ("fruit", vec![SingularNoun, Verb]),
-        ("full", vec![Adjective, Adverb, Verb]),
-        ("further", vec![Adjective]),
-        ("future", vec![SingularNoun, Adjective]),
-        ("gain", vec![SingularNoun, Verb]),
-        ("galaxy", vec![SingularNoun]),
-        ("game", vec![SingularNoun, Verb]),
-        ("garden", vec![SingularNoun, Verb]),
-        ("gate", vec![SingularNoun, Verb]),
-        ("gather", vec![Verb]),
-        ("gave", vec![VerbPast]),
-        ("general", vec![Adjective, SingularNoun]),
-        ("gentle", vec![Adjective]),
-        ("gentleman", vec![SingularNoun]),
-        ("germany", vec![Country]),
-        ("gibraltar", vec![Country]),
-        ("gift", vec![SingularNoun, TransitiveVerb]),
-        ("girl", vec![SingularNoun]),
-        ("give", vec![Verb]),
-        ("gives", vec![Verb]),
-        ("glad", vec![Adjective]),
-        ("glass", vec![SingularNoun, Adjective, Verb]),
-        ("glossary", vec![SingularNoun]),
-        ("goes", vec![Verb]),
-        ("gold", vec![Element, Adjective]),
-        ("gone", vec![Adjective]),
-        ("good", vec![Adjective]),
-        ("goodbye", vec![Interjection, SingularNoun]),
-        ("govern", vec![Verb]),
-        ("government", vec![SingularNoun]),
-        ("grain", vec![SingularNoun, Verb]),
-        ("grass", vec![SingularNoun, Verb]),
-        ("grave", vec![SingularNoun, Adjective]),
-        ("gray", vec![Adjective, Verb]),
-        ("great", vec![Adjective]),
-        ("greece", vec![Country]),
-        ("greek", vec![Nationality]),
-        ("green", vec![Adjective]),
-        ("grew", vec![VerbPast]),
-        ("ground", vec![SingularNoun, Verb]),
-        ("group", vec![SingularNoun, Verb]),
-        ("grown", vec![Adjective]),
-        ("grow", vec![Verb]),
-        ("guard", vec![SingularNoun, Verb]),
-        ("guess", vec![Verb, SingularNoun]),
-        ("guide", vec![SingularNoun, Verb]),
-        ("hair", vec![SingularNoun]),
-        ("half", vec![SingularNoun, Adjective, Adverb]),
-        ("hall", vec![SingularNoun]),
-        ("halt", vec![Verb]),
-        ("hand", vec![SingularNoun, Verb]),
-        ("hang", vec![Verb]),
-        ("happen", vec![Verb]),
-        ("happened", vec![VerbPast]),
-        ("happy", vec![Adjective]),
-        ("hard", vec![Adjective, Adverb]),
-        ("havana", vec![City]),
-        ("have", vec![Verb]),
-        ("hawaii", vec![UsState]),
-        ("head", vec![SingularNoun, Adjective, Verb]),
-        ("health", vec![SingularNoun]),
-        ("hear", vec![Verb]),
-        ("heard", vec![VerbPast]),
-        ("heart", vec![SingularNoun]),
-        ("heat", vec![SingularNoun, Verb]),
-        ("heaven", vec![SingularNoun]),
-        ("heavy", vec![Adjective]),
-        ("height", vec![SingularNoun]),
-        ("held", vec![VerbPast]),
-        ("hello", vec![Interjection, SingularNoun]),
-        ("help", vec![SingularNoun, Verb]),
-        ("here", vec![Pronoun]),
-        ("hers", vec![Pronoun]),
-        ("high", vec![Adjective]),
-        ("hill", vec![SingularNoun]),
-        ("himself", vec![Pronoun]),
-        ("history", vec![SingularNoun]),
-        ("hold", vec![Verb]),
-        ("hole", vec![SingularNoun]),
-        ("holland", vec![Country]),
-        ("home", vec![SingularNoun]),
-        ("honor", vec![SingularNoun, TransitiveVerb]),
-        ("hope", vec![SingularNoun]),
-        ("horse", vec![SingularNoun]),
-        ("hour", vec![SingularNoun]),
-        ("hours", vec![PluralNoun]),
-        ("house", vec![SingularNoun]),
-        ("however", vec![Adjective, Conjunction]),
-        ("huge", vec![Adjective]),
-        ("human", vec![SingularNoun]),
-        ("hundred", vec![Adjective, SingularNoun]),
-        ("hunger", vec![SingularNoun, Verb]),
-        ("hunt", vec![SingularNoun, Verb]),
-        ("hunting", vec![SingularNoun, Verb]),
-        ("hurry", vec![SingularNoun, Verb]),
-        ("hurt", vec![Verb, SingularNoun]),
-        ("husband", vec![SingularNoun, Verb]),
-        ("iceland", vec![Country]),
-        ("idea", vec![SingularNoun]),
-        ("important", vec![Adjective]),
-        ("inch", vec![SingularNoun, Verb]),
-        ("inches", vec![PluralNoun]),
-        ("include", vec![TransitiveVerb]),
-        ("increase", vec![Verb, SingularNoun]),
-        ("indeed", vec![Interjection]),
-        ("india", vec![Country]),
-        ("indian", vec![Nationality]),
-        ("indicate", vec![TransitiveVerb]),
-        ("industry", vec![SingularNoun]),
-        ("information", vec![SingularNoun]),
-        ("insects", vec![PluralNoun]),
-        ("inside", vec![SingularNoun, Adjective, Adverb, Preposition]),
-        ("instead", vec![Adverb]),
-        ("instruments", vec![PluralNoun, TransitiveVerb]),
-        ("interest", vec![SingularNoun, TransitiveVerb]),
-        ("into", vec![Preposition]),
-        ("ireland", vec![Country]),
-        ("iron", vec![Element, Adjective]),
-        ("island", vec![SingularNoun, TransitiveVerb]),
-        ("italy", vec![Country]),
-        ("itself", vec![Pronoun]),
-        ("jamaica", vec![Country]),
-        ("japan", vec![Country]),
-        ("japanese", vec![Nationality]),
-        ("jerusalem", vec![City]),
-        ("join", vec![Verb]),
-        ("joined", vec![VerbPast]),
-        ("jordan", vec![Country, Name]),
-        ("journey", vec![SingularNoun, Verb]),
-        ("judge", vec![SingularNoun, Verb]),
-        ("july", vec![Month]),
-        ("jumped", vec![VerbPast]),
-        ("jump", vec![SingularNoun, Verb]),
-        ("june", vec![Month]),
-        ("jupiter", vec![Planet]),
-        ("just", vec![Adjective]),
-        ("keep", vec![SingularNoun, Verb]),
-        ("kentucky", vec![UsState]),
-        ("kenya", vec![Country]),
-        ("kept", vec![VerbPast]),
-        ("kill", vec![Verb, SingularNoun]),
-        ("killed", vec![VerbPast]),
-        ("kind", vec![Adjective, SingularNoun]),
-        ("king", vec![SingularNoun, Verb]),
-        ("kiss", vec![Verb, SingularNoun]),
-        ("kitchen", vec![SingularNoun]),
-        ("knew", vec![VerbPast]),
-        ("know", vec![Verb]),
-        ("known", vec![Adjective, VerbPast, SingularNoun]),
-        ("korea", vec![Country]),
-        ("labor", vec![SingularNoun, Verb]),
-        ("ladder", vec![SingularNoun]),
-        ("lady", vec![SingularNoun]),
-        ("lake", vec![SingularNoun]),
-        ("land", vec![SingularNoun, Verb]),
-        ("language", vec![SingularNoun]),
-        ("large", vec![Adjective, SingularNoun]),
-        ("last", vec![Adjective, Adverb, SingularNoun]),
-        ("late", vec![Adjective]),
-        ("later", vec![Adjective]),
-        ("laugh", vec![Verb, SingularNoun]),
-        ("laughed", vec![VerbPast]),
-        ("laughter", vec![SingularNoun]),
-        ("lead", vec![Element, Verb, Adjective]),
-        ("leader", vec![SingularNoun]),
-        ("learn", vec![Verb]),
-        ("least", vec![Adjective]),
-        ("leave", vec![Verb, SingularNoun, Verb]),
-        ("left", vec![VerbPast, Adjective, Adverb]),
-        ("legs", vec![PluralNoun]),
-        ("lend", vec![Verb]),
-        ("length", vec![SingularNoun]),
-        ("less", vec![Adjective]),
-        ("letter", vec![SingularNoun]),
-        ("level", vec![SingularNoun, Adjective, Verb]),
-        ("liar", vec![SingularNoun]),
-        ("life", vec![SingularNoun]),
-        ("lift", vec![SingularNoun, Verb]),
-        ("lifted", vec![VerbPast]),
-        ("light", vec![Adjective, SingularNoun, Verb]),
-        ("like", vec![Verb]),
-        ("likely", vec![Adjective, Adverb]),
-        ("line", vec![SingularNoun, Verb]),
-        ("lisbon", vec![City]),
-        ("list", vec![SingularNoun, Verb]),
-        ("listen", vec![Verb]),
-        ("little", vec![Adjective]),
-        ("live", vec![Verb, Adjective]),
-        ("located", vec![VerbPast]),
-        ("london", vec![City]),
-        ("lone", vec![Adjective]),
-        ("long", vec![Adjective, SingularNoun]),
-        ("look", vec![Verb]),
-        ("lord", vec![SingularNoun, Verb]),
-        ("lose", vec![Verb]),
-        ("loss", vec![SingularNoun]),
-        ("lost", vec![VerbPast]),
-        ("loud", vec![Adjective]),
-        ("love", vec![SingularNoun, Verb]),
-        ("lower", vec![IntransitiveVerb, Adjective]),
-        ("machine", vec![SingularNoun, Verb]),
-        ("made", vec![Adjective, VerbPast]),
-        ("madrid", vec![City]),
-        ("mail", vec![SingularNoun, Verb]),
-        ("main", vec![Adjective, SingularNoun]),
-        ("major", vec![Adjective, SingularNoun]),
-        ("make", vec![Verb]),
-        ("malta", vec![Country]),
-        ("manner", vec![SingularNoun]),
-        ("many", vec![Adjective]),
-        ("march", vec![Month, Verb, SingularNoun]),
-        ("market", vec![SingularNoun, Verb]),
-        ("mark", vec![MaleName, SingularNoun, Verb]),
-        ("marry", vec![Verb]),
-        ("mars", vec![Planet, Verb]),
-        ("maryland", vec![UsState]),
-        ("master", vec![SingularNoun, Verb]),
-        ("match", vec![SingularNoun, Verb]),
-        ("material", vec![SingularNoun]),
-        ("matter", vec![SingularNoun, IntransitiveVerb]),
-        ("maybe", vec![Interjection]),
-        ("mayor", vec![SingularNoun]),
-        ("mean", vec![SingularNoun, Verb]),
-        ("measure", vec![SingularNoun, Verb]),
-        ("meat", vec![SingularNoun]),
-        ("meeting", vec![SingularNoun, Verb]),
-        ("meet", vec![SingularNoun, Verb]),
-        ("melody", vec![SingularNoun]),
-        ("members", vec![PluralNoun]),
-        ("member", vec![SingularNoun]),
-        ("mercury", vec![Planet, Element]),
-        ("metal", vec![SingularNoun]),
-        ("method", vec![SingularNoun]),
-        ("mexico", vec![Country]),
-        ("middle", vec![Adjective]),
-        ("might", vec![SingularNoun, AuxiliaryVerb]),
-        ("mile", vec![SingularNoun]),
-        ("milk", vec![SingularNoun]),
-        ("million", vec![SingularNoun, Adjective]),
-        ("mind", vec![SingularNoun, Verb]),
-        ("mine", vec![SingularNoun, Verb, Pronoun]),
-        ("minute", vec![Adjective, SingularNoun]),
-        ("minutes", vec![PluralNoun]),
-        ("miss", vec![Verb, SingularNoun]),
-        ("mister", vec![SingularNoun]),
-        ("modern", vec![Adjective]),
-        ("molecules", vec![PluralNoun]),
-        ("moment", vec![SingularNoun]),
-        ("monday", vec![Day]),
-        ("money", vec![SingularNoun]),
-        ("montana", vec![UsState]),
-        ("month", vec![SingularNoun]),
-        ("months", vec![PluralNoun]),
-        ("moon", vec![Moon]),
-        ("more", vec![Adjective, Adverb]),
-        ("morning", vec![SingularNoun]),
-        ("moscow", vec![City]),
-        ("most", vec![Adjective]),
-        ("mother", vec![SingularNoun, Verb]),
-        ("mountain", vec![SingularNoun]),
-        ("mouth", vec![SingularNoun]),
-        ("movement", vec![SingularNoun]),
-        ("move", vec![Verb]),
-        ("much", vec![Adjective]),
-        ("music", vec![SingularNoun]),
-        ("must", vec![Verb, SingularNoun]),
-        ("nail", vec![SingularNoun, TransitiveVerb]),
-        ("name", vec![SingularNoun, Verb]),
-        ("nation", vec![SingularNoun]),
-        ("natural", vec![Adjective]),
-        ("nature", vec![SingularNoun, Verb]),
-        ("nearly", vec![Adverb]),
-        ("near", vec![Adjective]),
-        ("necessary", vec![Adjective]),
-        ("neck", vec![SingularNoun]),
-        ("needle", vec![SingularNoun, Verb]),
-        ("need", vec![SingularNoun, Verb]),
-        ("neighbor", vec![SingularNoun, Verb]),
-        ("neither", vec![Adjective]),
-        ("nepal", vec![Country]),
-        ("neptune", vec![Planet]),
-        ("nerve", vec![SingularNoun]),
-        ("netherlands", vec![Country]),
-        ("nevada", vec![UsState]),
-        ("never", vec![Adjective]),
-        ("news", vec![SingularNoun]),
-        ("next", vec![Adjective]),
-        ("nice", vec![Adjective]),
-        ("niece", vec![SingularNoun]),
-        ("night", vec![SingularNoun]),
-        ("nine", vec![Adjective, SingularNoun]),
-        ("noise", vec![SingularNoun]),
-        ("none", vec![Pronoun, Adverb]),
-        ("noon", vec![SingularNoun]),
-        ("north", vec![SingularNoun, Adjective, Adverb]),
-        ("northern", vec![Adjective]),
-        ("norway", vec![Country]),
-        ("nose", vec![SingularNoun, Verb]),
-        ("note", vec![SingularNoun, Verb]),
-        ("nothing", vec![Pronoun, SingularNoun, Adjective]),
-        ("notice", vec![SingularNoun, TransitiveVerb]),
-        ("noun", vec![SingularNoun]),
-        ("november", vec![Month]),
-        ("number", vec![SingularNoun, Verb]),
-        ("numeral", vec![SingularNoun]),
-        ("object", vec![SingularNoun, Verb]),
-        ("observe", vec![Verb]),
-        ("ocean", vec![SingularNoun]),
-        ("october", vec![Month]),
-        ("offer", vec![SingularNoun, Verb]),
-        ("office", vec![SingularNoun]),
-        ("often", vec![Adjective, Adverb]),
-        ("ohio", vec![UsState]),
-        ("once", vec![Adjective, Adverb]),
-        ("only", vec![Adjective, Adverb]),
-        ("open", vec![Adjective, Verb]),
-        ("opinion", vec![SingularNoun]),
-        ("opposite", vec![SingularNoun]),
-        ("orderly", vec![Adverb]),
-        ("order", vec![SingularNoun, Verb]),
-        ("oslo", vec![City]),
-        ("other", vec![Adjective, SingularNoun, Pronoun, Adverb]),
-        ("ought", vec![Verb]),
-        ("outer", vec![Adjective]),
-        ("outside", vec![Adjective, SingularNoun]),
-        ("over", vec![Preposition, Adverb]),
-        ("oxygen", vec![Element]),
-        ("page", vec![SingularNoun, Verb]),
-        ("paid", vec![VerbPast]),
-        ("pain", vec![SingularNoun, Verb]),
-        ("paint", vec![SingularNoun, Verb]),
-        ("pair", vec![SingularNoun, Verb]),
-        ("panama", vec![Country]),
-        ("paper", vec![SingularNoun, Verb]),
-        ("paragraph", vec![SingularNoun, TransitiveVerb]),
-        ("paris", vec![City]),
-        ("park", vec![SingularNoun, Verb]),
-        ("part", vec![SingularNoun]),
-        ("partial", vec![Adjective, SingularNoun]),
-        ("particular", vec![Adjective]),
-        ("party", vec![SingularNoun, Verb]),
-        ("pass", vec![Verb, SingularNoun]),
-        ("passed", vec![Adjective, VerbPast]),
-        ("past", vec![SingularNoun]),
-        ("pattern", vec![SingularNoun, Verb]),
-        ("peace", vec![SingularNoun]),
-        ("people", vec![SingularNoun]),
-        ("perfect", vec![Adjective]),
-        ("perhaps", vec![Interjection]),
-        ("period", vec![SingularNoun]),
-        ("person", vec![SingularNoun]),
-        ("peru", vec![Country]),
-        ("phrase", vec![SingularNoun, Verb]),
-        ("pick", vec![Verb, SingularNoun]),
-        ("picked", vec![VerbPast]),
-        ("picture", vec![SingularNoun, Verb]),
-        ("piece", vec![SingularNoun, TransitiveVerb]),
-        ("place", vec![SingularNoun, Verb]),
-        ("plain", vec![Adjective, SingularNoun]),
-        ("plains", vec![PluralNoun, SingularNoun]),
-        ("plane", vec![SingularNoun, Adjective]),
-        ("planet", vec![SingularNoun]),
-        ("plant", vec![SingularNoun, Verb]),
-        ("plants", vec![PluralNoun, Verb]),
-        ("plan", vec![SingularNoun, Verb]),
-        ("play", vec![SingularNoun, Verb]),
-        ("pleasant", vec![Adjective]),
-        ("please", vec![Verb]),
-        ("pleasure", vec![SingularNoun, Verb]),
-        ("plural", vec![Adjective]),
-        ("pluto", vec![Astronomy]),
-        ("poem", vec![SingularNoun]),
-        ("point", vec![SingularNoun, Verb]),
-        ("poland", vec![Country]),
-        ("pole", vec![SingularNoun, Verb]),
-        ("poor", vec![SingularNoun, Adjective]),
-        ("portugal", vec![Country]),
-        ("position", vec![SingularNoun, Verb]),
-        ("possible", vec![Adjective]),
-        ("pounds", vec![PluralNoun]),
-        ("power", vec![SingularNoun, Verb]),
-        ("practice", vec![SingularNoun, Verb]),
-        ("prepare", vec![Verb]),
-        ("prepared", vec![Adjective, VerbPast]),
-        ("present", vec![SingularNoun, Verb]),
-        ("president", vec![SingularNoun]),
-        ("presidents", vec![PluralNoun]),
-        ("press", vec![SingularNoun, Verb]),
-        ("pretty", vec![Adjective]),
-        ("price", vec![SingularNoun, Verb]),
-        ("printed", vec![VerbPast, Adjective]),
-        ("probable", vec![Adjective]),
-        ("probably", vec![Adjective]),
-        ("problem", vec![SingularNoun]),
-        ("process", vec![SingularNoun, Verb]),
-        ("produce", vec![SingularNoun, Verb]),
-        ("products", vec![PluralNoun]),
-        ("promise", vec![SingularNoun, Verb]),
-        ("property", vec![SingularNoun]),
-        ("proud", vec![Adjective]),
-        ("prove", vec![Verb]),
-        ("provide", vec![Verb]),
-        ("public", vec![Adjective, SingularNoun]),
-        ("pull", vec![Verb]),
-        ("pulled", vec![VerbPast]),
-        ("pure", vec![Adjective]),
-        ("push", vec![Verb]),
-        ("pushed", vec![VerbPast]),
-        ("quarter", vec![SingularNoun, Verb]),
-        ("queen", vec![SingularNoun]),
-        ("question", vec![SingularNoun, Verb]),
-        ("questions", vec![PluralNoun]),
-        ("quick", vec![Adverb, Adjective]),
-        ("quickly", vec![Adverb]),
-        ("quiet", vec![SingularNoun, Verb]),
-        ("quite", vec![Adjective, Adverb]),
-        ("race", vec![SingularNoun, Verb]),
-        ("radio", vec![SingularNoun, Verb]),
-        ("rain", vec![SingularNoun, Verb]),
-        ("raise", vec![SingularNoun, Verb]),
-        ("raised", vec![Adjective, VerbPast]),
-        ("rather", vec![Adjective]),
-        ("reach", vec![SingularNoun, Verb]),
-        ("reached", vec![VerbPast]),
-        ("read", vec![Verb, VerbPast]),
-        ("ready", vec![Adjective, Verb]),
-        ("real", vec![Adjective]),
-        ("realize", vec![Verb]),
-        ("really", vec![Adjective]),
-        ("reason", vec![SingularNoun, Verb]),
-        ("receive", vec![Verb]),
-        ("received", vec![VerbPast]),
-        ("record", vec![SingularNoun, Verb]),
-        ("region", vec![SingularNoun]),
-        ("remain", vec![Verb]),
-        ("remember", vec![Verb]),
-        ("repeated", vec![VerbPast]),
-        ("reply", vec![SingularNoun, Verb]),
-        ("report", vec![SingularNoun, Verb]),
-        ("represent", vec![Verb]),
-        ("require", vec![Verb]),
-        ("resent", vec![Verb]),
-        ("rest", vec![SingularNoun, Verb]),
-        ("result", vec![SingularNoun, Verb]),
-        ("return", vec![SingularNoun, Verb]),
-        ("rhythm", vec![SingularNoun]),
-        ("rich", vec![Adjective]),
-        ("ridden", vec![VerbPast, Adjective]),
-        ("ride", vec![SingularNoun, Verb]),
-        ("right", vec![SingularNoun, Verb]),
-        ("ring", vec![SingularNoun, Verb]),
-        ("rise", vec![SingularNoun, Verb]),
-        ("river", vec![SingularNoun]),
-        ("road", vec![SingularNoun]),
-        ("rock", vec![SingularNoun, Verb]),
-        ("roll", vec![SingularNoun, Verb]),
-        ("rolled", vec![VerbPast]),
-        ("rome", vec![City]),
-        ("room", vec![SingularNoun, Verb]),
-        ("root", vec![SingularNoun, Verb]),
-        ("rope", vec![SingularNoun, Verb]),
-        ("rose", vec![SingularNoun, Verb]),
-        ("round", vec![Adjective, Verb]),
-        ("rule", vec![SingularNoun, Verb]),
-        ("rush", vec![SingularNoun, Verb]),
-        ("russia", vec![Country]),
-        ("safe", vec![Adjective, SingularNoun]),
-        ("safety", vec![SingularNoun]),
-        ("said", vec![VerbPast]),
-        ("sail", vec![SingularNoun, Verb]),
-        ("salt", vec![SingularNoun, Verb]),
-        ("same", vec![Adjective]),
-        ("sand", vec![SingularNoun, Verb]),
-        ("saturday", vec![Day]),
-        ("saturn", vec![Planet]),
-        ("save", vec![Verb]),
-        ("says", vec![Verb]),
-        ("scale", vec![SingularNoun, Verb]),
-        ("scene", vec![SingularNoun]),
-        ("school", vec![SingularNoun, Verb]),
-        ("science", vec![SingularNoun]),
-        ("scientists", vec![PluralNoun]),
-        ("score", vec![SingularNoun, Verb]),
-        ("scotland", vec![Country]),
-        ("season", vec![SingularNoun, Verb]),
-        ("seat", vec![SingularNoun, Verb]),
-        ("second", vec![SingularNoun, Verb]),
-        ("section", vec![SingularNoun, Verb]),
-        ("seed", vec![SingularNoun, Verb]),
-        ("seeds", vec![PluralNoun]),
-        ("seem", vec![Verb]),
-        ("seen", vec![VerbPast, Adjective]),
-        ("self", vec![Pronoun]),
-        ("sell", vec![Verb]),
-        ("send", vec![Verb]),
-        ("sense", vec![SingularNoun, Verb]),
-        ("sentence", vec![Verb, SingularNoun]),
-        ("sent", vec![VerbPast]),
-        ("separate", vec![Adjective, Verb]),
-        ("september", vec![Month]),
-        ("serve", vec![Verb]),
-        ("service", vec![SingularNoun, Verb]),
-        ("settled", vec![VerbPast]),
-        ("settle", vec![Verb]),
-        ("seven", vec![Adjective, SingularNoun]),
-        ("several", vec![Adjective, SingularNoun]),
-        ("shade", vec![SingularNoun, Verb]),
-        ("shake", vec![SingularNoun, Verb]),
-        ("shall", vec![Adjective]),
-        ("shape", vec![SingularNoun, Verb]),
-        ("share", vec![SingularNoun, Verb]),
-        ("sharp", vec![Adjective]),
-        ("shine", vec![SingularNoun, Verb]),
-        ("ship", vec![SingularNoun, Verb]),
-        ("shirt", vec![SingularNoun]),
-        ("shoe", vec![SingularNoun, Verb]),
-        ("shoes", vec![PluralNoun]),
-        ("shop", vec![SingularNoun, Verb]),
-        ("shore", vec![SingularNoun, Verb]),
-        ("short", vec![SingularNoun, Verb]),
-        ("shot", vec![SingularNoun, VerbPast]),
-        ("shoulder", vec![SingularNoun, Verb]),
-        ("should", vec![Adjective]),
-        ("shout", vec![SingularNoun, Verb]),
-        ("shouted", vec![VerbPast]),
-        ("show", vec![SingularNoun, Verb]),
-        ("shown", vec![VerbPast]),
-        ("sick", vec![Adjective]),
-        ("side", vec![SingularNoun, Verb]),
-        ("sight", vec![SingularNoun, Verb]),
-        ("sign", vec![SingularNoun, Verb]),
-        ("signal", vec![SingularNoun, Verb]),
-        ("silent", vec![Adjective]),
-        ("silver", vec![Element, Verb]),
-        ("similar", vec![Adjective]),
-        ("simple", vec![Adjective]),
-        ("since", vec![Preposition]),
-        ("sing", vec![Verb]),
-        ("singapore", vec![Country]),
-        ("single", vec![SingularNoun, Verb]),
-        ("sister", vec![SingularNoun, Verb]),
-        ("size", vec![SingularNoun, Verb]),
-        ("skin", vec![SingularNoun, Verb]),
-        ("sleep", vec![SingularNoun, Verb]),
-        ("slept", vec![VerbPast]),
-        ("slow", vec![Adjective, Verb]),
-        ("slowly", vec![Adverb]),
-        ("small", vec![Adjective]),
-        ("smell", vec![Verb, SingularNoun]),
-        ("smiled", vec![VerbPast]),
-        ("smoke", vec![SingularNoun, Verb]),
-        ("snow", vec![SingularNoun, Verb]),
-        ("soft", vec![Adjective]),
-        ("soil", vec![SingularNoun, Verb]),
-        ("soldier", vec![SingularNoun, Verb]),
-        ("soldiers", vec![PluralNoun]),
-        ("sold", vec![VerbPast]),
-        ("solution", vec![SingularNoun]),
-        ("someone", vec![Pronoun]),
-        ("something", vec![Pronoun]),
-        ("sometimes", vec![Adverb]),
-        ("some", vec![Adjective]),
-        ("song", vec![SingularNoun]),
-        ("soon", vec![Adverb]),
-        ("sorry", vec![Interjection]),
-        ("sort", vec![SingularNoun, Verb]),
-        ("sound", vec![SingularNoun, Verb]),
-        ("south", vec![SingularNoun, Adjective, Adverb]),
-        ("southern", vec![Adjective]),
-        ("space", vec![SingularNoun, Verb]),
-        ("spain", vec![Country]),
-        ("speak", vec![Verb]),
-        ("special", vec![Adjective, SingularNoun]),
-        ("speed", vec![SingularNoun, Verb]),
-        ("spell", vec![Verb]),
-        ("spend", vec![Verb]),
-        ("spent", vec![VerbPast]),
-        ("spoke", vec![VerbPast]),
-        ("spot", vec![SingularNoun, Verb]),
-        ("spread", vec![SingularNoun, Verb]),
-        ("spring", vec![SingularNoun, Verb]),
-        ("square", vec![SingularNoun, Verb]),
-        ("stand", vec![SingularNoun, Verb]),
-        ("staple", vec![SingularNoun]),
-        ("star", vec![SingularNoun, Verb]),
-        ("stars", vec![PluralNoun]),
-        ("start", vec![SingularNoun, Verb]),
-        ("state", vec![SingularNoun, Verb]),
-        ("statement", vec![SingularNoun]),
-        ("station", vec![SingularNoun, Verb]),
-        ("stay", vec![SingularNoun, Verb]),
-        ("steel", vec![SingularNoun, Verb, Adjective]),
-        ("step", vec![SingularNoun, Verb]),
-        ("stick", vec![SingularNoun, Verb]),
-        ("still", vec![SingularNoun, Verb]),
-        ("stock", vec![SingularNoun, Verb]),
-        ("stone", vec![SingularNoun, Verb]),
-        ("stood", vec![VerbPast]),
-        ("stop", vec![SingularNoun, Verb]),
-        ("store", vec![SingularNoun, Verb]),
-        ("storm", vec![SingularNoun, Verb]),
-        ("story", vec![SingularNoun]),
-        ("straight", vec![Adjective]),
-        ("stranger", vec![SingularNoun]),
-        ("strange", vec![Adjective]),
-        ("stream", vec![SingularNoun, Verb]),
-        ("street", vec![SingularNoun]),
-        ("strength", vec![SingularNoun]),
-        ("stretched", vec![VerbPast]),
-        ("strike", vec![SingularNoun, Verb]),
-        ("string", vec![SingularNoun, Verb]),
-        ("strong", vec![Adjective]),
-        ("students", vec![PluralNoun]),
-        ("student", vec![SingularNoun]),
-        ("study", vec![SingularNoun, Verb]),
-        ("subject", vec![SingularNoun, Verb]),
-        ("substances", vec![PluralNoun]),
-        ("succeed", vec![Verb]),
-        ("success", vec![SingularNoun]),
-        ("such", vec![Adjective]),
-        ("suddenly", vec![Adverb]),
-        ("sudden", vec![Adjective]),
-        ("suffer", vec![Verb]),
-        ("suffix", vec![SingularNoun]),
-        ("sugar", vec![SingularNoun, Verb]),
-        ("suggested", vec![VerbPast]),
-        ("suit", vec![SingularNoun, Verb]),
-        ("summer", vec![SingularNoun, Verb]),
-        ("sunday", vec![Day]),
-        ("supply", vec![SingularNoun, Verb]),
-        ("suppose", vec![Verb]),
-        ("sure", vec![Adjective]),
-        ("surface", vec![SingularNoun, Verb]),
-        ("surprise", vec![SingularNoun, Verb]),
-        ("sweden", vec![Country]),
-        ("sweet", vec![Adjective]),
-        ("swim", vec![SingularNoun, Verb]),
-        ("syllables", vec![PluralNoun]),
-        ("symbols", vec![PluralNoun]),
-        ("system", vec![SingularNoun]),
-        ("table", vec![SingularNoun, Verb]),
-        ("tail", vec![SingularNoun, Verb]),
-        ("take", vec![SingularNoun, Verb]),
-        ("taken", vec![VerbPast, Adjective]),
-        ("talk", vec![SingularNoun, Verb]),
-        ("tall", vec![Adjective]),
-        ("taste", vec![SingularNoun, Verb]),
-        ("teach", vec![Verb]),
-        ("teacher", vec![SingularNoun]),
-        ("team", vec![SingularNoun, Verb]),
-        ("tear", vec![SingularNoun, Verb]),
-        ("tell", vec![SingularNoun, Verb]),
-        ("temperature", vec![SingularNoun]),
-        ("terms", vec![PluralNoun]),
-        ("test", vec![SingularNoun, Verb]),
-        ("texas", vec![UsState]),
-        ("thank", vec![Verb]),
-        ("than", vec![Preposition]),
-        ("that", vec![Pronoun]),
-        ("their", vec![Adjective]),
-        ("themselves", vec![Pronoun]),
-        ("them", vec![Pronoun]),
-        ("then", vec![Preposition, Conjunction, Noun, Adjective]),
-        (
-            "there",
-            vec![Adverb, Pronoun, Adjective, SingularNoun, Interjection]
-        ),
-        ("therefore", vec![Adverb]),
-        ("these", vec![Pronoun, Adjective]),
-        ("they", vec![Pronoun]),
-        ("thick", vec![Adjective]),
-        ("thin", vec![Adjective]),
-        ("thing", vec![SingularNoun]),
-        ("think", vec![Verb]),
-        ("third", vec![Adjective, SingularNoun]),
-        ("thirteen", vec![Adjective, SingularNoun]),
-        ("this", vec![Pronoun, Adjective, Adverb]),
-        ("those", vec![Pronoun, Adjective]),
-        ("though", vec![Conjunction, Adverb]),
-        ("thought", vec![SingularNoun, Verb]),
-        ("thousand", vec![SingularNoun, Adjective]),
-        ("thousands", vec![PluralNoun]),
-        ("three", vec![SingularNoun, Adjective]),
-        ("threw", vec![VerbPast]),
-        ("through", vec![Preposition, Adverb, Adjective]),
-        ("throw", vec![SingularNoun, Verb]),
-        ("thrown", vec![Adjective, VerbPast]),
-        ("thus", vec![Adverb]),
-        ("tied", vec![Adjective, VerbPast]),
-        ("till", vec![SingularNoun, Verb]),
-        ("time", vec![SingularNoun, Verb]),
-        ("tiny", vec![Adjective]),
-        ("today", vec![SingularNoun, Adverb, Adjective]),
-        ("together", vec![Adverb, Adjective]),
-        ("tokyo", vec![City]),
-        ("told", vec![VerbPast]),
-        ("tomorrow", vec![SingularNoun, Adverb]),
-        ("tone", vec![SingularNoun, Verb]),
-        ("took", vec![VerbPast]),
-        ("tools", vec![PluralNoun]),
-        ("tore", vec![VerbPast]),
-        ("total", vec![SingularNoun, Verb]),
-        ("touch", vec![SingularNoun, Verb]),
-        ("toward", vec![Preposition]),
-        ("town", vec![SingularNoun]),
-        ("track", vec![SingularNoun, Verb]),
-        ("trade", vec![SingularNoun, Verb]),
-        ("train", vec![SingularNoun, Verb]),
-        ("training", vec![SingularNoun]),
-        ("travel", vec![Verb]),
-        ("tree", vec![SingularNoun]),
-        ("triangle", vec![SingularNoun]),
-        ("tried", vec![VerbPast]),
-        ("tries", vec![Verb, PluralNoun]),
-        ("trip", vec![SingularNoun, Verb]),
-        ("trouble", vec![SingularNoun, Verb]),
-        ("truck", vec![SingularNoun, Verb]),
-        ("true", vec![Adjective, Verb]),
-        ("trust", vec![SingularNoun, Verb]),
-        ("tube", vec![SingularNoun]),
-        ("tuesday", vec![Day]),
-        ("turn", vec![SingularNoun, Verb]),
-        ("twelve", vec![Adjective, SingularNoun]),
-        ("twenty", vec![Adjective, SingularNoun]),
-        ("type", vec![SingularNoun, Verb]),
-        ("uncle", vec![SingularNoun]),
-        ("under", vec![Preposition, Adverb, Adjective]),
-        ("underline", vec![SingularNoun, Verb]),
-        ("understand", vec![Verb]),
-        ("understood", vec![VerbPast]),
-        ("unit", vec![SingularNoun]),
-        ("until", vec![Preposition, Conjunction]),
-        ("upon", vec![Preposition]),
-        ("uranus", vec![Planet]),
-        ("usually", vec![Adjective]),
-        ("usual", vec![Adjective]),
-        ("valley", vec![SingularNoun]),
-        ("value", vec![SingularNoun, Verb]),
-        ("various", vec![Adjective, Pronoun]),
-        ("venus", vec![Planet]),
-        ("verb", vec![SingularNoun]),
-        ("vermont", vec![UsState]),
-        ("very", vec![Adjective, Adverb]),
-        ("view", vec![SingularNoun, Verb]),
-        ("village", vec![SingularNoun]),
-        ("virginia", vec![UsState]),
-        ("visit", vec![SingularNoun, Verb]),
-        ("voice", vec![SingularNoun, Verb]),
-        ("vowel", vec![SingularNoun]),
-        ("wagon", vec![SingularNoun]),
-        ("wait", vec![SingularNoun, Verb]),
-        ("wales", vec![Country]),
-        ("walk", vec![SingularNoun, Verb]),
-        ("wall", vec![SingularNoun, Verb]),
-        ("wants", vec![Verb]),
-        ("want", vec![SingularNoun, Verb]),
-        ("warm", vec![SingularNoun, Verb]),
-        ("warsaw", vec![City]),
-        ("wash", vec![SingularNoun, Verb]),
-        ("washington", vec![UsState, City]),
-        ("watch", vec![SingularNoun, Verb]),
-        ("water", vec![SingularNoun, Verb]),
-        ("wave", vec![SingularNoun, Verb]),
-        ("waves", vec![PluralNoun]),
-        ("weak", vec![SingularNoun]),
-        ("wear", vec![Verb]),
-        ("weather", vec![SingularNoun, Verb]),
-        ("wedge", vec![SingularNoun, Verb]),
-        ("wednesday", vec![Day]),
-        ("week", vec![SingularNoun]),
-        ("weight", vec![SingularNoun]),
-        ("welcome", vec![SingularNoun, Verb]),
-        ("well", vec![Preposition, SingularNoun]),
-        ("went", vec![VerbPast]),
-        ("were", vec![VerbPast]),
-        ("west", vec![Adjective, SingularNoun]),
-        ("western", vec![Adjective, SingularNoun]),
-        (
-            "what",
-            vec![Pronoun, Adjective, Adverb, Conjunction, Interjection]
-        ),
-        ("wheat", vec![SingularNoun]),
-        ("wheel", vec![SingularNoun]),
-        ("wheels", vec![PluralNoun]),
-        ("when", vec![Adverb, Conjunction, Pronoun, SingularNoun]),
-        ("where", vec![Adverb, Conjunction, Pronoun, SingularNoun]),
-        ("whether", vec![Conjunction]),
-        ("which", vec![Pronoun, Adjective]),
-        ("while", vec![SingularNoun, Conjunction, TransitiveVerb]),
-        ("white", vec![Adjective, SingularNoun]),
-        ("whole", vec![Adjective, SingularNoun]),
-        ("whom", vec![Pronoun]),
-        ("whose", vec![Adjective]),
-        ("wide", vec![Adjective, Adverb]),
-        ("wife", vec![SingularNoun, Verb]),
-        ("wild", vec![Adjective, Adverb, SingularNoun]),
-        ("will", vec![SingularNoun, Verb]),
-        ("wind", vec![SingularNoun, Verb]),
-        ("window", vec![SingularNoun, Verb]),
-        ("wing", vec![SingularNoun, Verb]),
-        ("wings", vec![PluralNoun]),
-        ("winter", vec![SingularNoun, Verb]),
-        ("wire", vec![SingularNoun, Verb]),
-        ("wise", vec![SingularNoun, Verb]),
-        ("wish", vec![SingularNoun, Verb]),
-        ("with", vec![Preposition]),
-        ("within", vec![Adverb, Preposition, SingularNoun]),
-        ("without", vec![Adverb, Preposition, SingularNoun]),
-        ("woman", vec![SingularNoun]),
-        ("women", vec![PluralNoun]),
-        ("wonder", vec![SingularNoun, Verb]),
-        ("wood", vec![SingularNoun, Verb]),
-        ("word", vec![SingularNoun]),
-        ("wore", vec![VerbPast]),
-        ("work", vec![SingularNoun, Verb]),
-        ("workers", vec![PluralNoun]),
-        ("world", vec![SingularNoun]),
-        ("worn", vec![Adjective, VerbPast]),
-        ("worth", vec![SingularNoun, Adjective]),
-        ("would", vec![AuxiliaryVerb]),
-        ("write", vec![Verb]),
-        ("written", vec![VerbPast, Adjective]),
-        ("wrong", vec![Adjective, Verb]),
-        ("wrote", vec![VerbPast]),
-        ("yard", vec![SingularNoun]),
-        ("year", vec![SingularNoun]),
-        ("yellow", vec![Adjective, Verb]),
-        ("yesterday", vec![SingularNoun]),
-        ("young", vec![SingularNoun, Adjective]),
-        ("yourself", vec![Pronoun]),
-        ("your", vec![Adjective]),
-    ]);
+//--------------------------------------------------------------------------------------------------
+
+#[derive(Debug)]
+enum Sub<'a> {
+    Pattern(&'a str),
+    Special(WordKind),
 }
+
+//--------------------------------------------------------------------------------------------------
+
+enum KeychainWord {
+    KeychainWord1,
+    KeychainWord2,
+    KeychainWord3,
+}
+
+use KeychainWord::*;
+
+const KEYCHAIN_WORDS: [KeychainWord; 3] = [KeychainWord1, KeychainWord2, KeychainWord3];
+
+//--------------------------------------------------------------------------------------------------
 
 /**
 
@@ -1482,149 +558,4 @@ fn shuffle(s: &str) -> String {
     let mut r = s.chars().collect::<Vec<_>>();
     r.shuffle(&mut rng);
     r.into_iter().collect()
-}
-
-/**
-
-Generate a keychain word type 1, consisting of 5 lowercase letters and 1 uppercase letter
-
-*/
-fn keychain_word_1() -> String {
-    shuffle(&format!(
-        "{}{}",
-        random_str(5, &LOWERCASE),
-        random_str(1, &UPPERCASE)
-    ))
-}
-
-/**
-
-Generate a keychain word type 2, consisting of 5 lowercase letters and 1 digit
-
-*/
-fn keychain_word_2() -> String {
-    shuffle(&format!(
-        "{}{}",
-        random_str(5, &LOWERCASE),
-        random_str(1, &DIGITS)
-    ))
-}
-
-/**
-
-Generate a keychain word type 3, consisting of 6 lowercase letters
-
-*/
-fn keychain_word_3() -> String {
-    random_str(6, &LOWERCASE)
-}
-
-enum KeychainWord {
-    KeychainWord1,
-    KeychainWord2,
-    KeychainWord3,
-}
-
-use KeychainWord::*;
-
-const KEYCHAIN_WORDS: [KeychainWord; 3] = [KeychainWord1, KeychainWord2, KeychainWord3];
-
-/**
-
-Generate a keychain-style password with `n` "words"
-
-First 3 "words" are types 1, 2, and 3.
-Additional words are of random type.
-Words are shuffled.
-
-*/
-fn keychain_words(n: usize) -> Vec<String> {
-    let mut words = vec![];
-    if n == 0 {
-        return words;
-    }
-    words.push(keychain_word_1());
-    if n >= 2 {
-        words.push(keychain_word_2());
-    }
-    if n >= 3 {
-        words.push(keychain_word_3());
-    }
-    let mut rng = thread_rng();
-    for _ in 4..=n {
-        words.push(match KEYCHAIN_WORDS.choose(&mut rng).unwrap() {
-            KeychainWord1 => keychain_word_1(),
-            KeychainWord2 => keychain_word_2(),
-            KeychainWord3 => keychain_word_3(),
-        });
-    }
-    words.shuffle(&mut rng);
-    words
-}
-
-/**
-
-Generate a "code name" like `BLUE STEEL`
-
-*/
-pub fn code_name() -> String {
-    format!(
-        "{} {}",
-        WORDS.get(Adjective).to_uppercase(),
-        WORDS.get(Noun).to_uppercase(),
-    )
-}
-
-/**
-
-Generate a keychain-style password like `plvifc-z9kedn-imcbDp`
-
-*/
-pub fn keychain() -> String {
-    keychain_words(3).join("-")
-}
-
-/**
-
-Generate a password from the given pattern
-
-* Words
-    * `W`: Uppercase word
-    * `w`: Lowercase word
-    * `T`: Title case word
-    * `k`: Keychain-style "word" `shuffle(cccc(c|d)(C|c))`
-* Characters
-    * `C`: Uppercase letter (A-Z)
-    * `c`: Lowercase letter (a-z)
-    * `d`: Digit (0-9)
-    * `s`: Symbol (`~!@#$%^&*-_=+;:,./?()[]{}<>`)
-    * `a`: Any of the above
-
-*/
-pub fn generate(pattern: &str) -> String {
-    let mut r = String::new();
-    let mut words = WORDS.get_n(
-        pattern
-            .chars()
-            .map(|c| if ['w', 'W', 'T'].contains(&c) { 1 } else { 0 })
-            .sum(),
-        All,
-    );
-    let mut kc_words = keychain_words(pattern.chars().map(|c| if c == 'k' { 1 } else { 0 }).sum());
-    let mut rng = thread_rng();
-    for c in pattern.chars() {
-        match c {
-            'W' => r.push_str(&words.remove(0).to_uppercase()),
-            'w' => r.push_str(&words.remove(0)),
-            'T' => r.push_str(&ucfirst(&words.remove(0))),
-            'k' => r.push_str(&kc_words.remove(0)),
-            'C' => r.push(*UPPERCASE.choose(&mut rng).unwrap()),
-            'c' => r.push(*LOWERCASE.choose(&mut rng).unwrap()),
-            'd' => r.push(*DIGITS.choose(&mut rng).unwrap()),
-            's' => r.push(*SYMBOLS.choose(&mut rng).unwrap()),
-            'a' => r.push(*ALL.choose(&mut rng).unwrap()),
-            _ => r.push(c),
-        }
-    }
-    r
 }

@@ -18,4 +18,8 @@
   reorganize
 * 0.6.1 (2023-11-22): fix readme
 * 0.7.0 (2023-11-24): complete redesign
+* 0.8.0 (2023-11-25): remove benchmark; simplify cli options; add `-r` and `-C`
+  options; restore `-c 0` functionality; add `codename-series` special pattern;
+  add word kind subpatterns; enable external runtime configuration via new
+  `Config` struct
 
