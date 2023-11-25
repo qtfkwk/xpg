@@ -93,6 +93,16 @@ fn main() -> Result<()> {
     let cfg = if let Some(config) = cli.config {
         // Load a custom configuration via -C
         xpg::Config::from_path(&config)?
+    } else if let Some(proj_dirs) = directories::ProjectDirs::from("com", "qtfkwk", "xpg") {
+        let config_dir = proj_dirs.config_dir();
+        let user_config = config_dir.join("config.json");
+        if user_config.exists() {
+            // Load a custom configuration file
+            xpg::Config::from_path(&user_config)?
+        } else {
+            // Use the default configuration
+            xpg::CONFIG.clone()
+        }
     } else {
         // Use the default configuration
         xpg::CONFIG.clone()

@@ -203,18 +203,20 @@ $ xpg a -m 20
 
 # Configuration
 
-See [`config.json`] for the default configuration compiled into the binary
-executable.
+See [`config.json`] or use `-d` for the default configuration compiled into the
+binary executable.
 
 [`config.json`]: config.json
 
 If another file is placed at any of the following locations or the path provided
 via the `-C` option at *runtime*, it will be used instead.
 
-```text
-~/.config/xpg/config.json
-/etc/xpg/config.json
-```
+* Linux:
+  `/home/username/.config/xpg/config.json`
+* Windows:
+  `C:\Users\username\AppData\Roaming\qtfkwk\xpg\config\config.json`
+* macOS:
+  `/Users/username/Library/Application Support/com.qtfkwk.xpg/config.json`
 
 ## `WordKind`s
 

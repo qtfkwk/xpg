@@ -10,7 +10,7 @@ xkcd-style password generator
 
 ```text
 $ xpg -h
-xpg 0.8.0 <https://crates.io/crates/xpg>
+xpg 0.8.1 <https://crates.io/crates/xpg>
 
 xkcd-style password generator
 
@@ -56,7 +56,7 @@ Notes
 
 ```text
 $ xpg -V
-xpg 0.8.0
+xpg 0.8.1
 ```
 
 *See also the [Configuration] section below.*
@@ -67,39 +67,39 @@ xpg 0.8.0
 
 ```text
 $ xpg
-unittravelbelfastdance
+dictionarysomeonegalaxyscale
 ```
 
 Generate 10 passwords:
 
 ```text
 $ xpg -c 10
-kenyawentvillagesystem
-statementofferseatgermany
-sweetsoftpaintroad
-futuresystemmontanagone
-sundaytoolspicturebicycle
-passedrecordinstrumentsoffice
-osloscotlandlegsbeauty
-watchlargearmyridden
-cornerdesirehusbandsent
-laborsymbolsconditionstrain
+plantsicelandpartythin
+husbandobjectneptunelisten
+horsepassedbridgeshouted
+figurestonesoldierchief
+fractionindiaunderstandwhom
+washthirteenfoodboard
+wishdeepdemandtell
+placecornermembersthat
+fridayrushbegantokyo
+doublelasttrainingbread
 ```
 
 Generate passwords forever (or until Ctrl+C / SIGINT):
 
 ```text
 $ xpg -c 0
-rometouchslowfriday
-goodlearnunderlinereached
-greeceflierconsiderriver
-plutotwelvenationlone
-spokeaustraliashotgovern
-alsosafeshoutedeight
-remainalsomeatcalifornia
-dishprobablymadequarter
-spellworkersproudaway
-rainwavenationguess
+painttomorrowpeacerepresent
+mayorhandbecausepoor
+knewvirginiayellowknown
+bothpeaceaprilindicate
+theyofficemuchwednesday
+marketfoolpicturewhose
+shipgreenlaughdevice
+propertygoldplainabout
+loudfatherhangstatement
+throughbrownideablood
 ^C
 ```
 
@@ -107,72 +107,72 @@ Generate a password with 8 words:
 
 ```text
 $ xpg wwwwwwww
-poleunderstandpositionactionsystemcolombiaoppositegive
+stillstooduranusmoneyrealsectiongoodbyedivision
 ```
 
 Generate 10 passwords with 8 words:
 
 ```text
 $ xpg wwwwwwww -c 10
-spendboatyearoppositemontanacleanstartafraid
-escapeinsectsawayuponsoilsucceedgoesinches
-asiasortsizenearprovetreeenoughskin
-centbodyvalleylosepricefeltcannotsyllables
-shoutedohionoselegspieceportugalsimilarthick
-electricitycountpositioncenturypresidentshandtripcotton
-instrumentsthrowncirclemattermeattherelanguagegold
-worldseedseatfirstkingservicegreatshake
-somethingstaplearounddollarevereverythingeitherchildren
-aroundsciencecapitalcarefullyveryjourneyhollandstaple
+doubtdailyfastrichtwentyskinbelgiumchild
+letterpagesubjectunderstandhusbandcropshoweverfine
+legsnailforestburningperiodnoticeableround
+thuspagepartcreatecropschangecolombiaoctober
+sightgentlechangeroadlossgavegoodhawaii
+wheelleaderbottlethankguardhomebattlestreet
+certainaftermaindownjulysentnaturepage
+treeproduceapriltilllosebelongpusharms
+gamegonecigarettehealthcropsglasspresscuba
+rightpresentunitshoplordsincecomelisbon
 ```
 
 Generate a password with 2 words followed by 3 digits:
 
 ```text
 $ xpg wwddd
-excitingpeace726
+frienddeal814
 ```
 
 Generate a password with 2 words followed by 2 symbols:
 
 ```text
 $ xpg wwss
-thesemain*/
+pricearrived;-
 ```
 
 Generate a password with 2 words followed by a digit and a symbol:
 
 ```text
 $ xpg wwds
-suchproblem4_
+winteraunt7;
 ```
 
 Generate a password with 4 words followed by 2 lowercase letters:
 
 ```text
 $ xpg wwwwcc
-buildingmisterlaughperiodoa
+fastmercurycontinuemostml
 ```
 
 Generate a password with 4 words followed by 2 uppercase letters:
 
 ```text
 $ xpg wwwwCC
-presidentssomeonepatternsentenceVX
+visitforeverjumpeditselfZE
 ```
 
 Generate a password with 4 title case words:
 
 ```text
 $ xpg TTTT
-OxygenSoldBrotherNose
+CarefullyMoneyKnownSelf
 ```
 
 Generate a password with 4 uppercase words:
 
 ```text
 $ xpg WWWW
-AUSTRALIAFURTHERDESERTPOSITION
+DOLLARWORESAFETYHEALTH
 ```
 
 Generate a password with 4 words followed by 5 "any" characters (lowercase letter, uppercase letter,
@@ -180,21 +180,21 @@ digit, or symbol)
 
 ```text
 $ xpg wwwwaaaaa
-squareprovideshakeroomE*?pw
+californiabottomgentlemaniceland<LVdD
 ```
 
 Generate a password with 3 words and at least 15 characters:
 
 ```text
 $ xpg www -m 16
-fingersbelliron
+delightbelfastlaugh
 ```
 
 Generate a password with 3 words and no more than 20 characters:
 
 ```text
 $ xpg www -M 20
-perfectheldanything
+blowcornbecome
 ```
 
 Generate a password with 4 words and between 20 and 25 characters (increase attempts to help it
@@ -202,7 +202,7 @@ succeed):
 
 ```text
 $ xpg www -m 20 -M 25 -a 1000
-pureespeciallypretty
+distancerhythmoctober
 ```
 
 Generate a password with 2 words, 3 digits, 1 symbol, and exactly 16 characters (increase attempts
@@ -210,107 +210,109 @@ to help it succeed):
 
 ```text
 $ xpg wwddds -l 16 -a 1000
-observebirds823{
+detailsserve302#
 ```
 
 Generate a password with a `1`, 2 title case words, and `!`:
 
 ```text
 $ xpg '1TT!'
-1MovementSignal!
+1GaveMuch!
 ```
 
 Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits:
 
 ```text
 $ xpg 's{adj}{adj}{n}dd'
-$excitingverytrack95
+(pleasantmadepublic03
 ```
 
 Generate a keychain-style password:
 
 ```text
 $ xpg keychain
-yymodw-xfvan6-txLzrm
+bfraPq-titxcw-cqyy4x
 ```
 
 Generate a code name:
 
 ```text
 $ xpg codename
-FIRM POINT
+GOLD CIGARETTE
 ```
 
 Generate a code name series:
 
 ```text
 $ xpg codename-series
-AWAYTUBE GONENIGHT
-AWAYTUBE NEITHERBIRDS
-AWAYTUBE BRITISHMORNING
-AWAYTUBE PARTIALBONE
-AWAYTUBE MAINEIGHT
-AWAYTUBE PASSEDSHOES
-AWAYTUBE LEFTNATION
-AWAYTUBE THERESHADE
-AWAYTUBE LOWERMOMENT
-AWAYTUBE DIFFICULTPAIN
+JUSTTHERE WHICHMOON
+JUSTTHERE SHARPSTAND
+JUSTTHERE TINYCOUNT
+JUSTTHERE DESERTRIVER
+JUSTTHERE BROKENSURFACE
+JUSTTHERE EIGHTWITHOUT
+JUSTTHERE GROWNPLAIN
+JUSTTHERE DIRECTPRESIDENTS
+JUSTTHERE DIRECTTEST
+JUSTTHERE NEXTNERVE
 ```
 
 Generate a code name series with 20 code names:
 
 ```text
 $ xpg codename-series -c 20
-STRANGESCIENCE SIMILARGROUP
-STRANGESCIENCE CLEARPARAGRAPH
-STRANGESCIENCE THOUSANDFAVOR
-STRANGESCIENCE BRITISHWORTH
-STRANGESCIENCE FRENCHTELL
-STRANGESCIENCE PRETTYSOUTH
-STRANGESCIENCE RICHQUESTIONS
-STRANGESCIENCE HEADARMS
-STRANGESCIENCE EASYFUTURE
-STRANGESCIENCE SICKSUFFIX
-STRANGESCIENCE BRITISHBOARD
-STRANGESCIENCE BROKENWIND
-STRANGESCIENCE JUSTHUNDRED
-STRANGESCIENCE FASTPARTIAL
-STRANGESCIENCE GENERALLIST
-STRANGESCIENCE OUTEROCTOBER
-STRANGESCIENCE LEFTPOINT
-STRANGESCIENCE LEADISLAND
-STRANGESCIENCE PROBABLESOUND
-STRANGESCIENCE SWEETPROCESS
+GONEMERCURY LONGLADY
+GONEMERCURY SEPARATEEUROPE
+GONEMERCURY THEIROTHER
+GONEMERCURY LATERPERIOD
+GONEMERCURY ABLESEED
+GONEMERCURY PLURALCOTTON
+GONEMERCURY SAFEMOUTH
+GONEMERCURY FREELAST
+GONEMERCURY EXPRESSSEAT
+GONEMERCURY GLASSGRAIN
+GONEMERCURY MADEROCK
+GONEMERCURY FIFTYOPINION
+GONEMERCURY AFTERSAFE
+GONEMERCURY OUTSIDEFINE
+GONEMERCURY DISTANTSLEEP
+GONEMERCURY CHIEFWHOLE
+GONEMERCURY WILDFORCE
+GONEMERCURY JAPANESEWEATHER
+GONEMERCURY BEARRUSH
+GONEMERCURY DOUBLEMARK
 ```
 
 Generate a password with 20 "any" characters:
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
-.ZghZ8XdBSbpOlJq$?>^
+$OHj;I6c1B~]Lq4y@?~I
 ```
 
 Same as the previous example, but shorter:
 
 ```text
 $ xpg a -m 20
-zf_?R]j,4)L#{nq<EC>S
+wR)dIbaV!C;xV=^Eb+=]
 ```
 
 # Configuration
 
-See [`config.json`] for the default configuration compiled into the binary
-executable.
+See [`config.json`] or use `-d` for the default configuration compiled into the
+binary executable.
 
 [`config.json`]: config.json
 
 If another file is placed at any of the following locations or the path provided
 via the `-C` option at *runtime*, it will be used instead.
 
-```text
-~/.config/xpg/config.json
-/etc/xpg/config.json
-```
+* Linux:
+  `/home/username/.config/xpg/config.json`
+* Windows:
+  `C:\Users\username\AppData\Roaming\qtfkwk\xpg\config\config.json`
+* macOS:
+  `/Users/username/Library/Application Support/com.qtfkwk.xpg/config.json`
 
 ## `WordKind`s
 
@@ -385,6 +387,7 @@ via the `-C` option at *runtime*, it will be used instead.
   options; restore `-c 0` functionality; add `codename-series` special pattern;
   add word kind subpatterns; enable external runtime configuration via new
   `Config` struct
+* 0.8.1 (2023-11-25): fix `-C` option
 
 # References
 

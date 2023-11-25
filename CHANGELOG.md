@@ -22,4 +22,5 @@
   options; restore `-c 0` functionality; add `codename-series` special pattern;
   add word kind subpatterns; enable external runtime configuration via new
   `Config` struct
+* 0.8.1 (2023-11-25): fix `-C` option
 
