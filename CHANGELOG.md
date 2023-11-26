@@ -23,4 +23,6 @@
   add word kind subpatterns; enable external runtime configuration via new
   `Config` struct
 * 0.8.1 (2023-11-25): fix `-C` option
+* 0.9.0 (2023-11-26): add extended words; enable multiple patterns; add `-e` and
+  `-L` options; make `-d` dump the loaded not default configuration
 

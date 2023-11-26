@@ -4,7 +4,7 @@ xkcd-style password generator
 
 */
 
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use lazy_static::lazy_static;
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde::{Deserialize, Serialize};
@@ -12,17 +12,24 @@ use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
-use std::str::FromStr;
 use ucfirst::ucfirst;
 
 //--------------------------------------------------------------------------------------------------
 
-const CONFIG_JSON: &str = include_str!("../config.json");
+pub const CONFIG: &str = include_str!("../config.json");
 
 lazy_static! {
-    pub static ref CONFIG: Config = Config::from_str(CONFIG_JSON).unwrap();
-    pub static ref WORD_KIND_SUBS: Vec<(String, WordKind)> =
-        WORD_KIND_LIST.iter().map(|x| (x.sub(), *x)).collect();
+    pub static ref WORD_KIND_SUBS: HashMap<String, WordKind> = WORD_KINDS_ALL
+        .iter()
+        .flat_map(|x| {
+            let sub = x.sub();
+            [
+                (sub.clone(), *x),
+                (format!("{{W:{}", &sub[1..]), *x),
+                (format!("{{T:{}", &sub[1..]), *x),
+            ]
+        })
+        .collect();
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -32,6 +39,11 @@ pub enum WordKind {
     Astronomy,
     Planet,
     Moon,
+    MarsMoon,
+    JupiterMoon,
+    SaturnMoon,
+    UranusMoon,
+    NeptuneMoon,
     Continent,
     Country,
     UsState,
@@ -43,8 +55,10 @@ pub enum WordKind {
     Name,
     Element,
     Mythology,
-    RomanDeity,
-    GreekDeity,
+    RomanMyth,
+    GreekMyth,
+    Olympian,
+    Chthonic,
     Month,
     Day,
     Color,
@@ -64,14 +78,21 @@ pub enum WordKind {
     Conjunction,
     Interjection,
     All,
+    Extended,
+    AllExtended,
 }
 
 use WordKind::*;
 
-const WORD_KIND_LIST: [WordKind; 35] = [
+const WORD_KINDS_ALL: [WordKind; 44] = [
     Astronomy,
     Planet,
     Moon,
+    MarsMoon,
+    JupiterMoon,
+    SaturnMoon,
+    UranusMoon,
+    NeptuneMoon,
     Continent,
     Country,
     UsState,
@@ -83,8 +104,10 @@ const WORD_KIND_LIST: [WordKind; 35] = [
     Name,
     Element,
     Mythology,
-    RomanDeity,
-    GreekDeity,
+    RomanMyth,
+    GreekMyth,
+    Olympian,
+    Chthonic,
     Month,
     Day,
     Color,
@@ -104,15 +127,32 @@ const WORD_KIND_LIST: [WordKind; 35] = [
     Conjunction,
     Interjection,
     All,
+    Extended,
+    AllExtended,
+];
+
+const WORD_KINDS_EXTENDED: [WordKind; 7] = [
+    MarsMoon,
+    JupiterMoon,
+    SaturnMoon,
+    UranusMoon,
+    NeptuneMoon,
+    Extended,
+    AllExtended,
 ];
 
 impl WordKind {
-    fn enumerate(&self) -> Vec<WordKind> {
-        let mut r = vec![All, *self];
+    fn enumerate(&self, extended: bool) -> Vec<WordKind> {
+        let mut r = vec![*self];
         match self {
             Astronomy => r.append(&mut vec![SingularNoun, Noun]),
             Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
             Moon => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
+            MarsMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            JupiterMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            SaturnMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            UranusMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            NeptuneMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
             Continent => r.append(&mut vec![Place, ProperNoun, SingularNoun, Noun]),
             Country => r.append(&mut vec![Place, ProperNoun]),
             UsState => r.append(&mut vec![Place, ProperNoun]),
@@ -123,8 +163,10 @@ impl WordKind {
             Name => r.push(ProperNoun),
             Element => r.append(&mut vec![ProperNoun, Noun]),
             Mythology => r.append(&mut vec![ProperNoun, Noun]),
-            RomanDeity => r.append(&mut vec![Mythology, ProperNoun, Noun]),
-            GreekDeity => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            RomanMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            GreekMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            Olympian => r.append(&mut vec![GreekMyth, ProperNoun, Noun]),
+            Chthonic => r.append(&mut vec![GreekMyth, ProperNoun, Noun]),
             Month => r.append(&mut vec![SingularNoun, Noun]),
             Day => r.append(&mut vec![SingularNoun, Noun]),
             Color => r.append(&mut vec![SingularNoun, Noun, Verb]),
@@ -136,6 +178,10 @@ impl WordKind {
             SingularNoun => r.push(Noun),
             _ => {}
         }
+        if extended || !r.contains(&Extended) {
+            r.push(All);
+        }
+        r.push(AllExtended);
         r
     }
 
@@ -144,8 +190,10 @@ impl WordKind {
             Adjective => "{adj}",
             Adverb => "{adv}",
             All => "{a}",
+            AllExtended => "{a.ext}",
             Astronomy => "{ast}",
             AuxiliaryVerb => "{v.aux}",
+            Chthonic => "{chthonic}",
             City => "{city}",
             Color => "{color}",
             Conjunction => "{conj}",
@@ -153,26 +201,33 @@ impl WordKind {
             Country => "{country}",
             Day => "{day}",
             Element => "{el}",
+            Extended => "{ext}",
             FemaleName => "{fname}",
-            GreekDeity => "{greekdeity}",
+            GreekMyth => "{greekmyth}",
             Interjection => "{i}",
             IntransitiveVerb => "{v.int}",
+            JupiterMoon => "{jupitermoon}",
             MaleName => "{mname}",
+            MarsMoon => "{marsmoon}",
             Month => "{mon}",
             Moon => "{moon}",
             Mythology => "{myth}",
             Name => "{name}",
             Nationality => "{nat}",
+            NeptuneMoon => "{neptunemoon}",
             Noun => "{n}",
+            Olympian => "{olympian}",
             Place => "{place}",
             Planet => "{planet}",
             PluralNoun => "{n.pl}",
             Preposition => "{prep}",
             Pronoun => "{n.pro}",
             ProperNoun => "{n.prop}",
-            RomanDeity => "{romandeity}",
+            RomanMyth => "{romanmyth}",
+            SaturnMoon => "{saturnmoon}",
             SingularNoun => "{n.s}",
             TransitiveVerb => "{v.tr}",
+            UranusMoon => "{uranusmoon}",
             UsState => "{us-state}",
             Verb => "{v}",
             VerbPast => "{v.past}",
@@ -193,48 +248,42 @@ pub struct Config {
 
     #[serde(skip)]
     alphabets: BTreeMap<char, Vec<char>>,
-}
 
-#[derive(Debug, PartialEq, Eq)]
-pub struct ConfigParseError;
-
-impl FromStr for Config {
-    type Err = ConfigParseError;
-
-    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        match serde_json::from_str::<Config>(s) {
-            Ok(cfg) => Ok(cfg.build()),
-            Err(e) => {
-                eprintln!("ERROR: {e:?}");
-                Err(ConfigParseError)
-            }
-        }
-    }
+    #[serde(skip)]
+    pub extended: bool,
 }
 
 impl Config {
-    pub fn from_path(path: &Path) -> Result<Config> {
+    pub fn from_path(path: &Path, extended: bool) -> Result<Config> {
         let r: Config = serde_json::from_reader(BufReader::new(File::open(path)?))?;
-        Ok(r.build())
+        Ok(r.build(extended))
+    }
+
+    pub fn from_str(s: &str, extended: bool) -> Result<Config> {
+        Ok(serde_json::from_str::<Config>(s)?.build(extended))
     }
 
     pub fn dump(&self) -> Result<String> {
         Ok(serde_json::to_string_pretty(self)?)
     }
 
-    fn build(mut self) -> Config {
+    fn build(mut self, extended: bool) -> Config {
         // Build word lists for each kind
-        let mut kinds: HashMap<WordKind, BTreeSet<String>> = WORD_KIND_LIST
+        let mut kinds: HashMap<WordKind, BTreeSet<String>> = WORD_KINDS_ALL
             .iter()
             .map(|x| (*x, BTreeSet::new()))
             .collect();
         for (word, word_kinds) in &self.words {
+            let word_kinds = word_kinds
+                .iter()
+                .flat_map(|x| x.enumerate(extended))
+                .collect::<Vec<_>>();
+            let word_is_extended = word_kinds.contains(&Extended);
             for kind in word_kinds {
-                for k in kind.enumerate() {
-                    let s = kinds.get_mut(&k).unwrap();
-                    if !s.contains(word) {
-                        s.insert(word.to_string());
-                    }
+                let kind_is_extended = WORD_KINDS_EXTENDED.contains(&kind);
+                let s = kinds.get_mut(&kind).unwrap();
+                if !s.contains(word) && extended || (!word_is_extended || kind_is_extended) {
+                    s.insert(word.to_string());
                 }
             }
         }
@@ -248,7 +297,27 @@ impl Config {
             self.alphabets.insert(*c, s.chars().collect());
         }
 
+        self.extended = extended;
+
         self
+    }
+
+    pub fn list(&self, sub: &String) -> Result<Vec<String>> {
+        if let Some(kind) = WORD_KIND_SUBS.get(sub) {
+            if let Some(list) = self.kinds.get(kind) {
+                Ok(if sub.starts_with("{W:") {
+                    list.iter().map(|x| x.to_uppercase()).collect()
+                } else if sub.starts_with("{T:") {
+                    list.iter().map(|x| ucfirst(x)).collect()
+                } else {
+                    list.clone()
+                })
+            } else {
+                Err(anyhow!("Unknown"))
+            }
+        } else {
+            Err(anyhow!("Invalid sub: `{sub}`!"))
+        }
     }
 
     fn get_n(&self, n: usize, kind: WordKind) -> Vec<String> {
@@ -381,53 +450,6 @@ impl Config {
 
     /**
     Generate a password from the given pattern
-
-    * Characters
-        * `C`: Uppercase letter (A-Z)
-        * `c`: Lowercase letter (a-z)
-        * `d`: Digit (0-9)
-        * `s`: Symbol (`~!@#$%^&*-_=+;:,./?()[]{}<>`)
-        * `a`: Any of the above
-    * Words
-        * `W`: Uppercase word
-        * `w`: Lowercase word
-        * `T`: Title case word
-        * `k`: Keychain-style "word" `shuffle(cccc(c|d)(C|c))`
-        * `{adj}`: Adjective
-        * `{adv}`: Adverb
-        * `{a}`: All
-        * `{ast}`: Astronomy
-        * `{v.aux}`: AuxiliaryVerb
-        * `{city}`: City
-        * `{color}`: Color
-        * `{conj}`: Conjunction
-        * `{cont}`: Continent
-        * `{country}`: Country
-        * `{day}`: Day
-        * `{el}`: Element
-        * `{fname}`: FemaleName
-        * `{greekdeity}`: GreekDeity
-        * `{i}`: Interjection
-        * `{v.intr}`: IntransitiveVerb
-        * `{mname}`: MaleName
-        * `{mon}`: Month
-        * `{moon}`: Moon
-        * `{myth}`: Mythology
-        * `{name}`: Name
-        * `{nat}`: Nationality
-        * `{n}`: Noun
-        * `{place}`: Place
-        * `{planet}`: Planet
-        * `{n.pl}`: PluralNoun
-        * `{prep}`: Preposition
-        * `{n.pro}`: Pronoun
-        * `{n.prop}`: ProperNoun
-        * `{romandeity}`: RomanDeity
-        * `{n.s}`: SingularNoun
-        * `{tv}`: TransitiveVerb
-        * `{us-state}`: UsState
-        * `{v}`: Verb
-        * `{v.past}`: VerbPast
     */
     pub fn generate(&self, pattern: &str) -> String {
         let j = pattern.len();
@@ -461,7 +483,7 @@ impl Config {
                     .sum::<usize>();
                 subs.push(Sub::Pattern(s));
             }
-            subs.push(Sub::Special(*kind));
+            subs.push(Sub::Special((sub.to_string(), *kind)));
             i = *p + sub.len();
         }
         if subs.is_empty() {
@@ -478,7 +500,7 @@ impl Config {
             subs.push(Sub::Pattern(&pattern[i..j]));
         }
 
-        let mut words = self.get_n(words, All);
+        let mut words = self.get_n(words, if self.extended { AllExtended } else { All });
         let mut kc_words = self.keychain_words(kc_words);
 
         let mut rng = thread_rng();
@@ -503,8 +525,16 @@ impl Config {
                         }
                     }
                 }
-                Sub::Special(kind) => {
-                    r.push_str(&self.get(kind));
+                Sub::Special((sub, kind)) => {
+                    let word = self.get(kind);
+                    let word = if sub.starts_with("{W:") {
+                        word.to_uppercase()
+                    } else if sub.starts_with("{T:") {
+                        ucfirst(&word)
+                    } else {
+                        word
+                    };
+                    r.push_str(&word);
                 }
             }
         }
@@ -517,7 +547,7 @@ impl Config {
 #[derive(Debug)]
 enum Sub<'a> {
     Pattern(&'a str),
-    Special(WordKind),
+    Special((String, WordKind)),
 }
 
 //--------------------------------------------------------------------------------------------------

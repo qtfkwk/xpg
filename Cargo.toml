@@ -1,6 +1,6 @@
 [package]
 name = "xpg"
-version = "0.8.1"
+version = "0.9.0"
 edition = "2021"
 description = "xkcd-style password generator"
 repository = "https://github.com/qtfkwk/xpg"

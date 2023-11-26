@@ -2,6 +2,7 @@
 
 * clippy
 * `README.md`
+* `config.json`
 
 ```
 cargo build --release
@@ -13,6 +14,7 @@ cargo build --release
 * `Cargo.toml`
 * `CHANGELOG.md`
 * `src/**/*.rs`
+* `config.json`
 
 ```
 cargo build --release

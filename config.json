@@ -41,6 +41,10 @@
     "adjective": [
       "SingularNoun"
     ],
+    "adrastea": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "advance": [
       "Verb",
       "SingularNoun",
@@ -50,7 +54,7 @@
       "Adjective"
     ],
     "africa": [
-      "Country"
+      "Continent"
     ],
     "after": [
       "Adverb",
@@ -79,6 +83,10 @@
     ],
     "airplane": [
       "SingularNoun"
+    ],
+    "aitne": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "alabama": [
       "UsState"
@@ -113,6 +121,10 @@
     "always": [
       "Adverb"
     ],
+    "amalthea": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "america": [
       "Continent"
     ],
@@ -124,6 +136,10 @@
     ],
     "amsterdam": [
       "Country"
+    ],
+    "ananke": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "anger": [
       "SingularNoun",
@@ -148,9 +164,23 @@
       "SingularNoun",
       "Verb"
     ],
+    "antarctica": [
+      "Continent",
+      "Extended"
+    ],
     "anything": [
       "Pronoun",
       "SingularNoun"
+    ],
+    "aoede": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "aphrodite": [
+      "Olympian"
+    ],
+    "apollo": [
+      "Olympian"
     ],
     "appear": [
       "IntransitiveVerb"
@@ -161,11 +191,25 @@
     "april": [
       "Month"
     ],
+    "arche": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "area": [
       "SingularNoun"
     ],
+    "ares": [
+      "Olympian"
+    ],
+    "ariel": [
+      "UranusMoon"
+    ],
     "arizona": [
       "UsState"
+    ],
+    "arkansas": [
+      "UsState",
+      "Extended"
     ],
     "arms": [
       "PluralNoun"
@@ -185,11 +229,17 @@
       "IntransitiveVerb",
       "VerbPast"
     ],
+    "artemis": [
+      "Olympian"
+    ],
     "article": [
       "SingularNoun"
     ],
     "asia": [
       "Continent"
+    ],
+    "athena": [
+      "Olympian"
     ],
     "athens": [
       "City"
@@ -205,10 +255,15 @@
       "SingularNoun"
     ],
     "australia": [
-      "Country"
+      "Country",
+      "Continent"
     ],
     "austria": [
       "Country"
+    ],
+    "autonoe": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "away": [
       "Adverb",
@@ -519,6 +574,14 @@
       "Verb",
       "SingularNoun"
     ],
+    "callirrhoe": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "callisto": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "came": [
       "SingularNoun",
       "Verb"
@@ -543,6 +606,14 @@
     ],
     "carefully": [
       "Adverb"
+    ],
+    "carme": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "carpo": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "carry": [
       "Verb"
@@ -587,6 +658,10 @@
     "chair": [
       "SingularNoun",
       "TransitiveVerb"
+    ],
+    "chaldene": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "chance": [
       "SingularNoun",
@@ -701,6 +776,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "colorado": [
+      "UsState",
+      "Extended"
+    ],
     "colour": [
       "SingularNoun",
       "Verb"
@@ -738,6 +817,10 @@
     ],
     "congo": [
       "Country"
+    ],
+    "connecticut": [
+      "UsState",
+      "Extended"
     ],
     "consider": [
       "Verb"
@@ -846,6 +929,10 @@
       "Adjective",
       "SingularNoun"
     ],
+    "cyllene": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "daily": [
       "Adjective",
       "Adverb",
@@ -913,6 +1000,10 @@
     "degree": [
       "SingularNoun"
     ],
+    "deimos": [
+      "MarsMoon",
+      "GreekMyth"
+    ],
     "delaware": [
       "UsState"
     ],
@@ -923,6 +1014,9 @@
     "demand": [
       "Verb",
       "SingularNoun"
+    ],
+    "demeter": [
+      "Olympian"
     ],
     "denmark": [
       "Country"
@@ -943,6 +1037,10 @@
       "TransitiveVerb",
       "SingularNoun"
     ],
+    "despina": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "destroy": [
       "Verb"
     ],
@@ -958,6 +1056,10 @@
     ],
     "device": [
       "SingularNoun"
+    ],
+    "dia": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "dictionary": [
       "SingularNoun"
@@ -978,6 +1080,13 @@
     ],
     "dinner": [
       "SingularNoun"
+    ],
+    "dione": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
+    "dionysus": [
+      "Olympian"
     ],
     "direct": [
       "Verb",
@@ -1143,8 +1252,16 @@
       "SingularNoun",
       "Adjective"
     ],
+    "eirene": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "either": [
       "Pronoun"
+    ],
+    "elara": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "electric": [
       "Adjective",
@@ -1159,6 +1276,10 @@
     "else": [
       "Adjective",
       "Adverb"
+    ],
+    "enceladus": [
+      "SaturnMoon",
+      "GreekMyth"
     ],
     "enemy": [
       "SingularNoun"
@@ -1200,6 +1321,14 @@
     "equation": [
       "SingularNoun"
     ],
+    "erinome": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "ersa": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "escape": [
       "Verb",
       "SingularNoun"
@@ -1210,8 +1339,32 @@
     "etching": [
       "SingularNoun"
     ],
+    "euanthe": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "eukelade": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "eupheme": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "euporie": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "europa": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "europe": [
       "Continent"
+    ],
+    "eurydome": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "even": [
       "Adjective",
@@ -1584,12 +1737,20 @@
       "SingularNoun",
       "Verb"
     ],
+    "galatea": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "galaxy": [
       "SingularNoun"
     ],
     "game": [
       "SingularNoun",
       "Verb"
+    ],
+    "ganymede": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "garden": [
       "SingularNoun",
@@ -1614,6 +1775,11 @@
     ],
     "gentleman": [
       "SingularNoun"
+    ],
+    "georgia": [
+      "UsState",
+      "Country",
+      "Extended"
     ],
     "germany": [
       "Country"
@@ -1724,6 +1890,9 @@
       "SingularNoun",
       "Verb"
     ],
+    "hades": [
+      "Chthonic"
+    ],
     "hair": [
       "SingularNoun"
     ],
@@ -1731,6 +1900,10 @@
       "SingularNoun",
       "Adjective",
       "Adverb"
+    ],
+    "halimede": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "hall": [
       "SingularNoun"
@@ -1757,6 +1930,10 @@
     "hard": [
       "Adjective",
       "Adverb"
+    ],
+    "harpalyke": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "havana": [
       "City"
@@ -1794,11 +1971,19 @@
     "heavy": [
       "Adjective"
     ],
+    "hegemone": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "height": [
       "SingularNoun"
     ],
     "held": [
       "VerbPast"
+    ],
+    "helike": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "hello": [
       "Interjection",
@@ -1808,11 +1993,31 @@
       "SingularNoun",
       "Verb"
     ],
+    "hephaestus": [
+      "Olympian"
+    ],
+    "hera": [
+      "Olympian"
+    ],
     "here": [
       "Pronoun"
     ],
+    "hermes": [
+      "Olympian"
+    ],
+    "hermippe": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "hers": [
       "Pronoun"
+    ],
+    "herse": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "hestia": [
+      "Olympian"
     ],
     "high": [
       "Adjective"
@@ -1820,8 +2025,16 @@
     "hill": [
       "SingularNoun"
     ],
+    "himalia": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "himself": [
       "Pronoun"
+    ],
+    "hippocamp": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "history": [
       "SingularNoun"
@@ -1895,11 +2108,23 @@
       "SingularNoun",
       "Verb"
     ],
+    "iapetus": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
     "iceland": [
       "Country"
     ],
+    "idaho": [
+      "UsState",
+      "Extended"
+    ],
     "idea": [
       "SingularNoun"
+    ],
+    "illinois": [
+      "UsState",
+      "Extended"
     ],
     "important": [
       "Adjective"
@@ -1927,8 +2152,16 @@
     "indian": [
       "Nationality"
     ],
+    "indiana": [
+      "UsState",
+      "Extended"
+    ],
     "indicate": [
       "TransitiveVerb"
+    ],
+    "indigo": [
+      "Color",
+      "Extended"
     ],
     "industry": [
       "SingularNoun"
@@ -1959,6 +2192,18 @@
     "into": [
       "Preposition"
     ],
+    "io": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "iocaste": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "iowa": [
+      "UsState",
+      "Extended"
+    ],
     "ireland": [
       "Country"
     ],
@@ -1969,6 +2214,10 @@
     "island": [
       "SingularNoun",
       "TransitiveVerb"
+    ],
+    "isonoe": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "italy": [
       "Country"
@@ -2021,10 +2270,26 @@
     ],
     "jupiter": [
       "Planet",
-      "RomanDeity"
+      "RomanMyth"
     ],
     "just": [
       "Adjective"
+    ],
+    "kale": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "kallichore": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "kalyke": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "kansas": [
+      "UsState",
+      "Extended"
     ],
     "keep": [
       "SingularNoun",
@@ -2072,6 +2337,10 @@
       "VerbPast",
       "SingularNoun"
     ],
+    "kore": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "korea": [
       "Country"
     ],
@@ -2095,9 +2364,17 @@
     "language": [
       "SingularNoun"
     ],
+    "laomedeia": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "large": [
       "Adjective",
       "SingularNoun"
+    ],
+    "larissa": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "last": [
       "Adjective",
@@ -2138,6 +2415,10 @@
       "Verb",
       "SingularNoun",
       "Verb"
+    ],
+    "leda": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "left": [
       "VerbPast",
@@ -2242,6 +2523,10 @@
     "loud": [
       "Adjective"
     ],
+    "louisiana": [
+      "UsState",
+      "Extended"
+    ],
     "love": [
       "SingularNoun",
       "Verb"
@@ -2249,6 +2534,10 @@
     "lower": [
       "IntransitiveVerb",
       "Adjective"
+    ],
+    "lysithea": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "machine": [
       "SingularNoun",
@@ -2268,6 +2557,10 @@
     "main": [
       "Adjective",
       "SingularNoun"
+    ],
+    "maine": [
+      "UsState",
+      "Extended"
     ],
     "major": [
       "Adjective",
@@ -2305,10 +2598,14 @@
     "mars": [
       "Planet",
       "Verb",
-      "RomanDeity"
+      "RomanMyth"
     ],
     "maryland": [
       "UsState"
+    ],
+    "massachusetts": [
+      "UsState",
+      "Extended"
     ],
     "master": [
       "SingularNoun",
@@ -2350,6 +2647,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "megaclite": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "melody": [
       "SingularNoun"
     ],
@@ -2362,7 +2663,7 @@
     "mercury": [
       "Planet",
       "Element",
-      "RomanDeity"
+      "RomanMyth"
     ],
     "metal": [
       "SingularNoun"
@@ -2370,8 +2671,16 @@
     "method": [
       "SingularNoun"
     ],
+    "metis": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "mexico": [
       "Country"
+    ],
+    "michigan": [
+      "UsState",
+      "Extended"
     ],
     "middle": [
       "Adjective"
@@ -2390,6 +2699,10 @@
       "SingularNoun",
       "Adjective"
     ],
+    "mimas": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
     "mind": [
       "SingularNoun",
       "Verb"
@@ -2399,6 +2712,10 @@
       "Verb",
       "Pronoun"
     ],
+    "minnesota": [
+      "UsState",
+      "Extended"
+    ],
     "minute": [
       "Adjective",
       "SingularNoun"
@@ -2406,12 +2723,27 @@
     "minutes": [
       "PluralNoun"
     ],
+    "miranda": [
+      "UranusMoon"
+    ],
     "miss": [
       "Verb",
       "SingularNoun"
     ],
+    "mississippi": [
+      "UsState",
+      "Extended"
+    ],
+    "missouri": [
+      "UsState",
+      "Extended"
+    ],
     "mister": [
       "SingularNoun"
+    ],
+    "mneme": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "modern": [
       "Adjective"
@@ -2479,6 +2811,10 @@
       "Verb",
       "SingularNoun"
     ],
+    "naiad": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "nail": [
       "SingularNoun",
       "TransitiveVerb"
@@ -2502,6 +2838,10 @@
     ],
     "nearly": [
       "Adverb"
+    ],
+    "nebraska": [
+      "UsState",
+      "Extended"
     ],
     "necessary": [
       "Adjective"
@@ -2528,10 +2868,19 @@
       "Country"
     ],
     "neptune": [
-      "Planet"
+      "Planet",
+      "RomanMyth"
+    ],
+    "nereid": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "nerve": [
       "SingularNoun"
+    ],
+    "neso": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "netherlands": [
       "Country"
@@ -2542,8 +2891,24 @@
     "never": [
       "Adjective"
     ],
+    "newhampshire": [
+      "UsState",
+      "Extended"
+    ],
+    "newjersey": [
+      "UsState",
+      "Extended"
+    ],
+    "newmexico": [
+      "UsState",
+      "Extended"
+    ],
     "news": [
       "SingularNoun"
+    ],
+    "newyork": [
+      "UsState",
+      "Extended"
     ],
     "next": [
       "Adjective"
@@ -2575,6 +2940,18 @@
       "SingularNoun",
       "Adjective",
       "Adverb"
+    ],
+    "northamerica": [
+      "Continent",
+      "Extended"
+    ],
+    "northcarolina": [
+      "UsState",
+      "Extended"
+    ],
+    "northdakota": [
+      "UsState",
+      "Extended"
     ],
     "northern": [
       "Adjective"
@@ -2612,6 +2989,9 @@
     "numeral": [
       "SingularNoun"
     ],
+    "oberon": [
+      "UranusMoon"
+    ],
     "object": [
       "SingularNoun",
       "Verb"
@@ -2621,6 +3001,10 @@
     ],
     "ocean": [
       "SingularNoun"
+    ],
+    "oceania": [
+      "Place",
+      "Extended"
     ],
     "october": [
       "Month"
@@ -2638,6 +3022,10 @@
     ],
     "ohio": [
       "UsState"
+    ],
+    "oklahoma": [
+      "UsState",
+      "Extended"
     ],
     "once": [
       "Adjective",
@@ -2657,12 +3045,24 @@
     "opposite": [
       "SingularNoun"
     ],
+    "orange": [
+      "Color",
+      "Extended"
+    ],
     "order": [
       "SingularNoun",
       "Verb"
     ],
     "orderly": [
       "Adverb"
+    ],
+    "oregon": [
+      "UsState",
+      "Extended"
+    ],
+    "orthosie": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "oslo": [
       "City"
@@ -2712,6 +3112,10 @@
     "panama": [
       "Country"
     ],
+    "pandia": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "paper": [
       "SingularNoun",
       "Verb"
@@ -2741,6 +3145,14 @@
       "SingularNoun",
       "Verb"
     ],
+    "pasiphae": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "pasithee": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "pass": [
       "Verb",
       "SingularNoun"
@@ -2759,6 +3171,10 @@
     "peace": [
       "SingularNoun"
     ],
+    "pennsylvania": [
+      "UsState",
+      "Extended"
+    ],
     "people": [
       "SingularNoun"
     ],
@@ -2771,11 +3187,22 @@
     "period": [
       "SingularNoun"
     ],
+    "persephone": [
+      "Chthonic"
+    ],
     "person": [
       "SingularNoun"
     ],
     "peru": [
       "Country"
+    ],
+    "philophrosyne": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
+    "phobos": [
+      "MarsMoon",
+      "GreekMyth"
     ],
     "phrase": [
       "SingularNoun",
@@ -2868,6 +3295,9 @@
     "portugal": [
       "Country"
     ],
+    "poseidon": [
+      "Olympian"
+    ],
     "position": [
       "SingularNoun",
       "Verb"
@@ -2885,6 +3315,10 @@
     "practice": [
       "SingularNoun",
       "Verb"
+    ],
+    "praxidike": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "prepare": [
       "Verb"
@@ -2945,6 +3379,10 @@
     "property": [
       "SingularNoun"
     ],
+    "proteus": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "proud": [
       "Adjective"
     ],
@@ -2954,9 +3392,16 @@
     "provide": [
       "Verb"
     ],
+    "psamathe": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "public": [
       "Adjective",
       "SingularNoun"
+    ],
+    "puck": [
+      "UranusMoon"
     ],
     "pull": [
       "Verb"
@@ -2966,6 +3411,10 @@
     ],
     "pure": [
       "Adjective"
+    ],
+    "purple": [
+      "Color",
+      "Extended"
     ],
     "push": [
       "Verb"
@@ -3063,6 +3512,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "red": [
+      "Color",
+      "Extended"
+    ],
     "region": [
       "SingularNoun"
     ],
@@ -3103,6 +3556,14 @@
     "return": [
       "SingularNoun",
       "Verb"
+    ],
+    "rhea": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
+    "rhodeisland": [
+      "UsState",
+      "Extended"
     ],
     "rhythm": [
       "SingularNoun"
@@ -3206,12 +3667,16 @@
       "SingularNoun",
       "Verb"
     ],
+    "sao": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "saturday": [
       "Day"
     ],
     "saturn": [
       "Planet",
-      "RomanDeity"
+      "RomanMyth"
     ],
     "save": [
       "Verb"
@@ -3443,6 +3908,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "sinope": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "sister": [
       "SingularNoun",
       "Verb"
@@ -3541,6 +4010,14 @@
       "Adjective",
       "Adverb"
     ],
+    "southcarolina": [
+      "UsState",
+      "Extended"
+    ],
+    "southdakota": [
+      "UsState",
+      "Extended"
+    ],
     "southern": [
       "Adjective"
     ],
@@ -3573,6 +4050,10 @@
     ],
     "spoke": [
       "VerbPast"
+    ],
+    "sponde": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "spot": [
       "SingularNoun",
@@ -3819,6 +4300,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "taygete": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "teach": [
       "Verb"
     ],
@@ -3840,6 +4325,10 @@
     "temperature": [
       "SingularNoun"
     ],
+    "tennessee": [
+      "UsState",
+      "Extended"
+    ],
     "terms": [
       "PluralNoun"
     ],
@@ -3847,8 +4336,16 @@
       "SingularNoun",
       "Verb"
     ],
+    "tethys": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
     "texas": [
       "UsState"
+    ],
+    "thalassa": [
+      "NeptuneMoon",
+      "GreekMyth"
     ],
     "than": [
       "Preposition"
@@ -3859,11 +4356,23 @@
     "that": [
       "Pronoun"
     ],
+    "thebe": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "their": [
       "Adjective"
     ],
+    "thelxinoe": [
+      "JupiterMoon",
+      "GreekMyth"
+    ],
     "them": [
       "Pronoun"
+    ],
+    "themisto": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "themselves": [
       "Pronoun"
@@ -3955,8 +4464,16 @@
       "Adjective",
       "VerbPast"
     ],
+    "thursday": [
+      "Day",
+      "Extended"
+    ],
     "thus": [
       "Adverb"
+    ],
+    "thyone": [
+      "JupiterMoon",
+      "GreekMyth"
     ],
     "tied": [
       "Adjective",
@@ -3972,6 +4489,13 @@
     ],
     "tiny": [
       "Adjective"
+    ],
+    "titan": [
+      "SaturnMoon",
+      "GreekMyth"
+    ],
+    "titania": [
+      "UranusMoon"
     ],
     "today": [
       "SingularNoun",
@@ -4054,6 +4578,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "triton": [
+      "NeptuneMoon",
+      "GreekMyth"
+    ],
     "trouble": [
       "SingularNoun",
       "Verb"
@@ -4092,6 +4620,9 @@
       "SingularNoun",
       "Verb"
     ],
+    "umbriel": [
+      "UranusMoon"
+    ],
     "uncle": [
       "SingularNoun"
     ],
@@ -4122,13 +4653,20 @@
     ],
     "uranus": [
       "Planet",
-      "GreekDeity"
+      "GreekMyth"
     ],
     "usual": [
       "Adjective"
     ],
     "usually": [
       "Adjective"
+    ],
+    "utah": [
+      "UsState",
+      "Extended"
+    ],
+    "valetudo": [
+      "JupiterMoon"
     ],
     "valley": [
       "SingularNoun"
@@ -4143,7 +4681,7 @@
     ],
     "venus": [
       "Planet",
-      "RomanDeity"
+      "RomanMyth"
     ],
     "verb": [
       "SingularNoun"
@@ -4276,6 +4814,10 @@
       "Adjective",
       "SingularNoun"
     ],
+    "westvirginia": [
+      "UsState",
+      "Extended"
+    ],
     "what": [
       "Pronoun",
       "Adjective",
@@ -4369,6 +4911,10 @@
       "SingularNoun",
       "Verb"
     ],
+    "wisconsin": [
+      "UsState",
+      "Extended"
+    ],
     "wise": [
       "SingularNoun",
       "Verb"
@@ -4445,6 +4991,10 @@
     "wrote": [
       "VerbPast"
     ],
+    "wyoming": [
+      "UsState",
+      "Extended"
+    ],
     "yard": [
       "SingularNoun"
     ],
@@ -4452,8 +5002,7 @@
       "SingularNoun"
     ],
     "yellow": [
-      "Adjective",
-      "Verb"
+      "Color"
     ],
     "yesterday": [
       "SingularNoun"
@@ -4467,6 +5016,9 @@
     ],
     "yourself": [
       "Pronoun"
+    ],
+    "zeus": [
+      "Olympian"
     ]
   }
 }

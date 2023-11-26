@@ -10,14 +10,14 @@ xkcd-style password generator
 
 ```text
 $ xpg -h
-xpg 0.8.1 <https://crates.io/crates/xpg>
+xpg 0.9.0 <https://crates.io/crates/xpg>
 
 xkcd-style password generator
 
-Usage: xpg [OPTIONS] [PATTERN]
+Usage: xpg [OPTIONS] [PATTERNS]...
 
 Arguments:
-  [PATTERN]  Pattern (see note 1 below) [default: wwww]
+  [PATTERNS]...  Pattern(s) (see note 1 below) [default: `wwww`, `-L`: `{a}`]
 
 Options:
   -c, --count <NUMBER>     Number of passwords (0:∞ ) [default: 1]
@@ -26,7 +26,9 @@ Options:
   -M, --maximum <NUMBER>   Maximum length
   -a, --attempts <NUMBER>  Attempts [default: 10]
   -C, --config <PATH>      Configuration file
-  -d, --default-config     Print default configuration
+  -e, --extended           Merge extended words
+  -L, --list               List words in `{sub}`(s)
+  -d, --dump-config        Print configuration
   -r, --readme             Print readme
   -h, --help               Print help
   -V, --version            Print version
@@ -52,11 +54,15 @@ Notes
         * `keychain`
         * `codename`
         * `codename-series`
+
+2. By default, extended words are only available in exclusively extended word
+   kinds; however, with `-e`, they are merged with regular word kinds; use with
+   the `-L` option to see its effect.
 ```
 
 ```text
 $ xpg -V
-xpg 0.8.1
+xpg 0.9.0
 ```
 
 *See also the [Configuration] section below.*
@@ -67,234 +73,368 @@ xpg 0.8.1
 
 ```text
 $ xpg
-dictionarysomeonegalaxyscale
+thickagainknowmove
 ```
 
-Generate 10 passwords:
+#### Generate 10 passwords
 
 ```text
 $ xpg -c 10
-plantsicelandpartythin
-husbandobjectneptunelisten
-horsepassedbridgeshouted
-figurestonesoldierchief
-fractionindiaunderstandwhom
-washthirteenfoodboard
-wishdeepdemandtell
-placecornermembersthat
-fridayrushbegantokyo
-doublelasttrainingbread
+bankerscoreafricaindicate
+answersafeallowtrain
+thesecigarettelordbattery
+foolburningbankerheat
+lesssongkeepfiji
+smiledsciencemasterdeveloped
+noseoverdishrose
+throughhavanajumpparty
+teacherhaveshadeangle
+sailflowersdollarkenya
 ```
 
-Generate passwords forever (or until Ctrl+C / SIGINT):
+#### Generate passwords forever
+
+*or until Ctrl+C / SIGINT*
 
 ```text
 $ xpg -c 0
-painttomorrowpeacerepresent
-mayorhandbecausepoor
-knewvirginiayellowknown
-bothpeaceaprilindicate
-theyofficemuchwednesday
-marketfoolpicturewhose
-shipgreenlaughdevice
-propertygoldplainabout
-loudfatherhangstatement
-throughbrownideablood
+gamesoonriverleft
+windowcornclothrepeated
+churchrightdiedpluto
+togetherincreasemovealmost
+countreachedmotherwalk
+dearstillmusicsound
+saltagreespotlate
+roseweekhawaiismiled
+factorswomenwriteprice
+killedfijioffershare
 ^C
 ```
 
-Generate a password with 8 words:
+#### Generate a password with 8 words
 
 ```text
 $ xpg wwwwwwww
-stillstooduranusmoneyrealsectiongoodbyedivision
+snowtomorrowfancyballhardorderlyaroundcomplete
 ```
 
-Generate 10 passwords with 8 words:
+#### Generate 10 passwords with 8 words
 
 ```text
 $ xpg wwwwwwww -c 10
-doubtdailyfastrichtwentyskinbelgiumchild
-letterpagesubjectunderstandhusbandcropshoweverfine
-legsnailforestburningperiodnoticeableround
-thuspagepartcreatecropschangecolombiaoctober
-sightgentlechangeroadlossgavegoodhawaii
-wheelleaderbottlethankguardhomebattlestreet
-certainaftermaindownjulysentnaturepage
-treeproduceapriltilllosebelongpusharms
-gamegonecigarettehealthcropsglasspresscuba
-rightpresentunitshoplordsincecomelisbon
+stillgainmusicbeatmondaytuesdaypaperresult
+factoriesheatcaseofficerestanimalbuildingpoint
+showgentlemanmethodfathersilenttriesknowscale
+beenclimbedplanenieceislandsuddenkindposeidon
+freshbeautyhimselfbreadreachedsmallbesidewants
+furtherhealthnaturalmelodyholedoublefellbritish
+quietnineshipdistantinchesimportantleastturn
+englandbroughtbrazilprobablewaleskindlegspage
+beginpatternsystemdesignteacherracestringlater
+rootbatteryconsiderablesouthernundercarebecausedifferent
 ```
 
-Generate a password with 2 words followed by 3 digits:
+#### Generate a password with 2 words followed by 3 digits
 
 ```text
 $ xpg wwddd
-frienddeal814
+requirejerusalem983
 ```
 
-Generate a password with 2 words followed by 2 symbols:
+#### Generate a password with 2 words followed by 2 symbols
 
 ```text
 $ xpg wwss
-pricearrived;-
+broughthera]]
 ```
 
-Generate a password with 2 words followed by a digit and a symbol:
+#### Generate a password with 2 words followed by a digit and a symbol
 
 ```text
 $ xpg wwds
-winteraunt7;
+catchfear7_
 ```
 
-Generate a password with 4 words followed by 2 lowercase letters:
+#### Generate a password with 4 words followed by 2 lowercase letters
 
 ```text
 $ xpg wwwwcc
-fastmercurycontinuemostml
+goldamongthousandsfigurefc
 ```
 
-Generate a password with 4 words followed by 2 uppercase letters:
+#### Generate a password with 4 words followed by 2 uppercase letters
 
 ```text
 $ xpg wwwwCC
-visitforeverjumpeditselfZE
+foundlistenapplecongoZF
 ```
 
-Generate a password with 4 title case words:
+#### Generate a password with 4 title case words
 
 ```text
 $ xpg TTTT
-CarefullyMoneyKnownSelf
+ResentMailFearHere
 ```
 
-Generate a password with 4 uppercase words:
+#### Generate a password with 4 uppercase words
 
 ```text
 $ xpg WWWW
-DOLLARWORESAFETYHEALTH
+DESCRIBERIDEFLIERPROUD
 ```
 
-Generate a password with 4 words followed by 5 "any" characters (lowercase letter, uppercase letter,
-digit, or symbol)
+#### Generate a password with 4 words followed by 5 "any" characters
+
+*An "any" character can be a lowercase letter, uppercase letter, digit, or
+symbol.*
 
 ```text
 $ xpg wwwwaaaaa
-californiabottomgentlemaniceland<LVdD
+daughterdoublecompanycottonUM{en
 ```
 
-Generate a password with 3 words and at least 15 characters:
+#### Generate a password with 3 words and at least 15 characters
 
 ```text
-$ xpg www -m 16
-delightbelfastlaugh
+$ xpg www -m 15
+valleygladparagraph
 ```
 
-Generate a password with 3 words and no more than 20 characters:
+#### Generate a password with 3 words and no more than 20 characters
 
 ```text
 $ xpg www -M 20
-blowcornbecome
+asiaitselfallow
 ```
 
-Generate a password with 4 words and between 20 and 25 characters (increase attempts to help it
-succeed):
+#### Generate a password with 4 words and between 20 and 25 characters
+
+*Increase attempts to help it succeed.*
 
 ```text
 $ xpg www -m 20 -M 25 -a 1000
-distancerhythmoctober
+childhoodegyptlisbon
 ```
 
-Generate a password with 2 words, 3 digits, 1 symbol, and exactly 16 characters (increase attempts
-to help it succeed):
+#### Generate a password with 2 words, 3 digits, 1 symbol, and exactly 16 characters
+
+*Increase attempts to help it succeed.*
 
 ```text
 $ xpg wwddds -l 16 -a 1000
-detailsserve302#
+millionapril175~
 ```
 
-Generate a password with a `1`, 2 title case words, and `!`:
+#### Generate a password with a `1`, 2 title case words, and `!`
 
 ```text
 $ xpg '1TT!'
-1GaveMuch!
+1LastNecessary!
 ```
 
-Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits:
+#### Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits
 
 ```text
 $ xpg 's{adj}{adj}{n}dd'
-(pleasantmadepublic03
+.gentlebaserope89
 ```
 
-Generate a keychain-style password:
+#### Generate a password with 2 words and 1 extended word
+
+```text
+$ xpg 'ww{ext}'
+ladyfarmersisonoe
+```
+
+#### Generate a password with 2 words and 1 title case extended word
+
+```text
+$ xpg 'ww{T:ext}'
+shopsoldierMiranda
+```
+
+#### Generate a password with 2 words and 1 uppercase extended word
+
+```text
+$ xpg 'ww{W:ext}'
+childbrazilLYSITHEA
+```
+
+#### Generate 10 passwords with 4 title case words and extended words merged
+
+```text
+$ xpg -ec 10 TTTT
+PraxidikeMissouriFifteenNetherlands
+ArticleSufferBesideArea
+StickEasyBeatBeauty
+RockDuringFijiLouisiana
+SingBlowAmsterdamMaryland
+ShouldDecidedBelievePeople
+MomentHurtFillObject
+SettleHereConnecticutMelody
+SaysChaldeneCarmeCorner
+AuntWithoutCannotTeacher
+```
+
+#### Generate a keychain-style password
 
 ```text
 $ xpg keychain
-bfraPq-titxcw-cqyy4x
+bteOgr-wxuvne-iub9zn
 ```
 
-Generate a code name:
+#### Generate a code name
 
 ```text
 $ xpg codename
-GOLD CIGARETTE
+FAST SUMMER
 ```
 
-Generate a code name series:
+#### Generate a code name series
 
 ```text
 $ xpg codename-series
-JUSTTHERE WHICHMOON
-JUSTTHERE SHARPSTAND
-JUSTTHERE TINYCOUNT
-JUSTTHERE DESERTRIVER
-JUSTTHERE BROKENSURFACE
-JUSTTHERE EIGHTWITHOUT
-JUSTTHERE GROWNPLAIN
-JUSTTHERE DIRECTPRESIDENTS
-JUSTTHERE DIRECTTEST
-JUSTTHERE NEXTNERVE
+YOUNGPLANT WHATTRIP
+YOUNGPLANT FINALLYFAIL
+YOUNGPLANT ACTIONSHOW
+YOUNGPLANT FINISHEDFAVOR
+YOUNGPLANT BROADANYTHING
+YOUNGPLANT EXPRESSSIGHT
+YOUNGPLANT BACKEFFORT
+YOUNGPLANT DAUGHTERADDITION
+YOUNGPLANT WIDEKNOWN
+YOUNGPLANT LITTLEINFORMATION
 ```
 
-Generate a code name series with 20 code names:
+#### Generate a code name series with 20 code names
 
 ```text
 $ xpg codename-series -c 20
-GONEMERCURY LONGLADY
-GONEMERCURY SEPARATEEUROPE
-GONEMERCURY THEIROTHER
-GONEMERCURY LATERPERIOD
-GONEMERCURY ABLESEED
-GONEMERCURY PLURALCOTTON
-GONEMERCURY SAFEMOUTH
-GONEMERCURY FREELAST
-GONEMERCURY EXPRESSSEAT
-GONEMERCURY GLASSGRAIN
-GONEMERCURY MADEROCK
-GONEMERCURY FIFTYOPINION
-GONEMERCURY AFTERSAFE
-GONEMERCURY OUTSIDEFINE
-GONEMERCURY DISTANTSLEEP
-GONEMERCURY CHIEFWHOLE
-GONEMERCURY WILDFORCE
-GONEMERCURY JAPANESEWEATHER
-GONEMERCURY BEARRUSH
-GONEMERCURY DOUBLEMARK
+HARDTRUST FEELINGHELP
+HARDTRUST WHATCROSS
+HARDTRUST DONEWHEN
+HARDTRUST MUCHLEAD
+HARDTRUST NEAREFFORT
+HARDTRUST MAINFEBRUARY
+HARDTRUST HAPPYDREAM
+HARDTRUST LONGHEART
+HARDTRUST THOUSANDETCHING
+HARDTRUST BEAUTIFULDARK
+HARDTRUST TALLSIGNAL
+HARDTRUST REALLYSEASON
+HARDTRUST REALHONOR
+HARDTRUST DOWNEQUAL
+HARDTRUST YOURLADY
+HARDTRUST OFTENCROPS
+HARDTRUST EVENNOON
+HARDTRUST SHARPSPOT
+HARDTRUST FRONTFACE
+HARDTRUST LITTLEFRUIT
 ```
 
-Generate a password with 20 "any" characters:
+#### Generate a password with 20 "any" characters
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
-$OHj;I6c1B~]Lq4y@?~I
+C(A~[)YO@_(.v)O.F4WB
 ```
 
-Same as the previous example, but shorter:
+#### Same as the previous example, but shorter
+
+*This works because a character-only pattern is padded to the minimum length
+with the last character.*
 
 ```text
 $ xpg a -m 20
-wR)dIbaV!C;xV=^Eb+=]
+K[9jbO(5Hjbf8%N.c9xG
+```
+
+#### Generate 3 passwords each from a different pattern
+
+```text
+$ xpg wwww WWWW TTTT
+greecebarbadoskingkitchen
+ALTHOUGHFALLHELLOPAID
+WhereGoodGiveInside
+```
+
+#### List the words in Color / `{color}`
+
+```text
+$ xpg -L '{color}'
+black
+blue
+brown
+gray
+green
+white
+yellow
+```
+
+#### List the words in Color / `{color}` in uppercase
+
+```text
+$ xpg -L '{W:color}'
+BLACK
+BLUE
+BROWN
+GRAY
+GREEN
+WHITE
+YELLOW
+```
+
+#### List the words in Color / `{color}` in title case
+
+```text
+$ xpg -L '{T:color}'
+Black
+Blue
+Brown
+Gray
+Green
+White
+Yellow
+```
+
+#### Count the words in Color / `{color}`
+
+```text
+$ xpg -L '{color}' |wc -l
+7
+```
+
+#### List the words in Color / `{color}` and Element / `{W:el}`
+
+```text
+$ xpg -L '{color}' '{W:el}'
+black
+blue
+brown
+gray
+green
+white
+yellow
+GOLD
+IRON
+LEAD
+MERCURY
+OXYGEN
+SILVER
+```
+
+#### Count words
+
+```text
+$ xpg -L |wc -l
+1272
+```
+
+#### Count words with extended
+
+```text
+$ xpg -Le |wc -l
+1400
 ```
 
 # Configuration
@@ -316,45 +456,59 @@ via the `-C` option at *runtime*, it will be used instead.
 
 ## `WordKind`s
 
-* Adjective / `{adj}`
-    * Color\* / `{color}`
-    * Nationality / `{nat}`
-* Adverb / `{adv}`
-* Conjunction / `{conj}`
-* Interjection / `{i}`
-* Noun / `{n}`
-    * PluralNoun / `{n.pl}`
-    * Pronoun / `{n.pro}`
-    * SingularNoun / `{n.s}`
-        * Astronomy / `{ast}`
-            * Moon / `{moon}`
-            * Planet / `{planet}`
-        * Color\* / `{color}`
-        * Day / `{day}`
-        * Month / `{mon}`
-        * ProperNoun / `{n.prop}`
-            * Element / `{el}`
-            * Name / `{name}`
-                * FemaleName / `{fname}`
-                * MaleName / `{mname}`
-            * Place / `{place}`
-                * City / `{city}`
-                * Continent / `{cont}`
-                * Country / `{country}`
-                * UsState / `{us-state}`
-            * Mythology / `{myth}`
-                * GreekDeity / `{greekdeity}`
-                * RomanDeity / `{romandeity}`
-* Preposition / `{prep}`
-* Verb / `{v}`
-    * AuxiliaryVerb / `{v.aux}`
-    * IntransitiveVerb / `{v.int}`
-    * TransitiveVerb / `{v.tr}`
-    * VerbPast / `{v.past}`
+* AllExtended / `{a.ext}`
+    * All / `{a}`
+        * Adjective / `{adj}`
+            * Color\* / `{color}`
+            * Nationality / `{nat}`
+        * Adverb / `{adv}`
+        * Conjunction / `{conj}`
+        * Interjection / `{i}`
+        * Noun / `{n}`
+            * PluralNoun / `{n.pl}`
+            * Pronoun / `{n.pro}`
+            * SingularNoun / `{n.s}`
+                * Astronomy / `{ast}`
+                    * Moon / `{moon}`
+                    * Planet / `{planet}`
+                * Color\* / `{color}`
+                * Day / `{day}`
+                * Month / `{mon}`
+                * ProperNoun / `{n.prop}`
+                    * Element / `{el}`
+                    * Name / `{name}`
+                        * FemaleName / `{fname}`
+                        * MaleName / `{mname}`
+                    * Place / `{place}`
+                        * City / `{city}`
+                        * Continent / `{cont}`
+                        * Country / `{country}`
+                        * UsState / `{us-state}`
+                    * Mythology / `{myth}`
+                        * GreekMyth / `{greekmyth}`
+                            * Olympian / `{olympian}`
+                            * Chthonic / `{chthonic}`
+                        * RomanMyth / `{romanmyth}`
+        * Preposition / `{prep}`
+        * Verb / `{v}`
+            * AuxiliaryVerb / `{v.aux}`
+            * IntransitiveVerb / `{v.int}`
+            * TransitiveVerb / `{v.tr}`
+            * VerbPast / `{v.past}`
+    * Extended / `{ext}`
+        * Noun / `{n}`
+            * SingularNoun / `{n.s}`
+                * Astronomy / `{ast}`
+                    * Moon / `{moon}`
+                        * MarsMoon / `{marsmoon}`
+                        * JupiterMoon / `{jupitermoon}`
+                        * SaturnMoon / `{saturnmoon}`
+                        * UranusMoon / `{uranusmoon}`
+                        * NeptuneMoon / `{neptunemoon}`
 
 **Notes**
 
-1. `WordKind` / `{sub}`
+1. WordKind / `{sub}`
 
 2. It is only necessary to set the most descriptive `WordKind`(s) since they are
    automatically included in the larger word kinds.
@@ -362,6 +516,10 @@ via the `-C` option at *runtime*, it will be used instead.
 3. The `characters` object value must contain the `C`, `c`, and `d` keys with
    non-empty values.
    Additional keys/values can be added and used.
+
+4. `{sub}`s produce lowercase words by default, but if prefixed with `W:` or
+   `T:` words will be uppercase or title case, respectively: i.e. `{W:sub}` or
+   `{T:sub}` (replace `sub` with an actual `{sub}` name above).
 
 # Changelog
 
@@ -388,6 +546,8 @@ via the `-C` option at *runtime*, it will be used instead.
   add word kind subpatterns; enable external runtime configuration via new
   `Config` struct
 * 0.8.1 (2023-11-25): fix `-C` option
+* 0.9.0 (2023-11-26): add extended words; enable multiple patterns; add `-e` and
+  `-L` options; make `-d` dump the loaded not default configuration
 
 # References
 
