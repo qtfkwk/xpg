@@ -221,6 +221,48 @@ $ xpg codename-series -c 20
 !run:../target/release/xpg codename-series -c 20
 ```
 
+#### Generate a haiku
+
+```text
+$ xpg haiku
+!run:../target/release/xpg haiku
+```
+
+#### Generate a haiku with syllable pattern
+
+```text
+$ xpg haiku+
+!run:../target/release/xpg haiku+
+```
+
+#### Generate a condensed haiku with syllable pattern
+
+```text
+$ xpg haiku-
+!run:../target/release/xpg haiku-
+```
+
+#### Generate a condensed haiku
+
+```text
+$ xpg haiku--
+!run:../target/release/xpg haiku--
+```
+
+#### Generate a haiku with newlines
+
+```text
+$ xpg haiku++
+!run:../target/release/xpg haiku++
+```
+
+#### Generate a haiku with syllable pattern and newlines
+
+```text
+$ xpg haiku+++
+!run:../target/release/xpg haiku+++
+```
+
 #### Generate a password with 20 "any" characters
 
 ```text
@@ -243,6 +285,13 @@ $ xpg a -m 20
 ```text
 $ xpg wwww WWWW TTTT
 !run:../target/release/xpg wwww WWWW TTTT
+```
+
+#### Generate a password with words with 1, 2, 3, 4, and 5 syllables
+
+```text
+$ xpg '{a:1}-{W:a:2}-{T:a:3}-{olympian:4}-{T:ext:5}'
+!run:../target/release/xpg '{a:1}-{W:a:2}-{T:a:3}-{olympian:4}-{T:ext:5}'
 ```
 
 #### List the words in Color / `{color}`
@@ -377,6 +426,11 @@ via the `-C` option at *runtime*, it will be used instead.
 4. `{sub}`s produce lowercase words by default, but if prefixed with `W:` or
    `T:` words will be uppercase or title case, respectively: i.e. `{W:sub}` or
    `{T:sub}` (replace `sub` with an actual `{sub}` name above).
+
+5. `{sub}`s include all words by default, but if suffixed with `:N` where `N` is
+   a number, it will only include words with that number of syllables: i.e.
+   `{sub:N}` (replace `sub` with an actual `{sub}` name above and `N` with the
+   desired number of syllables ~1-5).
 
 !inc:../CHANGELOG.md
 

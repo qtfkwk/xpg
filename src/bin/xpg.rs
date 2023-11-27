@@ -32,6 +32,12 @@ Notes
         * `keychain`
         * `codename`
         * `codename-series`
+        * `haiku`
+        * `haiku+`
+        * `haiku-`
+        * `haiku--`
+        * `haiku++`
+        * `haiku+++`
 
 2. By default, extended words are only available in exclusively extended word
    kinds; however, with `-e`, they are merged with regular word kinds; use with
@@ -63,7 +69,7 @@ struct Cli {
     #[arg(short = 'C', long, value_name = "PATH")]
     config: Option<PathBuf>,
 
-    /// Merge extended words
+    /// Merge extended words (see note 2)
     #[arg(short, long)]
     extended: bool,
 
@@ -79,7 +85,7 @@ struct Cli {
     #[arg(short, long)]
     readme: bool,
 
-    /// Pattern(s) (see note 1 below) [default: `wwww`, `-L`: `{a}`]
+    /// Pattern(s) (see note 1) [default: `wwww`, `-L`: `{a}`]
     patterns: Vec<String>,
 }
 
@@ -163,9 +169,20 @@ fn main() -> Result<()> {
         let len = pattern.len();
         let d = if len < *min { min - len } else { 0 };
         let pattern = if d > 0
-            && !["keychain", "codename", "codename-series"].contains(&pattern.as_str())
+            && ![
+                "keychain",
+                "codename",
+                "codename-series",
+                "haiku",
+                "haiku+",
+                "haiku-",
+                "haiku--",
+                "haiku++",
+                "haiku+++",
+            ]
+            .contains(&pattern.as_str())
             && !pattern.contains(['w', 'W', 'T'])
-            && !xpg::WORD_KIND_SUBS.keys().any(|x| pattern.contains(x))
+            && !cfg.subs.keys().any(|x| pattern.contains(x))
         {
             format!(
                 "{}{}",
@@ -192,6 +209,12 @@ fn main() -> Result<()> {
                     "keychain" => cfg.keychain(),
                     "codename" => cfg.codename(),
                     "codename-series" => cfg.codename_series(codenames),
+                    "haiku" => cfg.haiku(xpg::HaikuVariant::Normal),
+                    "haiku+" => cfg.haiku(xpg::HaikuVariant::WithSyllables),
+                    "haiku-" => cfg.haiku(xpg::HaikuVariant::WithSyllablesCondensed),
+                    "haiku--" => cfg.haiku(xpg::HaikuVariant::Condensed),
+                    "haiku++" => cfg.haiku(xpg::HaikuVariant::Full),
+                    "haiku+++" => cfg.haiku(xpg::HaikuVariant::FullWithSyllables),
                     _ => cfg.generate(&pattern),
                 };
 

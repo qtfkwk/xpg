@@ -25,4 +25,7 @@
 * 0.8.1 (2023-11-25): fix `-C` option
 * 0.9.0 (2023-11-26): add extended words; enable multiple patterns; add `-e` and
   `-L` options; make `-d` dump the loaded not default configuration
+* 0.10.0 (2023-11-27): add syllables and `haiku*` special patterns; fix the
+  codename series algorithm; make olympian/chthonic kinds extended; update
+  dependencies
 

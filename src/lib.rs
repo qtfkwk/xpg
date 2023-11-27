@@ -5,7 +5,6 @@ xkcd-style password generator
 */
 
 use anyhow::{anyhow, Result};
-use lazy_static::lazy_static;
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
@@ -18,127 +17,112 @@ use ucfirst::ucfirst;
 
 pub const CONFIG: &str = include_str!("../config.json");
 
-lazy_static! {
-    pub static ref WORD_KIND_SUBS: HashMap<String, WordKind> = WORD_KINDS_ALL
-        .iter()
-        .flat_map(|x| {
-            let sub = x.sub();
-            [
-                (sub.clone(), *x),
-                (format!("{{W:{}", &sub[1..]), *x),
-                (format!("{{T:{}", &sub[1..]), *x),
-            ]
-        })
-        .collect();
-}
-
 //--------------------------------------------------------------------------------------------------
 
-#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize)]
 pub enum WordKind {
-    Astronomy,
-    Planet,
-    Moon,
-    MarsMoon,
-    JupiterMoon,
-    SaturnMoon,
-    UranusMoon,
-    NeptuneMoon,
-    Continent,
-    Country,
-    UsState,
-    City,
-    Place,
-    Nationality,
-    MaleName,
-    FemaleName,
-    Name,
-    Element,
-    Mythology,
-    RomanMyth,
-    GreekMyth,
-    Olympian,
-    Chthonic,
-    Month,
-    Day,
-    Color,
-    Noun,
-    Pronoun,
-    ProperNoun,
-    PluralNoun,
-    SingularNoun,
     Adjective,
+    AdjectiveSyllables(usize),
     Adverb,
-    Verb,
-    IntransitiveVerb,
-    TransitiveVerb,
-    AuxiliaryVerb,
-    VerbPast,
-    Preposition,
-    Conjunction,
-    Interjection,
+    AdverbSyllables(usize),
     All,
-    Extended,
+    AllSyllables(usize),
     AllExtended,
+    AllExtendedSyllables(usize),
+    Astronomy,
+    AstronomySyllables(usize),
+    AuxiliaryVerb,
+    AuxiliaryVerbSyllables(usize),
+    Chthonic,
+    ChthonicSyllables(usize),
+    City,
+    CitySyllables(usize),
+    Color,
+    ColorSyllables(usize),
+    Conjunction,
+    ConjunctionSyllables(usize),
+    Continent,
+    ContinentSyllables(usize),
+    Country,
+    CountrySyllables(usize),
+    Day,
+    DaySyllables(usize),
+    Element,
+    ElementSyllables(usize),
+    Extended,
+    ExtendedSyllables(usize),
+    FemaleName,
+    FemaleNameSyllables(usize),
+    GreekMyth,
+    GreekMythSyllables(usize),
+    Interjection,
+    InterjectionSyllables(usize),
+    IntransitiveVerb,
+    IntransitiveVerbSyllables(usize),
+    JupiterMoon,
+    JupiterMoonSyllables(usize),
+    MaleName,
+    MaleNameSyllables(usize),
+    MarsMoon,
+    MarsMoonSyllables(usize),
+    Month,
+    MonthSyllables(usize),
+    Moon,
+    MoonSyllables(usize),
+    Mythology,
+    MythologySyllables(usize),
+    Name,
+    NameSyllables(usize),
+    Nationality,
+    NationalitySyllables(usize),
+    NeptuneMoon,
+    NeptuneMoonSyllables(usize),
+    Noun,
+    NounSyllables(usize),
+    Olympian,
+    OlympianSyllables(usize),
+    Place,
+    PlaceSyllables(usize),
+    Planet,
+    PlanetSyllables(usize),
+    PluralNoun,
+    PluralNounSyllables(usize),
+    Preposition,
+    PrepositionSyllables(usize),
+    Pronoun,
+    PronounSyllables(usize),
+    ProperNoun,
+    ProperNounSyllables(usize),
+    RomanMyth,
+    RomanMythSyllables(usize),
+    SaturnMoon,
+    SaturnMoonSyllables(usize),
+    SingularNoun,
+    SingularNounSyllables(usize),
+    TransitiveVerb,
+    TransitiveVerbSyllables(usize),
+    UranusMoon,
+    UranusMoonSyllables(usize),
+    UsState,
+    UsStateSyllables(usize),
+    Verb,
+    VerbSyllables(usize),
+    VerbPast,
+    VerbPastSyllables(usize),
 }
 
 use WordKind::*;
 
-const WORD_KINDS_ALL: [WordKind; 44] = [
-    Astronomy,
-    Planet,
-    Moon,
-    MarsMoon,
-    JupiterMoon,
-    SaturnMoon,
-    UranusMoon,
-    NeptuneMoon,
-    Continent,
-    Country,
-    UsState,
-    City,
-    Place,
-    Nationality,
-    MaleName,
-    FemaleName,
-    Name,
-    Element,
-    Mythology,
-    RomanMyth,
-    GreekMyth,
-    Olympian,
+const WORD_KINDS_EXTENDED: [WordKind; 9] = [
+    AllExtended,
     Chthonic,
-    Month,
-    Day,
-    Color,
-    Noun,
-    Pronoun,
-    ProperNoun,
-    PluralNoun,
-    SingularNoun,
-    Adjective,
-    Adverb,
-    Verb,
-    IntransitiveVerb,
-    TransitiveVerb,
-    AuxiliaryVerb,
-    VerbPast,
-    Preposition,
-    Conjunction,
-    Interjection,
-    All,
     Extended,
-    AllExtended,
-];
-
-const WORD_KINDS_EXTENDED: [WordKind; 7] = [
-    MarsMoon,
     JupiterMoon,
+    MarsMoon,
+    NeptuneMoon,
+    Olympian,
     SaturnMoon,
     UranusMoon,
-    NeptuneMoon,
-    Extended,
-    AllExtended,
 ];
 
 impl WordKind {
@@ -146,36 +130,36 @@ impl WordKind {
         let mut r = vec![*self];
         match self {
             Astronomy => r.append(&mut vec![SingularNoun, Noun]),
-            Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
-            Moon => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
-            MarsMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            JupiterMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            SaturnMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            UranusMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            NeptuneMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            AuxiliaryVerb => r.push(Verb),
+            Chthonic => r.append(&mut vec![GreekMyth, Mythology, ProperNoun, Noun, Extended]),
+            City => r.append(&mut vec![Place, ProperNoun]),
+            Color => r.append(&mut vec![SingularNoun, Noun, Verb]),
             Continent => r.append(&mut vec![Place, ProperNoun, SingularNoun, Noun]),
             Country => r.append(&mut vec![Place, ProperNoun]),
-            UsState => r.append(&mut vec![Place, ProperNoun]),
-            City => r.append(&mut vec![Place, ProperNoun]),
-            Nationality => r.push(Adjective),
-            MaleName => r.append(&mut vec![Name, ProperNoun]),
-            FemaleName => r.append(&mut vec![Name, ProperNoun]),
-            Name => r.push(ProperNoun),
-            Element => r.append(&mut vec![ProperNoun, Noun]),
-            Mythology => r.append(&mut vec![ProperNoun, Noun]),
-            RomanMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
-            GreekMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
-            Olympian => r.append(&mut vec![GreekMyth, ProperNoun, Noun]),
-            Chthonic => r.append(&mut vec![GreekMyth, ProperNoun, Noun]),
-            Month => r.append(&mut vec![SingularNoun, Noun]),
             Day => r.append(&mut vec![SingularNoun, Noun]),
-            Color => r.append(&mut vec![SingularNoun, Noun, Verb]),
+            Element => r.append(&mut vec![ProperNoun, Noun]),
+            FemaleName => r.append(&mut vec![Name, ProperNoun]),
+            GreekMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
             IntransitiveVerb => r.push(Verb),
-            TransitiveVerb => r.push(Verb),
-            AuxiliaryVerb => r.push(Verb),
-            VerbPast => r.push(Verb),
+            JupiterMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            MaleName => r.append(&mut vec![Name, ProperNoun]),
+            MarsMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            Month => r.append(&mut vec![SingularNoun, Noun]),
+            Moon => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
+            Mythology => r.append(&mut vec![ProperNoun, Noun]),
+            Name => r.push(ProperNoun),
+            Nationality => r.push(Adjective),
+            NeptuneMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            Olympian => r.append(&mut vec![GreekMyth, Mythology, ProperNoun, Noun, Extended]),
+            Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
             PluralNoun => r.push(Noun),
+            RomanMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            SaturnMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
             SingularNoun => r.push(Noun),
+            TransitiveVerb => r.push(Verb),
+            UranusMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            UsState => r.append(&mut vec![Place, ProperNoun]),
+            VerbPast => r.push(Verb),
             _ => {}
         }
         if extended || !r.contains(&Extended) {
@@ -187,53 +171,154 @@ impl WordKind {
 
     fn sub(&self) -> String {
         match self {
-            Adjective => "{adj}",
-            Adverb => "{adv}",
-            All => "{a}",
-            AllExtended => "{a.ext}",
-            Astronomy => "{ast}",
-            AuxiliaryVerb => "{v.aux}",
-            Chthonic => "{chthonic}",
-            City => "{city}",
-            Color => "{color}",
-            Conjunction => "{conj}",
-            Continent => "{cont}",
-            Country => "{country}",
-            Day => "{day}",
-            Element => "{el}",
-            Extended => "{ext}",
-            FemaleName => "{fname}",
-            GreekMyth => "{greekmyth}",
-            Interjection => "{i}",
-            IntransitiveVerb => "{v.int}",
-            JupiterMoon => "{jupitermoon}",
-            MaleName => "{mname}",
-            MarsMoon => "{marsmoon}",
-            Month => "{mon}",
-            Moon => "{moon}",
-            Mythology => "{myth}",
-            Name => "{name}",
-            Nationality => "{nat}",
-            NeptuneMoon => "{neptunemoon}",
-            Noun => "{n}",
-            Olympian => "{olympian}",
-            Place => "{place}",
-            Planet => "{planet}",
-            PluralNoun => "{n.pl}",
-            Preposition => "{prep}",
-            Pronoun => "{n.pro}",
-            ProperNoun => "{n.prop}",
-            RomanMyth => "{romanmyth}",
-            SaturnMoon => "{saturnmoon}",
-            SingularNoun => "{n.s}",
-            TransitiveVerb => "{v.tr}",
-            UranusMoon => "{uranusmoon}",
-            UsState => "{us-state}",
-            Verb => "{v}",
-            VerbPast => "{v.past}",
+            Adjective => String::from("{adj}"),
+            Adverb => String::from("{adv}"),
+            All => String::from("{a}"),
+            AllExtended => String::from("{a.ext}"),
+            Astronomy => String::from("{ast}"),
+            AuxiliaryVerb => String::from("{v.aux}"),
+            Chthonic => String::from("{chthonic}"),
+            City => String::from("{city}"),
+            Color => String::from("{color}"),
+            Conjunction => String::from("{conj}"),
+            Continent => String::from("{cont}"),
+            Country => String::from("{country}"),
+            Day => String::from("{day}"),
+            Element => String::from("{el}"),
+            Extended => String::from("{ext}"),
+            FemaleName => String::from("{fname}"),
+            GreekMyth => String::from("{greekmyth}"),
+            Interjection => String::from("{i}"),
+            IntransitiveVerb => String::from("{v.int}"),
+            JupiterMoon => String::from("{jupitermoon}"),
+            MaleName => String::from("{mname}"),
+            MarsMoon => String::from("{marsmoon}"),
+            Month => String::from("{mon}"),
+            Moon => String::from("{moon}"),
+            Mythology => String::from("{myth}"),
+            Name => String::from("{name}"),
+            Nationality => String::from("{nat}"),
+            NeptuneMoon => String::from("{neptunemoon}"),
+            Noun => String::from("{n}"),
+            Olympian => String::from("{olympian}"),
+            Place => String::from("{place}"),
+            Planet => String::from("{planet}"),
+            PluralNoun => String::from("{n.pl}"),
+            Preposition => String::from("{prep}"),
+            Pronoun => String::from("{n.pro}"),
+            ProperNoun => String::from("{n.prop}"),
+            RomanMyth => String::from("{romanmyth}"),
+            SaturnMoon => String::from("{saturnmoon}"),
+            SingularNoun => String::from("{n.s}"),
+            TransitiveVerb => String::from("{v.tr}"),
+            UranusMoon => String::from("{uranusmoon}"),
+            UsState => String::from("{us-state}"),
+            Verb => String::from("{v}"),
+            VerbPast => String::from("{v.past}"),
+            AdjectiveSyllables(n) => format!("{{adj:{n}}}"),
+            AdverbSyllables(n) => format!("{{adv:{n}}}"),
+            AllSyllables(n) => format!("{{a:{n}}}"),
+            AllExtendedSyllables(n) => format!("{{a.ext:{n}}}"),
+            AstronomySyllables(n) => format!("{{ast:{n}}}"),
+            AuxiliaryVerbSyllables(n) => format!("{{v.aux:{n}}}"),
+            ChthonicSyllables(n) => format!("{{chthonic:{n}}}"),
+            CitySyllables(n) => format!("{{city:{n}}}"),
+            ColorSyllables(n) => format!("{{color:{n}}}"),
+            ConjunctionSyllables(n) => format!("{{conj:{n}}}"),
+            ContinentSyllables(n) => format!("{{cont:{n}}}"),
+            CountrySyllables(n) => format!("{{country:{n}}}"),
+            DaySyllables(n) => format!("{{day:{n}}}"),
+            ElementSyllables(n) => format!("{{el:{n}}}"),
+            ExtendedSyllables(n) => format!("{{ext:{n}}}"),
+            FemaleNameSyllables(n) => format!("{{fname:{n}}}"),
+            GreekMythSyllables(n) => format!("{{greekmyth:{n}}}"),
+            InterjectionSyllables(n) => format!("{{i:{n}}}"),
+            IntransitiveVerbSyllables(n) => format!("{{v.int:{n}}}"),
+            JupiterMoonSyllables(n) => format!("{{jupitermoon:{n}}}"),
+            MaleNameSyllables(n) => format!("{{mname:{n}}}"),
+            MarsMoonSyllables(n) => format!("{{marsmoon:{n}}}"),
+            MonthSyllables(n) => format!("{{mon:{n}}}"),
+            MoonSyllables(n) => format!("{{moon:{n}}}"),
+            MythologySyllables(n) => format!("{{myth:{n}}}"),
+            NameSyllables(n) => format!("{{name:{n}}}"),
+            NationalitySyllables(n) => format!("{{nat:{n}}}"),
+            NeptuneMoonSyllables(n) => format!("{{neptunemoon:{n}}}"),
+            NounSyllables(n) => format!("{{n:{n}}}"),
+            OlympianSyllables(n) => format!("{{olympian:{n}}}"),
+            PlaceSyllables(n) => format!("{{place:{n}}}"),
+            PlanetSyllables(n) => format!("{{planet:{n}}}"),
+            PluralNounSyllables(n) => format!("{{n.pl:{n}}}"),
+            PrepositionSyllables(n) => format!("{{prep:{n}}}"),
+            PronounSyllables(n) => format!("{{n.pro:{n}}}"),
+            ProperNounSyllables(n) => format!("{{n.prop:{n}}}"),
+            RomanMythSyllables(n) => format!("{{romanmyth:{n}}}"),
+            SaturnMoonSyllables(n) => format!("{{saturnmoon:{n}}}"),
+            SingularNounSyllables(n) => format!("{{n.s:{n}}}"),
+            TransitiveVerbSyllables(n) => format!("{{v.tr:{n}}}"),
+            UranusMoonSyllables(n) => format!("{{uranusmoon:{n}}}"),
+            UsStateSyllables(n) => format!("{{us-state:{n}}}"),
+            VerbSyllables(n) => format!("{{v:{n}}}"),
+            VerbPastSyllables(n) => format!("{{v.past:{n}}}"),
         }
-        .to_string()
     }
+
+    fn with_syllables(&self, syllables: usize) -> WordKind {
+        match self {
+            Adjective => AdjectiveSyllables(syllables),
+            Adverb => AdverbSyllables(syllables),
+            All => AllSyllables(syllables),
+            AllExtended => AllExtendedSyllables(syllables),
+            Astronomy => AstronomySyllables(syllables),
+            AuxiliaryVerb => AuxiliaryVerbSyllables(syllables),
+            Chthonic => ChthonicSyllables(syllables),
+            City => CitySyllables(syllables),
+            Color => ColorSyllables(syllables),
+            Conjunction => ConjunctionSyllables(syllables),
+            Continent => ContinentSyllables(syllables),
+            Country => CountrySyllables(syllables),
+            Day => DaySyllables(syllables),
+            Element => ElementSyllables(syllables),
+            Extended => ExtendedSyllables(syllables),
+            FemaleName => FemaleNameSyllables(syllables),
+            GreekMyth => GreekMythSyllables(syllables),
+            Interjection => InterjectionSyllables(syllables),
+            IntransitiveVerb => IntransitiveVerbSyllables(syllables),
+            JupiterMoon => JupiterMoonSyllables(syllables),
+            MaleName => MaleNameSyllables(syllables),
+            MarsMoon => MarsMoonSyllables(syllables),
+            Month => MonthSyllables(syllables),
+            Moon => MoonSyllables(syllables),
+            Mythology => MythologySyllables(syllables),
+            Name => NameSyllables(syllables),
+            Nationality => NationalitySyllables(syllables),
+            NeptuneMoon => NeptuneMoonSyllables(syllables),
+            Noun => NounSyllables(syllables),
+            Olympian => OlympianSyllables(syllables),
+            Place => PlaceSyllables(syllables),
+            Planet => PlanetSyllables(syllables),
+            PluralNoun => PluralNounSyllables(syllables),
+            Preposition => PrepositionSyllables(syllables),
+            Pronoun => PronounSyllables(syllables),
+            ProperNoun => ProperNounSyllables(syllables),
+            RomanMyth => RomanMythSyllables(syllables),
+            SaturnMoon => SaturnMoonSyllables(syllables),
+            SingularNoun => SingularNounSyllables(syllables),
+            TransitiveVerb => TransitiveVerbSyllables(syllables),
+            UranusMoon => UranusMoonSyllables(syllables),
+            UsState => UsStateSyllables(syllables),
+            Verb => VerbSyllables(syllables),
+            VerbPast => VerbPastSyllables(syllables),
+            _ => *self,
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------
+
+#[derive(Clone, Deserialize, Serialize)]
+pub struct WordDetails {
+    kinds: Vec<WordKind>,
+    syllables: usize,
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -241,13 +326,16 @@ impl WordKind {
 #[derive(Clone, Deserialize, Serialize)]
 pub struct Config {
     characters: BTreeMap<char, String>,
-    words: BTreeMap<String, Vec<WordKind>>,
+    words: BTreeMap<String, WordDetails>,
 
     #[serde(skip)]
-    kinds: HashMap<WordKind, Vec<String>>,
+    kinds: BTreeMap<WordKind, Vec<String>>,
 
     #[serde(skip)]
     alphabets: BTreeMap<char, Vec<char>>,
+
+    #[serde(skip)]
+    pub subs: BTreeMap<String, WordKind>,
 
     #[serde(skip)]
     pub extended: bool,
@@ -268,21 +356,23 @@ impl Config {
     }
 
     fn build(mut self, extended: bool) -> Config {
-        // Build word lists for each kind
-        let mut kinds: HashMap<WordKind, BTreeSet<String>> = WORD_KINDS_ALL
-            .iter()
-            .map(|x| (*x, BTreeSet::new()))
-            .collect();
-        for (word, word_kinds) in &self.words {
-            let word_kinds = word_kinds
+        // Build word lists for each kind and syllable count
+        let mut kinds: HashMap<WordKind, BTreeSet<String>> = HashMap::new();
+        for (word, word_details) in &self.words {
+            let word_kinds = word_details
+                .kinds
                 .iter()
                 .flat_map(|x| x.enumerate(extended))
                 .collect::<Vec<_>>();
             let word_is_extended = word_kinds.contains(&Extended);
             for kind in word_kinds {
                 let kind_is_extended = WORD_KINDS_EXTENDED.contains(&kind);
-                let s = kinds.get_mut(&kind).unwrap();
-                if !s.contains(word) && extended || (!word_is_extended || kind_is_extended) {
+                if extended || !word_is_extended || kind_is_extended {
+                    let s = kinds.entry(kind).or_default();
+                    s.insert(word.to_string());
+                    let s = kinds
+                        .entry(kind.with_syllables(word_details.syllables))
+                        .or_default();
                     s.insert(word.to_string());
                 }
             }
@@ -290,6 +380,18 @@ impl Config {
         self.kinds = kinds
             .into_iter()
             .map(|(k, v)| (k, v.into_iter().collect()))
+            .collect();
+        self.subs = self
+            .kinds
+            .keys()
+            .flat_map(|x| {
+                let sub = x.sub();
+                [
+                    (sub.clone(), *x),
+                    (format!("{{W:{}", &sub[1..]), *x),
+                    (format!("{{T:{}", &sub[1..]), *x),
+                ]
+            })
             .collect();
 
         // Build alphabets
@@ -303,7 +405,7 @@ impl Config {
     }
 
     pub fn list(&self, sub: &String) -> Result<Vec<String>> {
-        if let Some(kind) = WORD_KIND_SUBS.get(sub) {
+        if let Some(kind) = self.subs.get(sub) {
             if let Some(list) = self.kinds.get(kind) {
                 Ok(if sub.starts_with("{W:") {
                     list.iter().map(|x| x.to_uppercase()).collect()
@@ -433,19 +535,102 @@ impl Config {
     ```
     */
     pub fn codename_series(&self, n: usize) -> String {
-        let f = || {
-            format!(
-                "{}{}",
-                self.get(Adjective).to_uppercase(),
-                self.get(Noun).to_uppercase(),
-            )
-        };
-        let umbrella = f();
+        let mut adjectives = self
+            .get_n(n + 1, Adjective)
+            .iter()
+            .map(|x| x.to_uppercase())
+            .collect::<Vec<_>>();
+        let mut nouns = self
+            .get_n(n + 1, Noun)
+            .iter()
+            .map(|x| x.to_uppercase())
+            .collect::<Vec<_>>();
+        let umbrella = format!("{}{}", adjectives.remove(0), nouns.remove(0));
         let mut r = vec![];
-        while r.len() < n {
-            r.push(format!("{umbrella} {}", f()));
+        while !adjectives.is_empty() {
+            r.push(format!(
+                "{umbrella} {}{}",
+                adjectives.remove(0),
+                nouns.remove(0),
+            ));
         }
         r.join("\n")
+    }
+
+    /**
+    Generate a haiku
+    */
+    pub fn haiku(&self, variant: HaikuVariant) -> String {
+        let (add_syllables, kebab, newline) = variant.options();
+        let (word_sep, line_sep, syl_sep) = if newline {
+            (" ", "\n", " ")
+        } else if kebab {
+            ("-", "/", "")
+        } else {
+            (" ", " / ", " ")
+        };
+        let max = 5;
+
+        let mut rng = thread_rng();
+
+        let mut lines = vec![];
+        let mut w = BTreeMap::new();
+
+        for mut c in [5, 7, 5] {
+            let mut words = vec![];
+            while c > 0 {
+                let poss = (1..=std::cmp::min(c, max)).collect::<Vec<_>>();
+                let i = poss.choose(&mut rng).unwrap();
+                words.push(*i);
+                c -= *i;
+                w.entry(*i).and_modify(|e| *e += 1).or_insert(1);
+            }
+            lines.push(words);
+        }
+
+        let mut w = w
+            .iter()
+            .map(|(syllables, words)| {
+                (
+                    *syllables,
+                    self.get_n(
+                        *words,
+                        if self.extended {
+                            AllExtendedSyllables(*syllables)
+                        } else {
+                            AllSyllables(*syllables)
+                        },
+                    ),
+                )
+            })
+            .collect::<BTreeMap<usize, Vec<String>>>();
+
+        let mut r = vec![];
+
+        for line in &lines {
+            let mut words = vec![];
+            for (i, syllables) in line.iter().enumerate() {
+                let s = w.get_mut(syllables).unwrap();
+                words.push(if i == 0 {
+                    ucfirst(&s.remove(0))
+                } else {
+                    s.remove(0)
+                });
+            }
+            let mut words = words.join(word_sep);
+            if add_syllables {
+                words.push_str(&format!(
+                    "{syl_sep}({})",
+                    line.iter()
+                        .map(|x| x.to_string())
+                        .collect::<Vec<_>>()
+                        .join(",")
+                ));
+            }
+            r.push(words);
+        }
+
+        r.join(line_sep)
     }
 
     /**
@@ -457,7 +642,7 @@ impl Config {
         let mut words = 0;
         let mut kc_words = 0;
         let mut pre = BTreeMap::new();
-        'outer: for (sub, kind) in WORD_KIND_SUBS.iter() {
+        'outer: for (sub, kind) in self.subs.iter() {
             let mut i = 0;
             while i < j {
                 if let Some(p) = pattern[i..].find(sub) {
@@ -542,6 +727,29 @@ impl Config {
     }
 }
 
+//--------------------------------------------------------------------------------------------------
+
+pub enum HaikuVariant {
+    Normal,
+    WithSyllables,
+    WithSyllablesCondensed,
+    Condensed,
+    Full,
+    FullWithSyllables,
+}
+
+impl HaikuVariant {
+    fn options(&self) -> (bool, bool, bool) {
+        match self {
+            Self::Condensed => (false, true, false),
+            Self::WithSyllablesCondensed => (true, true, false),
+            Self::Normal => (false, false, false),
+            Self::WithSyllables => (true, false, false),
+            Self::Full => (false, false, true),
+            Self::FullWithSyllables => (true, false, true),
+        }
+    }
+}
 //--------------------------------------------------------------------------------------------------
 
 #[derive(Debug)]
