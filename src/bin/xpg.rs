@@ -2,6 +2,9 @@ use anyhow::Result;
 use clap::Parser;
 use std::path::PathBuf;
 
+#[cfg(unix)]
+use pager::Pager;
+
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[derive(Parser)]
@@ -98,6 +101,9 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
 
     if cli.readme {
+        #[cfg(unix)]
+        Pager::with_pager("bat -pl md").setup();
+
         print!("{}", include_str!("../../README.md"));
         std::process::exit(0);
     }

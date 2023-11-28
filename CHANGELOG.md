@@ -28,4 +28,5 @@
 * 0.10.0 (2023-11-27): add syllables and `haiku*` special patterns; fix the
   codename series algorithm; make olympian/chthonic kinds extended; update
   dependencies
+* 0.11.0 (2023-11-28): add bat pager on \*nix
 
