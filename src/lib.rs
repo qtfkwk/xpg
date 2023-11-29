@@ -358,6 +358,7 @@ impl Config {
     fn build(mut self, extended: bool) -> Config {
         // Build word lists for each kind and syllable count
         let mut kinds: HashMap<WordKind, BTreeSet<String>> = HashMap::new();
+        let mut words = BTreeMap::new();
         for (word, word_details) in &self.words {
             let word_kinds = word_details
                 .kinds
@@ -365,10 +366,10 @@ impl Config {
                 .flat_map(|x| x.enumerate(extended))
                 .collect::<Vec<_>>();
             let word_is_extended = word_kinds.contains(&Extended);
-            for kind in word_kinds {
-                let kind_is_extended = WORD_KINDS_EXTENDED.contains(&kind);
+            for kind in &word_kinds {
+                let kind_is_extended = WORD_KINDS_EXTENDED.contains(kind);
                 if extended || !word_is_extended || kind_is_extended {
-                    let s = kinds.entry(kind).or_default();
+                    let s = kinds.entry(*kind).or_default();
                     s.insert(word.to_string());
                     let s = kinds
                         .entry(kind.with_syllables(word_details.syllables))
@@ -376,7 +377,15 @@ impl Config {
                     s.insert(word.to_string());
                 }
             }
+            words.insert(
+                word.clone(),
+                WordDetails {
+                    kinds: word_kinds,
+                    syllables: word_details.syllables,
+                },
+            );
         }
+        self.words = words;
         self.kinds = kinds
             .into_iter()
             .map(|(k, v)| (k, v.into_iter().collect()))
@@ -576,6 +585,7 @@ impl Config {
         let mut lines = vec![];
         let mut w = BTreeMap::new();
 
+        // Pick random syllable pattern
         for mut c in [5, 7, 5] {
             let mut words = vec![];
             while c > 0 {
@@ -588,6 +598,7 @@ impl Config {
             lines.push(words);
         }
 
+        // Get words without repetion
         let mut w = w
             .iter()
             .map(|(syllables, words)| {
@@ -611,11 +622,27 @@ impl Config {
             let mut words = vec![];
             for (i, syllables) in line.iter().enumerate() {
                 let s = w.get_mut(syllables).unwrap();
-                words.push(if i == 0 {
-                    ucfirst(&s.remove(0))
+                let word = s.remove(0);
+                let details = self.words.get(&word).unwrap();
+                let word = if i == 0 || details.kinds.contains(&ProperNoun) {
+                    ucfirst(&word)
                 } else {
-                    s.remove(0)
-                });
+                    word
+                };
+                let word = word
+                    .replace("Newhampshire", "New Hampshire")
+                    .replace("Newjersey", "New Jersey")
+                    .replace("Newmexico", "New Mexico")
+                    .replace("Newyork", "New York")
+                    .replace("Northamerica", "North America")
+                    .replace("Northcarolina", "North Carolina")
+                    .replace("Northdakota", "North Dakota")
+                    .replace("Rhodeisland", "Rhode Island")
+                    .replace("Southamerica", "South America")
+                    .replace("Southcarolina", "South Carolina")
+                    .replace("Southdakota", "South Dakota")
+                    .replace("Westvirginia", "West Virginia");
+                words.push(if i == 0 { ucfirst(&word) } else { word });
             }
             let mut words = words.join(word_sep);
             if add_syllables {

@@ -7373,6 +7373,13 @@
       ],
       "syllables": 1
     },
+    "southamerica": {
+      "kinds": [
+        "Continent",
+        "Extended"
+      ],
+      "syllables": 5
+    },
     "southcarolina": {
       "kinds": [
         "UsState",

@@ -263,6 +263,13 @@ $ xpg haiku+++
 !run:../target/release/xpg haiku+++
 ```
 
+#### Generate a haiku with extended words
+
+```text
+$ xpg -e haiku
+!run:../target/release/xpg -e haiku
+```
+
 #### Generate a password with 20 "any" characters
 
 ```text

@@ -29,4 +29,5 @@
   codename series algorithm; make olympian/chthonic kinds extended; update
   dependencies
 * 0.11.0 (2023-11-28): add bat pager on \*nix
+* 0.12.0 (2023-11-29): fix haiku algorithm; updated dependencies
 
