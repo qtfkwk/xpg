@@ -144,7 +144,7 @@ impl WordKind {
             JupiterMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
             MaleName => r.append(&mut vec![Name, ProperNoun]),
             MarsMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            Month => r.append(&mut vec![SingularNoun, Noun]),
+            Month => r.append(&mut vec![SingularNoun, Noun, ProperNoun]),
             Moon => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
             Mythology => r.append(&mut vec![ProperNoun, Noun]),
             Name => r.push(ProperNoun),
@@ -329,6 +329,9 @@ pub struct Config {
     words: BTreeMap<String, WordDetails>,
 
     #[serde(skip)]
+    words_built: BTreeMap<String, WordDetails>,
+
+    #[serde(skip)]
     kinds: BTreeMap<WordKind, Vec<String>>,
 
     #[serde(skip)]
@@ -358,7 +361,7 @@ impl Config {
     fn build(mut self, extended: bool) -> Config {
         // Build word lists for each kind and syllable count
         let mut kinds: HashMap<WordKind, BTreeSet<String>> = HashMap::new();
-        let mut words = BTreeMap::new();
+        self.words_built = BTreeMap::new();
         for (word, word_details) in &self.words {
             let word_kinds = word_details
                 .kinds
@@ -377,7 +380,7 @@ impl Config {
                     s.insert(word.to_string());
                 }
             }
-            words.insert(
+            self.words_built.insert(
                 word.clone(),
                 WordDetails {
                     kinds: word_kinds,
@@ -385,7 +388,6 @@ impl Config {
                 },
             );
         }
-        self.words = words;
         self.kinds = kinds
             .into_iter()
             .map(|(k, v)| (k, v.into_iter().collect()))
@@ -623,7 +625,7 @@ impl Config {
             for (i, syllables) in line.iter().enumerate() {
                 let s = w.get_mut(syllables).unwrap();
                 let word = s.remove(0);
-                let details = self.words.get(&word).unwrap();
+                let details = self.words_built.get(&word).unwrap();
                 let word = if i == 0 || details.kinds.contains(&ProperNoun) {
                     ucfirst(&word)
                 } else {

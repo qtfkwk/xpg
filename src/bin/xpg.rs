@@ -128,7 +128,7 @@ fn main() -> Result<()> {
     };
 
     if cli.dump_config {
-        print!("{}", cfg.dump()?);
+        println!("{}", cfg.dump()?);
         std::process::exit(0);
     } else if cli.list {
         let patterns = if cli.patterns.is_empty() {

@@ -4085,6 +4085,13 @@
       ],
       "syllables": 3
     },
+    "january": {
+      "kinds": [
+        "Month",
+        "Extended"
+      ],
+      "syllables": 4
+    },
     "japan": {
       "kinds": [
         "Country"
@@ -4808,6 +4815,14 @@
         "IntransitiveVerb"
       ],
       "syllables": 2
+    },
+    "may": {
+      "kinds": [
+        "Month",
+        "AuxiliaryVerb",
+        "Extended"
+      ],
+      "syllables": 1
     },
     "maybe": {
       "kinds": [
