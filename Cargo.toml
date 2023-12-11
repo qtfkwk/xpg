@@ -1,6 +1,6 @@
 [package]
 name = "xpg"
-version = "0.13.0"
+version = "0.14.0"
 edition = "2021"
 description = "xkcd-style password generator"
 repository = "https://github.com/qtfkwk/xpg"
@@ -9,7 +9,7 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0.75"
-clap = { version = "4.4.10", features = ["derive", "wrap_help"] }
+clap = { version = "4.4.11", features = ["derive", "wrap_help"] }
 directories = "5.0.1"
 rand = "0.8.5"
 serde = { version = "1.0.193", features = ["derive"] }

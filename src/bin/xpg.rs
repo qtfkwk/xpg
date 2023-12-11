@@ -42,9 +42,14 @@ Notes
         * `haiku++`
         * `haiku+++`
 
-2. By default, extended words are only available in exclusively extended word
-   kinds; however, with `-e`, they are merged with regular word kinds; use with
-   the `-L` option to see its effect.
+2. Ten attempts are made to satisfy the given length requirements by default;
+   use `-a N` and set `N` to the number of attempts to increase chances.
+   It will exit with an error if unable to satisfy requirements; some
+   configurations will always produce an error.
+
+3. Extended words are only available in exclusively extended word kinds by
+   default; however, with `-e`, they are merged with regular word kinds; use
+   with the `-L` option to see its effect.
 "
 )]
 struct Cli {
@@ -64,7 +69,7 @@ struct Cli {
     #[arg(short = 'M', long, value_name = "NUMBER")]
     maximum: Option<usize>,
 
-    /// Attempts
+    /// Attempts (see note 2)
     #[arg(short, long, value_name = "NUMBER", default_value = "10")]
     attempts: usize,
 
@@ -72,7 +77,7 @@ struct Cli {
     #[arg(short = 'C', long, value_name = "PATH")]
     config: Option<PathBuf>,
 
-    /// Merge extended words (see note 2)
+    /// Merge extended words (see note 3)
     #[arg(short, long)]
     extended: bool,
 

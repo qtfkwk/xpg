@@ -756,6 +756,12 @@ impl Config {
     }
 }
 
+impl Default for Config {
+    fn default() -> Config {
+        Config::from_str(CONFIG, false).unwrap()
+    }
+}
+
 //--------------------------------------------------------------------------------------------------
 
 pub enum HaikuVariant {

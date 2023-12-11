@@ -31,4 +31,5 @@
 * 0.11.0 (2023-11-28): add bat pager on \*nix
 * 0.12.0 (2023-11-29): fix haiku algorithm; updated dependencies
 * 0.13.0 (2023-12-01): add/fix months; fix dump; update dependencies
+* 0.14.0 (2023-12-11): impl Default for Config; updated dependencies
 

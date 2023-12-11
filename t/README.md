@@ -109,7 +109,7 @@ $ xpg WWWW
 !run:../target/release/xpg WWWW
 ```
 
-#### Generate a password with 4 words followed by 5 "any" characters
+#### Generate a password with 4 words followed by 5 *any* characters
 
 *An "any" character can be a lowercase letter, uppercase letter, digit, or
 symbol.*
@@ -135,21 +135,23 @@ $ xpg www -M 20
 
 #### Generate a password with 4 words and between 20 and 25 characters
 
-*Increase attempts to help it succeed.*
-
 ```text
 $ xpg www -m 20 -M 25 -a 1000
 !run:../target/release/xpg www -m 20 -M 25 -a 1000
 ```
 
-#### Generate a password with 2 words, 3 digits, 1 symbol, and exactly 16 characters
+*See also [Usage] note 2.*
 
-*Increase attempts to help it succeed.*
+[Usage]: #usage
+
+#### Generate a password with 2 words, 3 digits, 1 symbol, and exactly 16 characters
 
 ```text
 $ xpg wwddds -l 16 -a 1000
 !run:../target/release/xpg wwddds -l 16 -a 1000
 ```
+
+*See also [Usage] note 2.*
 
 #### Generate a password with a `1`, 2 title case words, and `!`
 
@@ -270,7 +272,7 @@ $ xpg -e haiku
 !run:../target/release/xpg -e haiku
 ```
 
-#### Generate a password with 20 "any" characters
+#### Generate a password with 20 *any* characters
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
