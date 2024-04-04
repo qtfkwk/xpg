@@ -10,7 +10,7 @@ xkcd-style password generator
 
 ```text
 $ xpg -h
-xpg 0.14.0 <https://crates.io/crates/xpg>
+xpg 0.14.1 <https://crates.io/crates/xpg>
 
 xkcd-style password generator
 
@@ -73,7 +73,7 @@ Notes
 
 ```text
 $ xpg -V
-xpg 0.14.0
+xpg 0.14.1
 ```
 
 *See also the [Configuration] section below.*
@@ -84,23 +84,23 @@ xpg 0.14.0
 
 ```text
 $ xpg
-indicatethreehonorsimilar
+judgegavemontanadraw
 ```
 
 #### Generate 10 passwords
 
 ```text
 $ xpg -c 10
-februaryorderthankparis
-whilesentseveralrest
-chargelookenoughpaper
-flowtimecheckline
-cropsdelighttasteexpect
-delawaretherecheckchina
-rightheavysisterfamous
-betweengroupbecausealone
-afterdownshinemade
-shoutgoodfactjordan
+beginmoonmothertube
+belgiuminsteadthingouter
+windowideapoundsdoes
+untilneedleneckabove
+measurelikeriseamerica
+doctorpropertyreacheduncle
+donefoundprobableplease
+newswednesdaybasketbroken
+matterdevelopedincludepounds
+provefrontlittlejordan
 ```
 
 #### Generate passwords forever
@@ -109,16 +109,16 @@ shoutgoodfactjordan
 
 ```text
 $ xpg -c 0
-lowertillsuchactually
-moonconditionphrasedesire
-foollatersafetyshort
-laughproudforestthick
-longlessstaplesupply
-orderlytablethosebusy
-mailtravelsubstancesqueen
-tiedfightglasssaturn
-considerableplantincheskorea
-shirtdesertcornbelong
+moresincesoiltexas
+finallyitselfevenmeat
+crossteamdelawareridden
+processthousandplaintone
+bellnetherlandsedgebranches
+suddenelsewingsstory
+sundaywedgenatureaustria
+sentsoldiersbeganwent
+continuedspecialduskbecome
+newskilledsomeonefarmers
 ^C
 ```
 
@@ -126,72 +126,72 @@ shirtdesertcornbelong
 
 ```text
 $ xpg wwwwwwww
-twentyyourselfsomewingjointruckmonthsoften
+fingerbecamecitydemandlaughedmoscoweffectafraid
 ```
 
 #### Generate 10 passwords with 8 words
 
 ```text
 $ xpg wwwwwwww -c 10
-behindsailpossiblemiddleuranusauntuponevening
-whitemilesomesaysmannerunderlinekilledbotswana
-pleaserecordsugarpracticedenmarkwelcomewhatsmall
-metalsignremainequalablefavorshownscotland
-camenailanotherplayeasybesidewhichmeeting
-matchcirclefoolparticularfindpluralseedsave
-neversmallratherpressdifferentspeedsandmost
-fishplainslosecarefullypluralloveshirtmoment
-locatedmeasureboardegyptsailfeltbrokearms
-oxygenfifteendamascusdanceweatherfactorsparkbulgaria
+englishmondayamountwhatopinionislandthickdictionary
+successenoughfullbusyearthinsectshellofrom
+rolledpulledbelieveknownreasonchairshownloss
+spreadwheatturnbrokeproductssouthbonescolor
+governmentslowlysmallbridgeyellowwellwithinscore
+likelytwelvepresentgirlinsteadmorningbookclock
+bottleunderstoodoncefebruaryclosetookrulebetween
+listlengthsilverduskscalefuturestaytoday
+shownspainkissappeartheybritishpossibledied
+whosemembersproudpropertystillgoessouthernlondon
 ```
 
 #### Generate a password with 2 words followed by 3 digits
 
 ```text
 $ xpg wwddd
-filldone264
+towardcare285
 ```
 
 #### Generate a password with 2 words followed by 2 symbols
 
 ```text
 $ xpg wwss
-southerneveryone}*
+showbrought&?
 ```
 
 #### Generate a password with 2 words followed by a digit and a symbol
 
 ```text
 $ xpg wwds
-nonerush5<
+warsawreal8-
 ```
 
 #### Generate a password with 4 words followed by 2 lowercase letters
 
 ```text
 $ xpg wwwwcc
-tiedbroadsubstancestowardsp
+coastbloodfencehusbandzq
 ```
 
 #### Generate a password with 4 words followed by 2 uppercase letters
 
 ```text
 $ xpg wwwwCC
-branchesstudentsconsiderriddenKG
+untiljamaicasureshoutXU
 ```
 
 #### Generate a password with 4 title case words
 
 ```text
 $ xpg TTTT
-WoodStreetSpreadSmall
+MilePromiseTeamRepresent
 ```
 
 #### Generate a password with 4 uppercase words
 
 ```text
 $ xpg WWWW
-CONSIDERTILLFOUNDESCAPE
+HANGTHEMSELVESSHOWFOOT
 ```
 
 #### Generate a password with 4 words followed by 5 *any* characters
@@ -201,28 +201,28 @@ symbol.*
 
 ```text
 $ xpg wwwwaaaaa
-gentlemanpresidentthirteenshownog%Dw
+noticebrightjumpedlandM44OE
 ```
 
 #### Generate a password with 3 words and at least 15 characters
 
 ```text
 $ xpg www -m 15
-providesoldsort
+signbellpartial
 ```
 
 #### Generate a password with 3 words and no more than 20 characters
 
 ```text
 $ xpg www -M 20
-kenyapeacegrave
+divideprocessglass
 ```
 
 #### Generate a password with 4 words and between 20 and 25 characters
 
 ```text
 $ xpg www -m 20 -M 25 -a 1000
-requiregroundbranches
+patternmainstatement
 ```
 
 *See also [Usage] note 2.*
@@ -233,7 +233,7 @@ requiregroundbranches
 
 ```text
 $ xpg wwddds -l 16 -a 1000
-aftermembers770~
+monthsmadrid593+
 ```
 
 *See also [Usage] note 2.*
@@ -242,167 +242,167 @@ aftermembers770~
 
 ```text
 $ xpg '1TT!'
-1OnlyAcross!
+1LossUpon!
 ```
 
 #### Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits
 
 ```text
 $ xpg 's{adj}{adj}{n}dd'
-~certaingravebetter73
+!bettersoutherncompound00
 ```
 
 #### Generate a password with 2 words and 1 extended word
 
 ```text
 $ xpg 'ww{ext}'
-romerisethebe
+oxygenwalknorthdakota
 ```
 
 #### Generate a password with 2 words and 1 title case extended word
 
 ```text
 $ xpg 'ww{T:ext}'
-growratherEnceladus
+rememberrestMegaclite
 ```
 
 #### Generate a password with 2 words and 1 uppercase extended word
 
 ```text
 $ xpg 'ww{W:ext}'
-leadertheyTETHYS
+belfastfirmCOLORADO
 ```
 
 #### Generate 10 passwords with 4 title case words and extended words merged
 
 ```text
 $ xpg -ec 10 TTTT
-RideAllowHaveCase
-ReportProvideTritonSuit
-LostAboutWarmGreece
-AgainPlanetWithinNevada
-HomeDeepToldThus
-WorkSlowOceanDuring
-FinlandCommonIsonoeSlept
-AmaltheaStrangerStormTaken
-VowelCylleneSongTrain
-LanguageDeimosTrainPhilophrosyne
+KilledHouseManySettle
+FirmHuntConsiderMinute
+MaterialLadderNearFruit
+PickMayorEuantheTraining
+PlanKalykeDemandHowever
+MeanSendFineHold
+HeavenDoesIronDemand
+ProductsNatureVillageEarly
+MayEffectNounToday
+GoesDegreeDelawareParty
 ```
 
 #### Generate a keychain-style password
 
 ```text
 $ xpg keychain
-cy5fzp-mxPhcq-ohgfgc
+mwprb5-vCcmys-ynwmjo
 ```
 
 #### Generate a code name
 
 ```text
 $ xpg codename
-COOL ROPE
+HIGH FRIENDS
 ```
 
 #### Generate a code name series
 
 ```text
 $ xpg codename-series
-LATERGENTLEMAN KINDDARE
-LATERGENTLEMAN NOTHINGFOOT
-LATERGENTLEMAN SUDDENMOON
-LATERGENTLEMAN THERECENTER
-LATERGENTLEMAN HUNDREDLINE
-LATERGENTLEMAN EXCITINGDAILY
-LATERGENTLEMAN IMPORTANTSUBJECT
-LATERGENTLEMAN FRONTHEAT
-LATERGENTLEMAN SIMILARSOIL
-LATERGENTLEMAN DARKSHIP
+FOURSTREAM BRITISHELEMENTS
+FOURSTREAM SAMEWITHOUT
+FOURSTREAM RICHSURPRISE
+FOURSTREAM EQUALRADIO
+FOURSTREAM ANGRYADVANCE
+FOURSTREAM ELSETILL
+FOURSTREAM LATERLIGHT
+FOURSTREAM AFRAIDSTORE
+FOURSTREAM PARTIALOBJECT
+FOURSTREAM FLATOPINION
 ```
 
 #### Generate a code name series with 20 code names
 
 ```text
 $ xpg codename-series -c 20
-HUNDREDDETAILS YOUNGTHROW
-HUNDREDDETAILS WORNCAPTAIN
-HUNDREDDETAILS DAUGHTERCASE
-HUNDREDDETAILS TINYFIFTH
-HUNDREDDETAILS HUGESHOP
-HUNDREDDETAILS GOLDBABY
-HUNDREDDETAILS DOUBLERECORD
-HUNDREDDETAILS MANYREPORT
-HUNDREDDETAILS HARDTOMORROW
-HUNDREDDETAILS MODERNFINISH
-HUNDREDDETAILS FIFTHVIEW
-HUNDREDDETAILS ELSEGIRL
-HUNDREDDETAILS LEADAPRIL
-HUNDREDDETAILS LIVENIECE
-HUNDREDDETAILS SILENTBEYOND
-HUNDREDDETAILS COOLWING
-HUNDREDDETAILS HAPPYSUNDAY
-HUNDREDDETAILS COMMONDOCTOR
-HUNDREDDETAILS MADESQUARE
-HUNDREDDETAILS COLDSTONE
+NEAREGGS CORRECTMONDAY
+NEAREGGS SUDDENINTEREST
+NEAREGGS OUTSIDESILVER
+NEAREGGS SIMILARBUILD
+NEAREGGS PLANEREACH
+NEAREGGS THICKFIFTEEN
+NEAREGGS THISTYPE
+NEAREGGS MINUTERETURN
+NEAREGGS THESEVIEW
+NEAREGGS TALLCHARGE
+NEAREGGS WESTSATURDAY
+NEAREGGS MAINFEAR
+NEAREGGS TWENTYGREEN
+NEAREGGS ANIMALMOTHER
+NEAREGGS THIRTEENCARE
+NEAREGGS WIDEFREE
+NEAREGGS ALONESOUND
+NEAREGGS CONSONANTSINGLE
+NEAREGGS NICEAUGUST
+NEAREGGS REALHEAT
 ```
 
 #### Generate a haiku
 
 ```text
 $ xpg haiku
-Electricity / Considerable nature / Village five sharp fine
+Died experiment / Poor considerable stay / Copenhagen best
 ```
 
 #### Generate a haiku with syllable pattern
 
 ```text
 $ xpg haiku+
-Held beauty evening (1,2,2) / Copenhagen Europe shore (4,2,1) / Water Mercury (2,3)
+Europe today fruit (2,2,1) / Considerable kept wire (5,1,1) / Cold suggested sight (1,3,1)
 ```
 
 #### Generate a condensed haiku with syllable pattern
 
 ```text
 $ xpg haiku-
-Mayor-test-give-weak(2,1,1,1)/Considerable-there-skin(5,1,1)/Electricity(5)
+Developed-either(3,2)/However-inches-above(3,2,2)/Cotton-solution(2,3)
 ```
 
 #### Generate a condensed haiku
 
 ```text
 $ xpg haiku--
-Opinion-strange-cook/Electricity-bone-grow/Copenhagen-main
+Considerable/Take-electricity-thank/Season-nature-land
 ```
 
 #### Generate a haiku with newlines
 
 ```text
 $ xpg haiku++
-Probable teach pure
-Temperature length distant
-Especially tree
+Bulgaria thing
+Within similar height class
+Hurt direction free
 ```
 
 #### Generate a haiku with syllable pattern and newlines
 
 ```text
 $ xpg haiku+++
-Information soon (4,1)
-Settled self Arizona (2,1,4)
-Ireland science (3,2)
+Greece America (1,4)
+Guess brought considerable (1,1,5)
+Equal leave over (2,1,2)
 ```
 
 #### Generate a haiku with extended words
 
 ```text
 $ xpg -e haiku
-South Carolina / Move South America life / Left Amalthea hurt
+Miss February / Consonant condition grown / Dionysus slept
 ```
 
 #### Generate a password with 20 *any* characters
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
-%GRA>R%EF>H7v(/lQIFZ
+fE6H}ax<h?,4oILFFn;3
 ```
 
 #### Same as the previous example, but shorter
@@ -412,23 +412,23 @@ with the last character.*
 
 ```text
 $ xpg a -m 20
-plMad$O&q+l1ovdzM~z~
+pi*;,h~JVyd=J3K6I[jz
 ```
 
 #### Generate 3 passwords each from a different pattern
 
 ```text
 $ xpg wwww WWWW TTTT
-shadebankercoveredpaid
-JUMPEDCLASSTHOUSANDISLAND
-LoudSnowSquareCarefully
+expressseeddoublehome
+ROLLEDEVERYLIFEESCAPE
+SameFlowDescribeCould
 ```
 
 #### Generate a password with words with 1, 2, 3, 4, and 5 syllables
 
 ```text
 $ xpg '{a:1}-{W:a:2}-{T:a:3}-{olympian:4}-{T:ext:5}'
-write-PERSON-Montana-dionysus-Louisiana
+eggs-OSLO-Uranus-aphrodite-Northcarolina
 ```
 
 #### List the words in Color / `{color}`
@@ -601,38 +601,34 @@ via the `-C` option at *runtime*, it will be used instead.
 
 # Changelog
 
-* 0.1.0 (2019-09-08): store wordlist as constant and operate on it without
-  copying; select N words without repetition via `choose_multiple`; tests;
-  benchmark various implementations; `xpg` function; `xpg!` macro to enable
-  optional word count argument; command line interface via clap
-* 0.1.1 (2019-09-08): minor fixes
-* 0.1.2 (2019-09-08): minor fixes
-* 0.2.0 (2019-09-09): expose `xpg!` macro; improve documentation
-* 0.3.0 (2022-10-01): update dependencies; add digits and symbols options
-* 0.3.1 (2022-10-01): fix readme
-* 0.4.0 (2022-10-02): add --lowercase, --uppercase, and --any options; enable
-  --words option to be zero if --any option is greater than zero; enable
-  infinite passwords via `-c 0`
-* 0.5.0 (2022-10-13): add --keychain and --code-name options
-* 0.6.0 (2023-11-22): remove num and factorial crate dependencies; improve
-  permutations function; update dependencies; apply clippy fixes and cargo fmt;
-  reorganize
-* 0.6.1 (2023-11-22): fix readme
-* 0.7.0 (2023-11-24): complete redesign
-* 0.8.0 (2023-11-25): remove benchmark; simplify cli options; add `-r` and `-C`
-  options; restore `-c 0` functionality; add `codename-series` special pattern;
-  add word kind subpatterns; enable external runtime configuration via new
-  `Config` struct
-* 0.8.1 (2023-11-25): fix `-C` option
-* 0.9.0 (2023-11-26): add extended words; enable multiple patterns; add `-e` and
-  `-L` options; make `-d` dump the loaded not default configuration
-* 0.10.0 (2023-11-27): add syllables and `haiku*` special patterns; fix the
-  codename series algorithm; make olympian/chthonic kinds extended; update
-  dependencies
-* 0.11.0 (2023-11-28): add bat pager on \*nix
-* 0.12.0 (2023-11-29): fix haiku algorithm; updated dependencies
-* 0.13.0 (2023-12-01): add/fix months; fix dump; update dependencies
-* 0.14.0 (2023-12-11): impl Default for Config; updated dependencies
+* 0.1.0 (2019-09-08): Store wordlist as constant and operate on it without copying; select N words
+  without repetition via `choose_multiple`; tests; benchmark various implementations; `xpg`
+  function; `xpg!` macro to enable optional word count argument; command line interface via clap
+    * 0.1.1 (2019-09-08): Minor fixes
+    * 0.1.2 (2019-09-08): Minor fixes
+* 0.2.0 (2019-09-09): Expose `xpg!` macro; improve documentation
+* 0.3.0 (2022-10-01): Update dependencies; add digits and symbols options
+    * 0.3.1 (2022-10-01): Fix readme
+* 0.4.0 (2022-10-02): Add --lowercase, --uppercase, and --any options; enable --words option to be
+  zero if --any option is greater than zero; enable infinite passwords via `-c 0`
+* 0.5.0 (2022-10-13): Add --keychain and --code-name options
+* 0.6.0 (2023-11-22): Remove num and factorial crate dependencies; improve permutations function;
+  update dependencies; apply clippy fixes and cargo fmt; reorganize
+    * 0.6.1 (2023-11-22): Fix readme
+* 0.7.0 (2023-11-24): Complete redesign
+* 0.8.0 (2023-11-25): Remove benchmark; simplify cli options; add `-r` and `-C` options; restore
+  `-c 0` functionality; add `codename-series` special pattern; add word kind subpatterns; enable
+  external runtime configuration via new `Config` struct
+    * 0.8.1 (2023-11-25): Fix `-C` option
+* 0.9.0 (2023-11-26): Add extended words; enable multiple patterns; add `-e` and `-L` options; make
+  `-d` dump the loaded not default configuration
+* 0.10.0 (2023-11-27): Add syllables and `haiku*` special patterns; fix the codename series
+  algorithm; make olympian/chthonic kinds extended; update dependencies
+* 0.11.0 (2023-11-28): Add bat pager on \*nix
+* 0.12.0 (2023-11-29): Fix haiku algorithm; updated dependencies
+* 0.13.0 (2023-12-01): Add/fix months; fix dump; update dependencies
+* 0.14.0 (2023-12-11): Implement Default for Config; updated dependencies
+    * 0.14.1 (2024-04-04): Update dependencies; fix changelog
 
 # References
 
