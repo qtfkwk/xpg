@@ -16,8 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Update dependencies
-      run: cargo install cargo-edit && cargo upgrade --incompatible && cargo update
     - name: Check
       run: cargo install cargo-outdated cargo-audit && cargo outdated && cargo audit
     - name: Build
