@@ -20,3 +20,7 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Check
+      run: cargo install cargo-outdated cargo-audit && cargo outdated && cargo audit
+    - name: Update
+      run: cargo install cargo-edit && cargo upgrade --incompatible && cargo update
