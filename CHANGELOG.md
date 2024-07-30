@@ -28,4 +28,5 @@
 * 0.13.0 (2023-12-01): Add/fix months; fix dump; update dependencies
 * 0.14.0 (2023-12-11): Implement Default for Config; updated dependencies
     * 0.14.1 (2024-04-04): Update dependencies; fix changelog
+* 0.15.0 (2024-07-30): Fix makefile; update dependencies
 

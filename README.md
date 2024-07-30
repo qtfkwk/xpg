@@ -10,7 +10,7 @@ xkcd-style password generator
 
 ```text
 $ xpg -h
-xpg 0.14.1 <https://crates.io/crates/xpg>
+xpg 0.15.0 <https://crates.io/crates/xpg>
 
 xkcd-style password generator
 
@@ -73,7 +73,7 @@ Notes
 
 ```text
 $ xpg -V
-xpg 0.14.1
+xpg 0.15.0
 ```
 
 *See also the [Configuration] section below.*
@@ -84,23 +84,23 @@ xpg 0.14.1
 
 ```text
 $ xpg
-judgegavemontanadraw
+almostequationunclethem
 ```
 
 #### Generate 10 passwords
 
 ```text
 $ xpg -c 10
-beginmoonmothertube
-belgiuminsteadthingouter
-windowideapoundsdoes
-untilneedleneckabove
-measurelikeriseamerica
-doctorpropertyreacheduncle
-donefoundprobableplease
-newswednesdaybasketbroken
-matterdevelopedincludepounds
-provefrontlittlejordan
+boardwentdealgrow
+melodythatconsiderreply
+indicatebeyondhusbandhand
+experienceforestfingersright
+showthreechilekentucky
+thirdbarbadosdesignpleasure
+nonethirteenchinaweek
+bonedoublecorneryesterday
+trustawaydrawwhose
+scaleweekblackmontana
 ```
 
 #### Generate passwords forever
@@ -109,16 +109,16 @@ provefrontlittlejordan
 
 ```text
 $ xpg -c 0
-moresincesoiltexas
-finallyitselfevenmeat
-crossteamdelawareridden
-processthousandplaintone
-bellnetherlandsedgebranches
-suddenelsewingsstory
-sundaywedgenatureaustria
-sentsoldiersbeganwent
-continuedspecialduskbecome
-newskilledsomeonefarmers
+plainsduringneighborscore
+forgettakenindiafind
+realizepairtookblack
+shoutedsingaporeappeargreen
+signalforestjourneysnow
+toldsystemnewsgrown
+countplaygirlstudents
+friendbecomeanotherpaint
+basketteachertodaycenter
+demandyellowdecembereverything
 ^C
 ```
 
@@ -126,72 +126,72 @@ newskilledsomeonefarmers
 
 ```text
 $ xpg wwwwwwww
-fingerbecamecitydemandlaughedmoscoweffectafraid
+moneyskinfoodoceanvirginiapartnicebecame
 ```
 
 #### Generate 10 passwords with 8 words
 
 ```text
 $ xpg wwwwwwww -c 10
-englishmondayamountwhatopinionislandthickdictionary
-successenoughfullbusyearthinsectshellofrom
-rolledpulledbelieveknownreasonchairshownloss
-spreadwheatturnbrokeproductssouthbonescolor
-governmentslowlysmallbridgeyellowwellwithinscore
-likelytwelvepresentgirlinsteadmorningbookclock
-bottleunderstoodoncefebruaryclosetookrulebetween
-listlengthsilverduskscalefuturestaytoday
-shownspainkissappeartheybritishpossibledied
-whosemembersproudpropertystillgoessouthernlondon
+fromprinteddollarsmorningdividedcellstruefactors
+dublinserviceteachermonthguessworkersmadehave
+beanreachedwesterneveningwoodwedgeafricaprocess
+tokyosingdistancesettledelawareanimalbirdinch
+havanaforevernicespokecausedeepdifferentgibraltar
+twentywednesdayweightpluralafricapleasurefriendsgather
+huntstreetexactlysaysfijioffergamerome
+suddenglassdoorafraidbillperioddrivecase
+squarevoicesingaporefulltimenonelaterforce
+makegreenwheelstypefarmuranuseverythingrush
 ```
 
 #### Generate a password with 2 words followed by 3 digits
 
 ```text
 $ xpg wwddd
-towardcare285
+frontpain557
 ```
 
 #### Generate a password with 2 words followed by 2 symbols
 
 ```text
 $ xpg wwss
-showbrought&?
+slowblock,#
 ```
 
 #### Generate a password with 2 words followed by a digit and a symbol
 
 ```text
 $ xpg wwds
-warsawreal8-
+soundrose0(
 ```
 
 #### Generate a password with 4 words followed by 2 lowercase letters
 
 ```text
 $ xpg wwwwcc
-coastbloodfencehusbandzq
+likeresentnorwayteacherif
 ```
 
 #### Generate a password with 4 words followed by 2 uppercase letters
 
 ```text
 $ xpg wwwwCC
-untiljamaicasureshoutXU
+anothertodayworebankerOS
 ```
 
 #### Generate a password with 4 title case words
 
 ```text
 $ xpg TTTT
-MilePromiseTeamRepresent
+MinuteSuitSmellSleep
 ```
 
 #### Generate a password with 4 uppercase words
 
 ```text
 $ xpg WWWW
-HANGTHEMSELVESSHOWFOOT
+BLOWTUBEYEARTORE
 ```
 
 #### Generate a password with 4 words followed by 5 *any* characters
@@ -201,28 +201,28 @@ symbol.*
 
 ```text
 $ xpg wwwwaaaaa
-noticebrightjumpedlandM44OE
+receivebookespeciallymarsT]9!:
 ```
 
 #### Generate a password with 3 words and at least 15 characters
 
 ```text
 $ xpg www -m 15
-signbellpartial
+factlikeactually
 ```
 
 #### Generate a password with 3 words and no more than 20 characters
 
 ```text
 $ xpg www -M 20
-divideprocessglass
+gifttypelower
 ```
 
 #### Generate a password with 4 words and between 20 and 25 characters
 
 ```text
 $ xpg www -m 20 -M 25 -a 1000
-patternmainstatement
+businesschildhoodelectric
 ```
 
 *See also [Usage] note 2.*
@@ -233,7 +233,7 @@ patternmainstatement
 
 ```text
 $ xpg wwddds -l 16 -a 1000
-monthsmadrid593+
+liftedgreece725-
 ```
 
 *See also [Usage] note 2.*
@@ -242,167 +242,167 @@ monthsmadrid593+
 
 ```text
 $ xpg '1TT!'
-1LossUpon!
+1MaltaNothing!
 ```
 
 #### Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits
 
 ```text
 $ xpg 's{adj}{adj}{n}dd'
-!bettersoutherncompound00
+-burningnearocean56
 ```
 
 #### Generate a password with 2 words and 1 extended word
 
 ```text
 $ xpg 'ww{ext}'
-oxygenwalknorthdakota
+streamcaughtdia
 ```
 
 #### Generate a password with 2 words and 1 title case extended word
 
 ```text
 $ xpg 'ww{T:ext}'
-rememberrestMegaclite
+washgroupAphrodite
 ```
 
 #### Generate a password with 2 words and 1 uppercase extended word
 
 ```text
 $ xpg 'ww{W:ext}'
-belfastfirmCOLORADO
+tonecompanyPERSEPHONE
 ```
 
 #### Generate 10 passwords with 4 title case words and extended words merged
 
 ```text
 $ xpg -ec 10 TTTT
-KilledHouseManySettle
-FirmHuntConsiderMinute
-MaterialLadderNearFruit
-PickMayorEuantheTraining
-PlanKalykeDemandHowever
-MeanSendFineHold
-HeavenDoesIronDemand
-ProductsNatureVillageEarly
-MayEffectNounToday
-GoesDegreeDelawareParty
+LanguageSignMondayDrive
+PeoplePullMeanCent
+SystemTritonClearTaygete
+CenterFastGovernmentAnger
+LaomedeiaValetudoRainLake
+ChiefWaitNaturalFear
+NailGeneralBottleSoil
+ListenZeusRoomCloth
+CameSharpMountainKnown
+NumeralPlutoTreeNature
 ```
 
 #### Generate a keychain-style password
 
 ```text
 $ xpg keychain
-mwprb5-vCcmys-ynwmjo
+Ccrvwz-6ukfem-viylkd
 ```
 
 #### Generate a code name
 
 ```text
 $ xpg codename
-HIGH FRIENDS
+ELECTRIC FLIER
 ```
 
 #### Generate a code name series
 
 ```text
 $ xpg codename-series
-FOURSTREAM BRITISHELEMENTS
-FOURSTREAM SAMEWITHOUT
-FOURSTREAM RICHSURPRISE
-FOURSTREAM EQUALRADIO
-FOURSTREAM ANGRYADVANCE
-FOURSTREAM ELSETILL
-FOURSTREAM LATERLIGHT
-FOURSTREAM AFRAIDSTORE
-FOURSTREAM PARTIALOBJECT
-FOURSTREAM FLATOPINION
+ABOVEBEAUTY BEATEARTH
+ABOVEBEAUTY FRENCHBETTER
+ABOVEBEAUTY SEPARATEBICYCLE
+ABOVEBEAUTY EARLYCITY
+ABOVEBEAUTY SOUTHERNBIRDS
+ABOVEBEAUTY FOURBUSINESS
+ABOVEBEAUTY FIFTEENDOUBT
+ABOVEBEAUTY ENTIRECOPY
+ABOVEBEAUTY ROUNDRULE
+ABOVEBEAUTY THOSESTARS
 ```
 
 #### Generate a code name series with 20 code names
 
 ```text
 $ xpg codename-series -c 20
-NEAREGGS CORRECTMONDAY
-NEAREGGS SUDDENINTEREST
-NEAREGGS OUTSIDESILVER
-NEAREGGS SIMILARBUILD
-NEAREGGS PLANEREACH
-NEAREGGS THICKFIFTEEN
-NEAREGGS THISTYPE
-NEAREGGS MINUTERETURN
-NEAREGGS THESEVIEW
-NEAREGGS TALLCHARGE
-NEAREGGS WESTSATURDAY
-NEAREGGS MAINFEAR
-NEAREGGS TWENTYGREEN
-NEAREGGS ANIMALMOTHER
-NEAREGGS THIRTEENCARE
-NEAREGGS WIDEFREE
-NEAREGGS ALONESOUND
-NEAREGGS CONSONANTSINGLE
-NEAREGGS NICEAUGUST
-NEAREGGS REALHEAT
+NICESURFACE PARTIALBONES
+NICESURFACE MOSTFAIR
+NICESURFACE WHATSHAKE
+NICESURFACE RAISEDEXPERIMENT
+NICESURFACE GLASSWALK
+NICESURFACE SAFEMOON
+NICESURFACE QUICKWORK
+NICESURFACE EQUALLANGUAGE
+NICESURFACE EASTBREAD
+NICESURFACE BETTERFIRE
+NICESURFACE KNOWNAMERICA
+NICESURFACE ABOVECHECK
+NICESURFACE SHOULDMINUTES
+NICESURFACE INDIANPOLE
+NICESURFACE WHOSEARTICLE
+NICESURFACE PERFECTSUNDAY
+NICESURFACE EASYMAIL
+NICESURFACE NEXTBUTTER
+NICESURFACE ROUNDAUNT
+NICESURFACE BEATSORT
 ```
 
 #### Generate a haiku
 
 ```text
 $ xpg haiku
-Died experiment / Poor considerable stay / Copenhagen best
+Govern September / Forever Wales move later / Though Ohio rest
 ```
 
 #### Generate a haiku with syllable pattern
 
 ```text
 $ xpg haiku+
-Europe today fruit (2,2,1) / Considerable kept wire (5,1,1) / Cold suggested sight (1,3,1)
+Electricity (5) / Kentucky consonant those (3,3,1) / Surface equation (2,3)
 ```
 
 #### Generate a condensed haiku with syllable pattern
 
 ```text
 $ xpg haiku-
-Developed-either(3,2)/However-inches-above(3,2,2)/Cotton-solution(2,3)
+Flowers-happened-rich(2,2,1)/Broke-forget-delight-happen(1,2,2,2)/Capital-today(3,2)
 ```
 
 #### Generate a condensed haiku
 
 ```text
 $ xpg haiku--
-Considerable/Take-electricity-thank/Season-nature-land
+Battle-line-spoke-lord/Here-continue-travel-shoe/Electricity
 ```
 
 #### Generate a haiku with newlines
 
 ```text
 $ xpg haiku++
-Bulgaria thing
-Within similar height class
-Hurt direction free
+Particular hall
+Difference team opposite
+Australia include
 ```
 
 #### Generate a haiku with syllable pattern and newlines
 
 ```text
 $ xpg haiku+++
-Greece America (1,4)
-Guess brought considerable (1,1,5)
-Equal leave over (2,1,2)
+Considerable (5)
+Electricity Belgium (5,2)
+Ahead April wave (2,2,1)
 ```
 
 #### Generate a haiku with extended words
 
 ```text
 $ xpg -e haiku
-Miss February / Consonant condition grown / Dionysus slept
+South Carolina / Meet Callirrhoe square wish / Separate distance
 ```
 
 #### Generate a password with 20 *any* characters
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
-fE6H}ax<h?,4oILFFn;3
+KO~BlP^{>Cq/QPSoH7lt
 ```
 
 #### Same as the previous example, but shorter
@@ -412,23 +412,23 @@ with the last character.*
 
 ```text
 $ xpg a -m 20
-pi*;,h~JVyd=J3K6I[jz
+%RllN;g]7/RwZi_/]2:;
 ```
 
 #### Generate 3 passwords each from a different pattern
 
 ```text
 $ xpg wwww WWWW TTTT
-expressseeddoublehome
-ROLLEDEVERYLIFEESCAPE
-SameFlowDescribeCould
+fencefoundcenturyperu
+DECIDEGOESDEALHILL
+SilverQuarterGuessDrive
 ```
 
 #### Generate a password with words with 1, 2, 3, 4, and 5 syllables
 
 ```text
 $ xpg '{a:1}-{W:a:2}-{T:a:3}-{olympian:4}-{T:ext:5}'
-eggs-OSLO-Uranus-aphrodite-Northcarolina
+stream-DELIGHT-Article-dionysus-Northamerica
 ```
 
 #### List the words in Color / `{color}`
@@ -629,6 +629,7 @@ via the `-C` option at *runtime*, it will be used instead.
 * 0.13.0 (2023-12-01): Add/fix months; fix dump; update dependencies
 * 0.14.0 (2023-12-11): Implement Default for Config; updated dependencies
     * 0.14.1 (2024-04-04): Update dependencies; fix changelog
+* 0.15.0 (2024-07-30): Fix makefile; update dependencies
 
 # References
 
