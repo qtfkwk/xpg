@@ -441,7 +441,12 @@ via the `-C` option at *runtime*, it will be used instead.
    `{sub:N}` (replace `sub` with an actual `{sub}` name above and `N` with the
    desired number of syllables ~1-5).
 
-!inc:../CHANGELOG.md
+# Changelog
+
+Please find the [`CHANGELOG.md`] in the [repository].
+
+[`CHANGELOG.md`]: https://github.com/qtfkwk/xpg/blob/master/CHANGELOG.md
+[repository]: https://github.com/qtfkwk/xpg
 
 # References
 
