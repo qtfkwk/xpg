@@ -296,6 +296,139 @@ $ xpg wwww WWWW TTTT
 !run:../target/release/xpg wwww WWWW TTTT
 ```
 
+#### Apply upper casing
+
+```text
+$ xpg -A upper 'T T T T'
+!run:../target/release/xpg -A upper 'T T T T'
+```
+
+#### Apply lower casing
+
+```text
+$ xpg -A lower 'T T T T'
+!run:../target/release/xpg -A lower 'T T T T'
+```
+
+#### Apply title casing
+
+```text
+$ xpg -A title 'T T T T'
+!run:../target/release/xpg -A title 'T T T T'
+```
+
+#### Apply toggle casing
+
+```text
+$ xpg -A toggle 'T T T T'
+!run:../target/release/xpg -A toggle 'T T T T'
+```
+
+#### Apply camel casing
+
+```text
+$ xpg -A camel 'T T T T'
+!run:../target/release/xpg -A camel 'T T T T'
+```
+
+#### Apply pascal casing
+
+```text
+$ xpg -A pascal 'T T T T'
+!run:../target/release/xpg -A pascal 'T T T T'
+```
+
+#### Apply upper-camel casing
+
+```text
+$ xpg -A upper-camel 'T T T T'
+!run:../target/release/xpg -A upper-camel 'T T T T'
+```
+
+#### Apply snake casing
+
+```text
+$ xpg -A snake 'T T T T'
+!run:../target/release/xpg -A snake 'T T T T'
+```
+
+#### Apply upper-snake casing
+
+```text
+$ xpg -A upper-snake 'T T T T'
+!run:../target/release/xpg -A upper-snake 'T T T T'
+```
+
+#### Apply screaming-snake casing
+
+```text
+$ xpg -A screaming-snake 'T T T T'
+!run:../target/release/xpg -A screaming-snake 'T T T T'
+```
+
+#### Apply kebab casing
+
+```text
+$ xpg -A kebab 'T T T T'
+!run:../target/release/xpg -A kebab 'T T T T'
+```
+
+#### Apply cobol casing
+
+```text
+$ xpg -A cobol 'T T T T'
+!run:../target/release/xpg -A cobol 'T T T T'
+```
+
+#### Apply upper-kebab casing
+
+```text
+$ xpg -A upper-kebab 'T T T T'
+!run:../target/release/xpg -A upper-kebab 'T T T T'
+```
+
+#### Apply train casing
+
+```text
+$ xpg -A train 'T T T T'
+!run:../target/release/xpg -A train 'T T T T'
+```
+
+#### Apply flat casing
+
+```text
+$ xpg -A flat 'T T T T'
+!run:../target/release/xpg -A flat 'T T T T'
+```
+
+#### Apply upper-flat casing
+
+```text
+$ xpg -A upper-flat 'T T T T'
+!run:../target/release/xpg -A upper-flat 'T T T T'
+```
+
+#### Apply alternating casing
+
+```text
+$ xpg -A alternating 'T T T T'
+!run:../target/release/xpg -A alternating 'T T T T'
+```
+
+#### Apply random casing
+
+```text
+$ xpg -A random 'T T T T'
+!run:../target/release/xpg -A random 'T T T T'
+```
+
+#### Apply pseudo-random casing
+
+```text
+$ xpg -A pseudo-random 'T T T T'
+!run:../target/release/xpg -A pseudo-random 'T T T T'
+```
+
 #### Generate a password with words with 1, 2, 3, 4, and 5 syllables
 
 ```text

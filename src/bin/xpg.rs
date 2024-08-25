@@ -1,5 +1,6 @@
 use anyhow::Result;
-use clap::Parser;
+use clap::{Parser, ValueEnum};
+use convert_case::Casing;
 use std::path::PathBuf;
 
 #[cfg(unix)]
@@ -81,6 +82,10 @@ struct Cli {
     #[arg(short, long)]
     extended: bool,
 
+    /// Apply case style
+    #[arg(short = 'A', long, value_name = "STYLE")]
+    apply_case: Option<Case>,
+
     /// List words in `{sub}`(s)
     #[arg(short = 'L', long)]
     list: bool,
@@ -98,9 +103,7 @@ struct Cli {
 }
 
 /**
-
 Provides the command line interface
-
 */
 fn main() -> Result<()> {
     let cli = Cli::parse();
@@ -231,6 +234,13 @@ fn main() -> Result<()> {
 
                 // Enforce length requirements
                 if length.contains(&pw.len()) {
+                    // Apply case style
+                    let pw = if let Some(case) = &cli.apply_case {
+                        case.apply(&pw)
+                    } else {
+                        pw
+                    };
+
                     println!("{pw}");
                     break;
                 } else {
@@ -253,4 +263,53 @@ fn main() -> Result<()> {
 fn error(msg: &str) {
     eprintln!("Error: {msg}");
     std::process::exit(1);
+}
+
+#[derive(Clone, ValueEnum)]
+enum Case {
+    Upper,
+    Lower,
+    Title,
+    Toggle,
+    Camel,
+    Pascal,
+    UpperCamel,
+    Snake,
+    UpperSnake,
+    ScreamingSnake,
+    Kebab,
+    Cobol,
+    UpperKebab,
+    Train,
+    Flat,
+    UpperFlat,
+    Alternating,
+    Random,
+    PseudoRandom,
+}
+
+impl Case {
+    fn apply(&self, s: &str) -> String {
+        s.to_case(match self {
+            Case::Upper => convert_case::Case::Upper,
+            Case::Lower => convert_case::Case::Lower,
+            Case::Title => convert_case::Case::Title,
+            Case::Toggle => convert_case::Case::Toggle,
+            Case::Camel => convert_case::Case::Camel,
+            Case::Pascal => convert_case::Case::Pascal,
+            Case::UpperCamel => convert_case::Case::UpperCamel,
+            Case::Snake => convert_case::Case::Snake,
+            Case::UpperSnake => convert_case::Case::UpperSnake,
+            Case::ScreamingSnake => convert_case::Case::ScreamingSnake,
+            Case::Kebab => convert_case::Case::Kebab,
+            Case::Cobol => convert_case::Case::Cobol,
+            Case::UpperKebab => convert_case::Case::UpperKebab,
+            Case::Train => convert_case::Case::Train,
+            Case::Flat => convert_case::Case::Flat,
+            Case::UpperFlat => convert_case::Case::UpperFlat,
+            Case::Alternating => convert_case::Case::Alternating,
+            Case::Random => convert_case::Case::Random,
+            Case::PseudoRandom => convert_case::Case::PseudoRandom,
+        })
+    }
 }

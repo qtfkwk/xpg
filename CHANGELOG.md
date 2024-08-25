@@ -22,4 +22,5 @@
     * 0.14.1 (2024-04-04): Update dependencies; fix changelog
 * 0.15.0 (2024-07-30): Fix makefile; update dependencies
     * 0.15.1 (2024-08-22): Fix changelog; fix readme; add `commit` target to makefile; update dependencies
+* 0.16.0 (2024-08-25): Add `-A` / `--apply-case` option
 
