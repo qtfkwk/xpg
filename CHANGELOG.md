@@ -24,4 +24,5 @@
     * 0.15.1 (2024-08-22): Fix changelog; fix readme; add `commit` target to makefile; update dependencies
 * 0.16.0 (2024-08-25): Add `-A` / `--apply-case` option
 * 0.17.0 (2024-08-25): Clean up code; add descriptive haiku variants; nuke github actions configuration; update dependencies
+    * 0.17.1 (2024-08-25): Fix readme; fix clippy
 

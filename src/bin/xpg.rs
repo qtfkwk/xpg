@@ -106,18 +106,18 @@ impl Cli {
     fn process_config(&self) -> Result<xpg::Config> {
         if let Some(config) = &self.config {
             // Load a custom configuration via -C
-            return Ok(xpg::Config::from_path(&config, self.extended)?);
+            return xpg::Config::from_path(config, self.extended);
         } else if let Some(proj_dirs) = directories::ProjectDirs::from("com", "qtfkwk", "xpg") {
             // Load a custom configuration file
             let config_dir = proj_dirs.config_dir();
             let user_config = config_dir.join("config.json");
             if user_config.exists() {
-                return Ok(xpg::Config::from_path(&user_config, self.extended)?);
+                return xpg::Config::from_path(&user_config, self.extended);
             }
         }
 
         // Load the default configuration
-        Ok(xpg::Config::from_str(xpg::CONFIG, self.extended)?)
+        xpg::Config::from_str(xpg::CONFIG, self.extended)
     }
 }
 
