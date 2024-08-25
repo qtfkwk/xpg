@@ -36,12 +36,12 @@ Notes
         * `keychain`
         * `codename`
         * `codename-series`
+        * `haiku--` | `haiku-condensed`
+        * `haiku-` | `haiku-with-syllables-condensed`
         * `haiku`
-        * `haiku+`
-        * `haiku-`
-        * `haiku--`
-        * `haiku++`
-        * `haiku+++`
+        * `haiku+` | `haiku-with-syllables`
+        * `haiku++` | `haiku-full`
+        * `haiku+++` | `haiku-full-with-syllables`
 
 2. Ten attempts are made to satisfy the given length requirements by default;
    use `-a N` and set `N` to the number of attempts to increase chances.
@@ -102,6 +102,25 @@ struct Cli {
     patterns: Vec<String>,
 }
 
+impl Cli {
+    fn process_config(&self) -> Result<xpg::Config> {
+        if let Some(config) = &self.config {
+            // Load a custom configuration via -C
+            return Ok(xpg::Config::from_path(&config, self.extended)?);
+        } else if let Some(proj_dirs) = directories::ProjectDirs::from("com", "qtfkwk", "xpg") {
+            // Load a custom configuration file
+            let config_dir = proj_dirs.config_dir();
+            let user_config = config_dir.join("config.json");
+            if user_config.exists() {
+                return Ok(xpg::Config::from_path(&user_config, self.extended)?);
+            }
+        }
+
+        // Load the default configuration
+        Ok(xpg::Config::from_str(xpg::CONFIG, self.extended)?)
+    }
+}
+
 /**
 Provides the command line interface
 */
@@ -117,23 +136,7 @@ fn main() -> Result<()> {
     }
 
     // Process the configuration
-    let cfg = if let Some(config) = cli.config {
-        // Load a custom configuration via -C
-        xpg::Config::from_path(&config, cli.extended)?
-    } else if let Some(proj_dirs) = directories::ProjectDirs::from("com", "qtfkwk", "xpg") {
-        let config_dir = proj_dirs.config_dir();
-        let user_config = config_dir.join("config.json");
-        if user_config.exists() {
-            // Load a custom configuration file
-            xpg::Config::from_path(&user_config, cli.extended)?
-        } else {
-            // Load the default configuration
-            xpg::Config::from_str(xpg::CONFIG, cli.extended)?
-        }
-    } else {
-        // Load the default configuration
-        xpg::Config::from_str(xpg::CONFIG, cli.extended)?
-    };
+    let cfg = cli.process_config()?;
 
     if cli.dump_config {
         println!("{}", cfg.dump()?);
@@ -193,6 +196,11 @@ fn main() -> Result<()> {
                 "haiku--",
                 "haiku++",
                 "haiku+++",
+                "haiku-with-syllables",
+                "haiku-with-syllables-condensed",
+                "haiku-condensed",
+                "haiku-full",
+                "haiku-full-with-syllables",
             ]
             .contains(&pattern.as_str())
             && !pattern.contains(['w', 'W', 'T'])
@@ -224,11 +232,17 @@ fn main() -> Result<()> {
                     "codename" => cfg.codename(),
                     "codename-series" => cfg.codename_series(codenames),
                     "haiku" => cfg.haiku(xpg::HaikuVariant::Normal),
-                    "haiku+" => cfg.haiku(xpg::HaikuVariant::WithSyllables),
-                    "haiku-" => cfg.haiku(xpg::HaikuVariant::WithSyllablesCondensed),
-                    "haiku--" => cfg.haiku(xpg::HaikuVariant::Condensed),
-                    "haiku++" => cfg.haiku(xpg::HaikuVariant::Full),
-                    "haiku+++" => cfg.haiku(xpg::HaikuVariant::FullWithSyllables),
+                    "haiku+" | "haiku-with-syllables" => {
+                        cfg.haiku(xpg::HaikuVariant::WithSyllables)
+                    }
+                    "haiku-" | "haiku-with-syllables-condensed" => {
+                        cfg.haiku(xpg::HaikuVariant::WithSyllablesCondensed)
+                    }
+                    "haiku--" | "haiku-condensed" => cfg.haiku(xpg::HaikuVariant::Condensed),
+                    "haiku++" | "haiku-full" => cfg.haiku(xpg::HaikuVariant::Full),
+                    "haiku+++" | "haiku-full-with-syllables" => {
+                        cfg.haiku(xpg::HaikuVariant::FullWithSyllables)
+                    }
                     _ => cfg.generate(&pattern),
                 };
 

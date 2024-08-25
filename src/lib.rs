@@ -1,7 +1,5 @@
 /*!
-
 xkcd-style password generator
-
 */
 
 use anyhow::{anyhow, Result};
@@ -451,9 +449,7 @@ impl Config {
             .clone()
     }
 
-    /**
-    Generate a keychain word type 1 (5 lowercase letters, 1 uppercase letter)
-    */
+    /// Generate a keychain word type 1 (5 lowercase letters, 1 uppercase letter)
     fn keychain_word_1(&self) -> String {
         shuffle(&format!(
             "{}{}",
@@ -462,9 +458,7 @@ impl Config {
         ))
     }
 
-    /**
-    Generate a keychain word type 2 (5 lowercase letters, 1 digit)
-    */
+    /// Generate a keychain word type 2 (5 lowercase letters, 1 digit)
     fn keychain_word_2(&self) -> String {
         shuffle(&format!(
             "{}{}",
@@ -473,9 +467,7 @@ impl Config {
         ))
     }
 
-    /**
-    Generate a keychain word type 3 (6 lowercase letters)
-    */
+    /// Generate a keychain word type 3 (6 lowercase letters)
     fn keychain_word_3(&self) -> String {
         random_str(6, self.alphabets.get(&'c').unwrap())
     }
@@ -511,16 +503,12 @@ impl Config {
         words
     }
 
-    /**
-    Generate a keychain-style password like `plvifc-z9kedn-imcbDp`
-    */
+    /// Generate a keychain-style password like `plvifc-z9kedn-imcbDp`
     pub fn keychain(&self) -> String {
         self.keychain_words(3).join("-")
     }
 
-    /**
-    Generate a "code name" like `BLUE STEEL`
-    */
+    /// Generate a "code name" like `BLUE STEEL`
     pub fn codename(&self) -> String {
         format!(
             "{} {}",
@@ -568,9 +556,7 @@ impl Config {
         r.join("\n")
     }
 
-    /**
-    Generate a haiku
-    */
+    /// Generate a haiku
     pub fn haiku(&self, variant: HaikuVariant) -> String {
         let (add_syllables, kebab, newline) = variant.options();
         let (word_sep, line_sep, syl_sep) = if newline {
@@ -662,9 +648,7 @@ impl Config {
         r.join(line_sep)
     }
 
-    /**
-    Generate a password from the given pattern
-    */
+    /// Generate a password from the given pattern
     pub fn generate(&self, pattern: &str) -> String {
         let j = pattern.len();
         let mut subs = vec![];
@@ -807,11 +791,7 @@ const KEYCHAIN_WORDS: [KeychainWord; 3] = [KeychainWord1, KeychainWord2, Keychai
 
 //--------------------------------------------------------------------------------------------------
 
-/**
-
-Generate a random string of length `n` from `alphabet`
-
-*/
+/// Generate a random string of length `n` from `alphabet`
 fn random_str(n: usize, alphabet: &[char]) -> String {
     let len = alphabet.len();
     let mut r = String::new();
@@ -821,11 +801,7 @@ fn random_str(n: usize, alphabet: &[char]) -> String {
     r
 }
 
-/**
-
-Shuffle a string slice
-
-*/
+/// Shuffle a string slice
 fn shuffle(s: &str) -> String {
     let mut rng = thread_rng();
     let mut r = s.chars().collect::<Vec<_>>();
