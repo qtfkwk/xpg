@@ -1,5 +1,5 @@
 use anyhow::Result;
-use clap::{Parser, ValueEnum};
+use clap::{builder::Styles, Parser, ValueEnum};
 use convert_case::Casing;
 use std::path::PathBuf;
 
@@ -8,11 +8,21 @@ use pager::Pager;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
+const STYLES: Styles = Styles::styled()
+    .header(clap_cargo::style::HEADER)
+    .usage(clap_cargo::style::USAGE)
+    .literal(clap_cargo::style::LITERAL)
+    .placeholder(clap_cargo::style::PLACEHOLDER)
+    .error(clap_cargo::style::ERROR)
+    .valid(clap_cargo::style::VALID)
+    .invalid(clap_cargo::style::INVALID);
+
 #[derive(Parser)]
 #[command(
     about,
     version,
     max_term_width = 80,
+    styles = STYLES,
     before_help = format!("xpg {VERSION} <https://crates.io/crates/xpg>"),
     after_help = "\
 ---

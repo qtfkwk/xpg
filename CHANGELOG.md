@@ -25,4 +25,5 @@
 * 0.16.0 (2024-08-25): Add `-A` / `--apply-case` option
 * 0.17.0 (2024-08-25): Clean up code; add descriptive haiku variants; nuke github actions configuration; update dependencies
     * 0.17.1 (2024-08-25): Fix readme; fix clippy
+    * 0.17.2 (2024-10-25): Add clap color; update dependencies
 
