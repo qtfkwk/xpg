@@ -802,7 +802,7 @@ fn random_str(n: usize, alphabet: &[char]) -> String {
 }
 
 /// Shuffle a string slice
-fn shuffle(s: &str) -> String {
+pub fn shuffle(s: &str) -> String {
     let mut rng = thread_rng();
     let mut r = s.chars().collect::<Vec<_>>();
     r.shuffle(&mut rng);

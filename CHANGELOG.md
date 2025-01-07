@@ -27,4 +27,5 @@
     * 0.17.1 (2024-08-25): Fix readme; fix clippy
     * 0.17.2 (2024-10-25): Add clap color; update dependencies
     * 0.17.3 (2024-12-04): Update dependencies
+* 0.18.0 (2025-01-07): Add `-s` / `--shuffle` option; expose `shuffle` function; update dependencies
 

@@ -64,6 +64,10 @@ Notes
 "
 )]
 struct Cli {
+    /// Shuffle characters
+    #[arg(short, long)]
+    shuffle: bool,
+
     /// Number of passwords (0:∞ )
     #[arg(short, long, value_name = "NUMBER", default_value = "1")]
     count: usize,
@@ -264,6 +268,9 @@ fn main() -> Result<()> {
                     } else {
                         pw
                     };
+
+                    // Shuffle characters
+                    let pw = if cli.shuffle { xpg::shuffle(&pw) } else { pw };
 
                     println!("{pw}");
                     break;

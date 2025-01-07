@@ -289,6 +289,30 @@ $ xpg a -m 20
 !run:../target/release/xpg a -m 20
 ```
 
+#### Generate a password with 5 lowercase, 1 uppercase, 1 digit, and 1 symbol
+
+```text
+$ xpg cccccCds
+!run:../target/release/xpg cccccCds
+```
+
+#### Generate a password with 5 lowercase, 1 uppercase, 1 digit, and 1 symbol and shuffle the characters
+
+```text
+$ xpg -s cccccCds
+!run:../target/release/xpg -s cccccCds
+```
+
+#### Same as the previous example, but shorter
+
+*This works because a character-only pattern is padded to the minimum length
+with the last character.*
+
+```text
+$ xpg -sm 8 Cdsc
+!run:../target/release/xpg -sm 8 Cdsc
+```
+
 #### Generate 3 passwords each from a different pattern
 
 ```text

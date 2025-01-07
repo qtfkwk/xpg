@@ -10,7 +10,7 @@ xkcd-style password generator
 
 ```text
 $ xpg -h
-xpg 0.17.3 <https://crates.io/crates/xpg>
+xpg 0.18.0 <https://crates.io/crates/xpg>
 
 xkcd-style password generator
 
@@ -20,6 +20,7 @@ Arguments:
   [PATTERNS]...  Pattern(s) (see note 1) [default: `wwww`, `-L`: `{a}`]
 
 Options:
+  -s, --shuffle             Shuffle characters
   -c, --count <NUMBER>      Number of passwords (0:∞ ) [default: 1]
   -l, --length <NUMBER>     Length
   -m, --minimum <NUMBER>    Minimum length
@@ -78,7 +79,7 @@ Notes
 
 ```text
 $ xpg -V
-xpg 0.17.3
+xpg 0.18.0
 ```
 
 *See also the [Configuration] section below.*
@@ -89,23 +90,23 @@ xpg 0.17.3
 
 ```text
 $ xpg
-largeamongindiabuilt
+fireanimalwithchoose
 ```
 
 #### Generate 10 passwords
 
 ```text
 $ xpg -c 10
-duskusualmelodynotice
-airplanemeetfactoriesdate
-doublefillpaidcarefully
-theirstateplantsomeone
-grasscollegemonthhere
-oceankindsightshould
-slowlyamsterdamkingneck
-evenstrikegoesmonth
-besideshallbringsand
-presidentohiosafeenjoy
+blueradiobulgariaabout
+angerkillpushedlevel
+steelhairseasonsaid
+experiencehandsignalmolecules
+strongswimshadepartial
+gamefamilyinstrumentsseen
+sightstrangelookbarbados
+faceflowerlatershine
+grouppagequicklyfree
+tiedoctobermightexcept
 ```
 
 #### Generate passwords forever
@@ -114,16 +115,16 @@ presidentohiosafeenjoy
 
 ```text
 $ xpg -c 0
-discoveredclockholdvoice
-shopsingsettleequal
-eitherstatereallyjourney
-nightbrothermaybeexercise
-playeverhusbandseat
-minuteswedgedeterminealone
-differentcourseedgegoodbye
-informationanswersuddenfence
-shorelatersubjectforget
-ringneptunehappenedsafe
+hersdivisionconsiderjupiter
+filledcapitalminddoes
+angerfenceofferdeath
+alongperusentweather
+fastwantsburningstart
+figuresoonshoesinterest
+niecebeganoutsidenumber
+februarydatesuggestedwednesday
+pagesettledvowelfamily
+maltabeatbankerfish
 ^C
 ```
 
@@ -131,72 +132,72 @@ ringneptunehappenedsafe
 
 ```text
 $ xpg wwwwwwww
-westdollarslevelpositionlistshouldersignpoland
+boardtailcostcopenhagenseedeverysufferbase
 ```
 
 #### Generate 10 passwords with 8 words
 
 ```text
 $ xpg wwwwwwww -c 10
-factorieskentuckyshortsentsteelwhitedailywash
-copylaterloststrangerpartialmarchgroupfront
-voicemeatgiveairplanehusbandtroublehersdone
-manymembersagreealonewentjoinedlifthalt
-sistercouldparisspainstillairplanetheyarmy
-dollarplansightoppositereachenteredfellowprocess
-grouplikelynecessarycoveredrushremainchooseuntil
-londonstarsintoelectricflierherssilvercalifornia
-townjudgesuchtrademinutesallowwonderstep
-fifthgatenorwaywatchvisitwavegeneralcattle
+pickedfinetakenblockshorttexasworthspell
+gathertonebridgeequalpartyrolleddistantbusiness
+createheartfifthburningstrongseveraldelighthour
+fancylastrestdetailsangryfingershalfberlin
+egyptfinallymexicobrightspokeobservedecimalbottom
+walkwriteeuropegraylandspainsandperiod
+takecaptaintalleverythingroomlargeunderlate
+resultrepresentlittlefiftypeoplepaintwhomcover
+catchefforteastsaidjupiterhillclothesrule
+insectsvirginiaaprilsaturdaytownpagebusinesstell
 ```
 
 #### Generate a password with 2 words followed by 3 digits
 
 ```text
 $ xpg wwddd
-basketsend049
+shallbuilt755
 ```
 
 #### Generate a password with 2 words followed by 2 symbols
 
 ```text
 $ xpg wwss
-verbfollow.(
+whichpresident<[
 ```
 
 #### Generate a password with 2 words followed by a digit and a symbol
 
 ```text
 $ xpg wwds
-industrykiss7(
+nepalpluto3*
 ```
 
 #### Generate a password with 4 words followed by 2 lowercase letters
 
 ```text
 $ xpg wwwwcc
-lonetailscoreleavepo
+clearshineyourtradeti
 ```
 
 #### Generate a password with 4 words followed by 2 uppercase letters
 
 ```text
 $ xpg wwwwCC
-wateryourincludeableJM
+mightwheathealthfollowNS
 ```
 
 #### Generate a password with 4 title case words
 
 ```text
 $ xpg TTTT
-DemandNothingRatherBanker
+TravelWheelsExplainShake
 ```
 
 #### Generate a password with 4 uppercase words
 
 ```text
 $ xpg WWWW
-FORGETDRAWINGPOEMSAFETY
+MAILFRIENDSBARBADOSMELODY
 ```
 
 #### Generate a password with 4 words followed by 5 *any* characters
@@ -206,28 +207,28 @@ symbol.*
 
 ```text
 $ xpg wwwwaaaaa
-irelandcubatesttoolsck#fT
+attemptagreeschoolround(<;?_
 ```
 
 #### Generate a password with 3 words and at least 15 characters
 
 ```text
 $ xpg www -m 15
-insteadshiptwelve
+fingersmondaydoes
 ```
 
 #### Generate a password with 3 words and no more than 20 characters
 
 ```text
 $ xpg www -M 20
-laterstoodsight
+needlefoolball
 ```
 
 #### Generate a password with 4 words and between 20 and 25 characters
 
 ```text
 $ xpg www -m 20 -M 25 -a 1000
-methodwelcomerepresent
+determineshoutbelong
 ```
 
 *See also [Usage] note 2.*
@@ -238,7 +239,7 @@ methodwelcomerepresent
 
 ```text
 $ xpg wwddds -l 16 -a 1000
-beautydesert296*
+articlesmell362+
 ```
 
 *See also [Usage] note 2.*
@@ -247,167 +248,167 @@ beautydesert296*
 
 ```text
 $ xpg '1TT!'
-1ChinaDried!
+1InstrumentsHeat!
 ```
 
 #### Generate a password with 1 symbol, 2 adjectives, 1 noun, and 2 digits
 
 ```text
 $ xpg 's{adj}{adj}{n}dd'
-!thindailydouble03
+-characterfrontanger09
 ```
 
 #### Generate a password with 2 words and 1 extended word
 
 ```text
 $ xpg 'ww{ext}'
-friendwritepersephone
+sectionmembershelike
 ```
 
 #### Generate a password with 2 words and 1 title case extended word
 
 ```text
 $ xpg 'ww{T:ext}'
-ropebirdAphrodite
+thousandmontanaNaiad
 ```
 
 #### Generate a password with 2 words and 1 uppercase extended word
 
 ```text
 $ xpg 'ww{W:ext}'
-daughterblackZEUS
+venusmomentDIONYSUS
 ```
 
 #### Generate 10 passwords with 4 title case words and extended words merged
 
 ```text
 $ xpg -ec 10 TTTT
-SquareDespinaClothIdaho
-SimilarLeastLookLeda
-HawaiiEggsPartyLaughed
-ThinkCenturyDollarVowel
-EntireGeorgiaNothingQueen
-MouthWellHumanJumped
-ShoreKaleHopeTell
-KitchenDollarHelloSpeak
-WhetherWifeMainTrip
-AuntNecessaryCountryFelt
+TallHeatPoundsBack
+MeetingDecemberSingaporeBottom
+PaperMannerThousandStation
+AgainstNereidThinkYard
+GroundNeedFastSaid
+AfricaSomeWirePosition
+ThickLakeChileShould
+PleasantFoolDamascusSpoke
+PlantsGardenSameParticular
+FiftyRoundSouthcarolinaGround
 ```
 
 #### Generate a keychain-style password
 
 ```text
 $ xpg keychain
-phxxgn-zinSje-qdt3bl
+o2mydp-bwrulo-dUwclm
 ```
 
 #### Generate a code name
 
 ```text
 $ xpg codename
-HEAVY MASTER
+LONG EQUATION
 ```
 
 #### Generate a code name series
 
 ```text
 $ xpg codename-series
-WIDEWHOLE NEARPOWER
-WIDEWHOLE LIKELYRIVER
-WIDEWHOLE DIFFICULTNIGHT
-WIDEWHOLE YOUNGDUSK
-WIDEWHOLE NORTHERNHALL
-WIDEWHOLE ABOUTFIRST
-WIDEWHOLE FURTHERWEAK
-WIDEWHOLE NEITHEROTHER
-WIDEWHOLE REALLYCHILDREN
-WIDEWHOLE LESSSTOP
+COOLTUESDAY ADVANCEHUNGER
+COOLTUESDAY MOSTCOAT
+COOLTUESDAY SILENTTEAM
+COOLTUESDAY WIDETHIRD
+COOLTUESDAY NICESCORE
+COOLTUESDAY SEPARATEBREAD
+COOLTUESDAY BUILTBRANCH
+COOLTUESDAY GREEKBASKET
+COOLTUESDAY MIDDLEMETAL
+COOLTUESDAY STRAIGHTUNIT
 ```
 
 #### Generate a code name series with 20 code names
 
 ```text
 $ xpg codename-series -c 20
-FIRMLONG NEXTCOUNTRY
-FIRMLONG QUITESOUTH
-FIRMLONG HEAVYFLOOR
-FIRMLONG ENGLISHBRIDGE
-FIRMLONG FAIRCOTTON
-FIRMLONG CLEANPLAN
-FIRMLONG CORRECTPRESIDENT
-FIRMLONG SHARPGROUND
-FIRMLONG NEVERDESIRE
-FIRMLONG SOFTNEED
-FIRMLONG SAFEFACTORS
-FIRMLONG SILENTSHINE
-FIRMLONG WORNCHANCE
-FIRMLONG SIMPLEBOTTOM
-FIRMLONG PRINTEDSTAR
-FIRMLONG MODERNSOLDIERS
-FIRMLONG PUBLICHELP
-FIRMLONG INDIANWHEEL
-FIRMLONG THICKDEEP
-FIRMLONG MANYCROPS
+WORTHCENTER SAMECONTROL
+WORTHCENTER USUALDEAR
+WORTHCENTER BEATPATTERN
+WORTHCENTER NICEWHEEL
+WORTHCENTER PROUDQUIET
+WORTHCENTER FUTURETOWN
+WORTHCENTER NOTHINGCHILDREN
+WORTHCENTER DEVELOPEDHUNT
+WORTHCENTER ACTIONNOTHING
+WORTHCENTER PROBABLYSURFACE
+WORTHCENTER CHARACTERVALLEY
+WORTHCENTER SEPARATELAUGHTER
+WORTHCENTER LONEELECTRICITY
+WORTHCENTER BESTWAVES
+WORTHCENTER MAINATTEMPT
+WORTHCENTER PURESUFFIX
+WORTHCENTER LEVELMEETING
+WORTHCENTER FULLLAND
+WORTHCENTER STRONGTAKE
+WORTHCENTER EIGHTCALL
 ```
 
 #### Generate a haiku
 
 ```text
 $ xpg haiku
-Japanese army / Electricity there game / Century nothing
+Iron future give / Division Botswana bone / Rather Germany
 ```
 
 #### Generate a haiku with syllable pattern
 
 ```text
 $ xpg haiku+
-Sense another book (1,3,1) / Process provide school Peru (2,2,1,2) / Face Belgium sent east (1,2,1,1)
+Addition where huge (3,1,1) / River rain fight Gibraltar (2,1,1,3) / Alaska wing have (3,1,1)
 ```
 
 #### Generate a condensed haiku with syllable pattern
 
 ```text
 $ xpg haiku-
-Electricity(5)/Busy-scene-lady-song-soft(2,1,2,1,1)/Considerable(5)
+Week-also-delight(1,2,2)/Jerusalem-passed-hunting(4,1,2)/Needle-process-hill(2,2,1)
 ```
 
 #### Generate a condensed haiku
 
 ```text
 $ xpg haiku--
-Thrown-Alabama/California-either-stock/Electricity
+Considerable/Steel-minute-whose-themselves-think/Electricity
 ```
 
 #### Generate a haiku with newlines
 
 ```text
 $ xpg haiku++
-Shot adjective roll
-Market nothing bright desert
-Broad company cloth
+California spent
+Spring land considerable
+Orderly Peru
 ```
 
 #### Generate a haiku with syllable pattern and newlines
 
 ```text
 $ xpg haiku+++
-Music women raised (2,2,1)
-Moment electricity (2,5)
-Jerusalem their (4,1)
+Electricity (5)
+Energy direct doubt wore (3,2,1,1)
+Information ball (4,1)
 ```
 
 #### Generate a haiku with extended words
 
 ```text
 $ xpg -e haiku
-Philophrosyne / Considerable score what / Electricity
+Colombia hang / Paris various none terms / Opinion once near
 ```
 
 #### Generate a password with 20 *any* characters
 
 ```text
 $ xpg aaaaaaaaaaaaaaaaaaaa
-=S/a1eHg8;LTYh11xO{4
+bqE~FW}T.(~[Pum{NHhO
 ```
 
 #### Same as the previous example, but shorter
@@ -417,156 +418,180 @@ with the last character.*
 
 ```text
 $ xpg a -m 20
-5zg9h9X_Gg^VDKOG47em
+NtPoEQ5]{}[nA;E*m8F8
+```
+
+#### Generate a password with 5 lowercase, 1 uppercase, 1 digit, and 1 symbol
+
+```text
+$ xpg cccccCds
+etxapA6!
+```
+
+#### Generate a password with 5 lowercase, 1 uppercase, 1 digit, and 1 symbol and shuffle the characters
+
+```text
+$ xpg -s cccccCds
+ij7t@toH
+```
+
+#### Same as the previous example, but shorter
+
+*This works because a character-only pattern is padded to the minimum length
+with the last character.*
+
+```text
+$ xpg -sm 8 Cdsc
+iliy?8lP
 ```
 
 #### Generate 3 passwords each from a different pattern
 
 ```text
 $ xpg wwww WWWW TTTT
-auntclockveryseen
-ITSELFPARTIALFROMHEAR
-PressInterestSeptemberClear
+heardraisedgoodstep
+FORMCHARACTERPLANEHOLD
+SoftWesternWomenReal
 ```
 
 #### Apply upper casing
 
 ```text
 $ xpg -A upper 'T T T T'
-EXPRESS SHINE SLEEP LIFE
+WORN FENCE SAID LEAD
 ```
 
 #### Apply lower casing
 
 ```text
 $ xpg -A lower 'T T T T'
-finger kiss partial probable
+happen express know consider
 ```
 
 #### Apply title casing
 
 ```text
 $ xpg -A title 'T T T T'
-Village Material Keep Jamaica
+Peace From Though Like
 ```
 
 #### Apply toggle casing
 
 ```text
 $ xpg -A toggle 'T T T T'
-fENCE aNGRY pOEM vALUE
+uNIT pIECE tHREE hERE
 ```
 
 #### Apply camel casing
 
 ```text
 $ xpg -A camel 'T T T T'
-coverGreeceNorthernPortugal
+floridaWheatBlueListen
 ```
 
 #### Apply pascal casing
 
 ```text
 $ xpg -A pascal 'T T T T'
-SuggestedSecondAmountDeep
+PositionCompleteBerlinLanguage
 ```
 
 #### Apply upper-camel casing
 
 ```text
 $ xpg -A upper-camel 'T T T T'
-ExactlyConsiderBreakLaughed
+CoolAlsoSufferDamascus
 ```
 
 #### Apply snake casing
 
 ```text
 $ xpg -A snake 'T T T T'
-really_season_farmers_insects
+sing_november_inside_join
 ```
 
 #### Apply upper-snake casing
 
 ```text
 $ xpg -A upper-snake 'T T T T'
-RIDDEN_CROSS_CHILDREN_ISLAND
+WHOLE_EXPLAIN_STUDENTS_GOLD
 ```
 
 #### Apply screaming-snake casing
 
 ```text
 $ xpg -A screaming-snake 'T T T T'
-BIRD_NOTHING_CUBA_BEST
+QUITE_DOCTOR_GOES_FAVOR
 ```
 
 #### Apply kebab casing
 
 ```text
 $ xpg -A kebab 'T T T T'
-angry-norway-swim-drawing
+work-something-include-design
 ```
 
 #### Apply cobol casing
 
 ```text
 $ xpg -A cobol 'T T T T'
-DICTIONARY-EVERY-SCALE-VALLEY
+AROUND-SENT-SUDDEN-THEM
 ```
 
 #### Apply upper-kebab casing
 
 ```text
 $ xpg -A upper-kebab 'T T T T'
-ROAD-TELL-RATHER-LISTEN
+FRENCH-NECK-BEAUTIFUL-GOODBYE
 ```
 
 #### Apply train casing
 
 ```text
 $ xpg -A train 'T T T T'
-Behind-Name-Region-Havana
+Read-Govern-Country-Gibraltar
 ```
 
 #### Apply flat casing
 
 ```text
 $ xpg -A flat 'T T T T'
-presidentsthinghardnumeral
+cityotherforwarddifference
 ```
 
 #### Apply upper-flat casing
 
 ```text
 $ xpg -A upper-flat 'T T T T'
-FEETCOOLNEVADABABY
+PLUTOHELPLEASTJERUSALEM
 ```
 
 #### Apply alternating casing
 
 ```text
 $ xpg -A alternating 'T T T T'
-nOtE sAfEtY sToP sInGlE
+lIvE fInAlLy SoMeTiMeS fIfTy
 ```
 
 #### Apply random casing
 
 ```text
 $ xpg -A random 'T T T T'
-PLAneT sumMEr TOok THIS
+hEaVen EneRgY hERS ReMAiN
 ```
 
 #### Apply pseudo-random casing
 
 ```text
 $ xpg -A pseudo-random 'T T T T'
-ReAlIzE bEgIn pERsoN sEeM
+LiaR ThrEE veNuS rOcK
 ```
 
 #### Generate a password with words with 1, 2, 3, 4, and 5 syllables
 
 ```text
 $ xpg '{a:1}-{W:a:2}-{T:a:3}-{olympian:4}-{T:ext:5}'
-bird-FOREST-Division-aphrodite-Northamerica
+drop-CHILE-Triangle-dionysus-Southamerica
 ```
 
 #### List the words in Color / `{color}`
