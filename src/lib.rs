@@ -2,14 +2,16 @@
 xkcd-style password generator
 */
 
-use anyhow::{anyhow, Result};
-use rand::{seq::SliceRandom, thread_rng, Rng};
-use serde::{Deserialize, Serialize};
-use std::collections::{BTreeMap, BTreeSet, HashMap};
-use std::fs::File;
-use std::io::BufReader;
-use std::path::Path;
-use ucfirst::ucfirst;
+use {
+    anyhow::{anyhow, Result},
+    rand::prelude::*,
+    serde::{Deserialize, Serialize},
+    std::collections::{BTreeMap, BTreeSet, HashMap},
+    std::fs::File,
+    std::io::BufReader,
+    std::path::Path,
+    ucfirst::ucfirst,
+};
 
 //--------------------------------------------------------------------------------------------------
 
@@ -435,7 +437,7 @@ impl Config {
         self.kinds
             .get(&kind)
             .unwrap()
-            .choose_multiple(&mut thread_rng(), n)
+            .choose_multiple(&mut rand::rng(), n)
             .cloned()
             .collect()
     }
@@ -444,7 +446,7 @@ impl Config {
         self.kinds
             .get(&kind)
             .unwrap()
-            .choose(&mut thread_rng())
+            .choose(&mut rand::rng())
             .unwrap()
             .clone()
     }
@@ -491,7 +493,7 @@ impl Config {
         if n >= 3 {
             words.push(self.keychain_word_3());
         }
-        let mut rng = thread_rng();
+        let mut rng = rand::rng();
         for _ in 4..=n {
             words.push(match KEYCHAIN_WORDS.choose(&mut rng).unwrap() {
                 KeychainWord1 => self.keychain_word_1(),
@@ -568,7 +570,7 @@ impl Config {
         };
         let max = 5;
 
-        let mut rng = thread_rng();
+        let mut rng = rand::rng();
 
         let mut lines = vec![];
         let mut w = BTreeMap::new();
@@ -701,7 +703,7 @@ impl Config {
         let mut words = self.get_n(words, if self.extended { AllExtended } else { All });
         let mut kc_words = self.keychain_words(kc_words);
 
-        let mut rng = thread_rng();
+        let mut rng = rand::rng();
         let mut r = String::new();
 
         for sub in subs {
@@ -796,14 +798,14 @@ fn random_str(n: usize, alphabet: &[char]) -> String {
     let len = alphabet.len();
     let mut r = String::new();
     for _ in 0..n {
-        r.push(alphabet[thread_rng().gen_range(0..len)]);
+        r.push(alphabet[rand::rng().random_range(0..len)]);
     }
     r
 }
 
 /// Shuffle a string slice
 pub fn shuffle(s: &str) -> String {
-    let mut rng = thread_rng();
+    let mut rng = rand::rng();
     let mut r = s.chars().collect::<Vec<_>>();
     r.shuffle(&mut rng);
     r.into_iter().collect()

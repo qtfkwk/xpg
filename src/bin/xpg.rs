@@ -306,6 +306,7 @@ enum Case {
     Pascal,
     UpperCamel,
     Snake,
+    Constant,
     UpperSnake,
     ScreamingSnake,
     Kebab,
@@ -317,6 +318,7 @@ enum Case {
     Alternating,
     Random,
     PseudoRandom,
+    Sentence,
 }
 
 impl Case {
@@ -325,13 +327,15 @@ impl Case {
             Case::Upper => convert_case::Case::Upper,
             Case::Lower => convert_case::Case::Lower,
             Case::Title => convert_case::Case::Title,
+            Case::Sentence => convert_case::Case::Sentence,
             Case::Toggle => convert_case::Case::Toggle,
             Case::Camel => convert_case::Case::Camel,
             Case::Pascal => convert_case::Case::Pascal,
             Case::UpperCamel => convert_case::Case::UpperCamel,
             Case::Snake => convert_case::Case::Snake,
+            Case::Constant => convert_case::Case::Constant,
             Case::UpperSnake => convert_case::Case::UpperSnake,
-            Case::ScreamingSnake => convert_case::Case::ScreamingSnake,
+            Case::ScreamingSnake => convert_case::Case::Constant,
             Case::Kebab => convert_case::Case::Kebab,
             Case::Cobol => convert_case::Case::Cobol,
             Case::UpperKebab => convert_case::Case::UpperKebab,
