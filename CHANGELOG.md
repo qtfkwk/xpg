@@ -29,4 +29,5 @@
     * 0.17.3 (2024-12-04): Update dependencies
 * 0.18.0 (2025-01-07): Add `-s` / `--shuffle` option; expose `shuffle` function; update dependencies
     * 0.18.1 (2025-02-21): Update dependencies; miscellaneous fixes including handling `convert-case`'s addition of `Constant`, `Sentence` cases and removal of `ScreamingSnake` case, and various changes to `rand` crate's API
+    * 0.18.2 (2025-04-16): Update dependencies
 
