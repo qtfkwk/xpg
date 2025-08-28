@@ -3,7 +3,7 @@ xkcd-style password generator
 */
 
 use {
-    anyhow::{anyhow, Result},
+    anyhow::{Result, anyhow},
     rand::prelude::*,
     serde::{Deserialize, Serialize},
     std::collections::{BTreeMap, BTreeSet, HashMap},

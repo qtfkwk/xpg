@@ -1,5 +1,5 @@
 use anyhow::Result;
-use clap::{builder::Styles, Parser, ValueEnum};
+use clap::{Parser, ValueEnum, builder::Styles};
 use convert_case::Casing;
 use std::path::PathBuf;
 
