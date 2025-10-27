@@ -1,6 +1,6 @@
 [package]
 name = "xpg"
-version = "0.19.0"
+version = "0.19.1"
 edition = "2024"
 description = "xkcd-style password generator"
 repository = "https://github.com/qtfkwk/xpg"
@@ -8,14 +8,14 @@ license = "MIT"
 categories = ["command-line-utilities"]
 
 [dependencies]
-anyhow = "1.0.99"
-clap = { version = "4.5.46", features = ["derive", "wrap_help"] }
-clap-cargo = "0.17.0"
+anyhow = "1.0.100"
+clap = { version = "4.5.50", features = ["derive", "wrap_help"] }
+clap-cargo = "0.18.3"
 convert_case = { version = "0.8.0", features = ["random"] }
 directories = "6.0.0"
 rand = "0.9.2"
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.143"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
 ucfirst = "0.4.0"
 
 [target.'cfg(unix)'.dependencies]

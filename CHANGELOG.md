@@ -31,4 +31,5 @@
     * 0.18.1 (2025-02-21): Update dependencies; miscellaneous fixes including handling `convert-case`'s addition of `Constant`, `Sentence` cases and removal of `ScreamingSnake` case, and various changes to `rand` crate's API
     * 0.18.2 (2025-04-16): Update dependencies
 * 0.19.0 (2025-08-28): Update dependencies; 2024 edition
+    * 0.19.1 (2025-10-27): Update dependencies
 
