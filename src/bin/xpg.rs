@@ -4,7 +4,7 @@ use convert_case::Casing;
 use std::path::PathBuf;
 
 #[cfg(unix)]
-use pager::Pager;
+use pager2::Pager;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 

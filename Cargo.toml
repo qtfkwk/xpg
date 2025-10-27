@@ -1,6 +1,6 @@
 [package]
 name = "xpg"
-version = "0.19.1"
+version = "0.19.2"
 edition = "2024"
 description = "xkcd-style password generator"
 repository = "https://github.com/qtfkwk/xpg"
@@ -19,4 +19,4 @@ serde_json = "1.0.145"
 ucfirst = "0.4.0"
 
 [target.'cfg(unix)'.dependencies]
-pager = "0.16.1"
+pager2 = "0.6.1"
