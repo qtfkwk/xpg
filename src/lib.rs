@@ -6,10 +6,13 @@ use {
     anyhow::{Result, anyhow},
     rand::prelude::*,
     serde::{Deserialize, Serialize},
-    std::collections::{BTreeMap, BTreeSet, HashMap},
-    std::fs::File,
-    std::io::BufReader,
-    std::path::Path,
+    std::{
+        collections::{BTreeMap, BTreeSet, HashMap},
+        fmt::Write,
+        fs::File,
+        io::BufReader,
+        path::Path,
+    },
     ucfirst::ucfirst,
 };
 
@@ -111,7 +114,23 @@ pub enum WordKind {
     VerbPastSyllables(usize),
 }
 
-use WordKind::*;
+use WordKind::{
+    Adjective, AdjectiveSyllables, Adverb, AdverbSyllables, All, AllExtended, AllExtendedSyllables,
+    AllSyllables, Astronomy, AstronomySyllables, AuxiliaryVerb, AuxiliaryVerbSyllables, Chthonic,
+    ChthonicSyllables, City, CitySyllables, Color, ColorSyllables, Conjunction,
+    ConjunctionSyllables, Continent, ContinentSyllables, Country, CountrySyllables, Day,
+    DaySyllables, Element, ElementSyllables, Extended, ExtendedSyllables, FemaleName,
+    FemaleNameSyllables, GreekMyth, GreekMythSyllables, Interjection, InterjectionSyllables,
+    IntransitiveVerb, IntransitiveVerbSyllables, JupiterMoon, JupiterMoonSyllables, MaleName,
+    MaleNameSyllables, MarsMoon, MarsMoonSyllables, Month, MonthSyllables, Moon, MoonSyllables,
+    Mythology, MythologySyllables, Name, NameSyllables, Nationality, NationalitySyllables,
+    NeptuneMoon, NeptuneMoonSyllables, Noun, NounSyllables, Olympian, OlympianSyllables, Place,
+    PlaceSyllables, Planet, PlanetSyllables, PluralNoun, PluralNounSyllables, Preposition,
+    PrepositionSyllables, Pronoun, PronounSyllables, ProperNoun, ProperNounSyllables, RomanMyth,
+    RomanMythSyllables, SaturnMoon, SaturnMoonSyllables, SingularNoun, SingularNounSyllables,
+    TransitiveVerb, TransitiveVerbSyllables, UranusMoon, UranusMoonSyllables, UsState,
+    UsStateSyllables, Verb, VerbPast, VerbPastSyllables, VerbSyllables,
+};
 
 const WORD_KINDS_EXTENDED: [WordKind; 9] = [
     AllExtended,
@@ -129,37 +148,25 @@ impl WordKind {
     fn enumerate(&self, extended: bool) -> Vec<WordKind> {
         let mut r = vec![*self];
         match self {
-            Astronomy => r.append(&mut vec![SingularNoun, Noun]),
-            AuxiliaryVerb => r.push(Verb),
-            Chthonic => r.append(&mut vec![GreekMyth, Mythology, ProperNoun, Noun, Extended]),
-            City => r.append(&mut vec![Place, ProperNoun]),
+            Astronomy | Day => r.append(&mut vec![SingularNoun, Noun]),
+            AuxiliaryVerb | IntransitiveVerb | TransitiveVerb | VerbPast => r.push(Verb),
+            Chthonic | Olympian => {
+                r.append(&mut vec![GreekMyth, Mythology, ProperNoun, Noun, Extended]);
+            }
+            City | Country | UsState => r.append(&mut vec![Place, ProperNoun]),
             Color => r.append(&mut vec![SingularNoun, Noun, Verb]),
             Continent => r.append(&mut vec![Place, ProperNoun, SingularNoun, Noun]),
-            Country => r.append(&mut vec![Place, ProperNoun]),
-            Day => r.append(&mut vec![SingularNoun, Noun]),
-            Element => r.append(&mut vec![ProperNoun, Noun]),
-            FemaleName => r.append(&mut vec![Name, ProperNoun]),
-            GreekMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
-            IntransitiveVerb => r.push(Verb),
-            JupiterMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            MaleName => r.append(&mut vec![Name, ProperNoun]),
-            MarsMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
+            Element | Mythology => r.append(&mut vec![ProperNoun, Noun]),
+            FemaleName | MaleName => r.append(&mut vec![Name, ProperNoun]),
+            GreekMyth | RomanMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
+            JupiterMoon | MarsMoon | NeptuneMoon | SaturnMoon | UranusMoon => {
+                r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]);
+            }
             Month => r.append(&mut vec![SingularNoun, Noun, ProperNoun]),
-            Moon => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
-            Mythology => r.append(&mut vec![ProperNoun, Noun]),
+            Moon | Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
             Name => r.push(ProperNoun),
             Nationality => r.push(Adjective),
-            NeptuneMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            Olympian => r.append(&mut vec![GreekMyth, Mythology, ProperNoun, Noun, Extended]),
-            Planet => r.append(&mut vec![Astronomy, SingularNoun, Noun]),
-            PluralNoun => r.push(Noun),
-            RomanMyth => r.append(&mut vec![Mythology, ProperNoun, Noun]),
-            SaturnMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            SingularNoun => r.push(Noun),
-            TransitiveVerb => r.push(Verb),
-            UranusMoon => r.append(&mut vec![Moon, Astronomy, SingularNoun, Noun, Extended]),
-            UsState => r.append(&mut vec![Place, ProperNoun]),
-            VerbPast => r.push(Verb),
+            PluralNoun | SingularNoun => r.push(Noun),
             _ => {}
         }
         if extended || !r.contains(&Extended) {
@@ -345,15 +352,30 @@ pub struct Config {
 }
 
 impl Config {
+    /**
+    # Errors
+
+    Returns an error if not able to open and read the file at the given path
+    */
     pub fn from_path(path: &Path, extended: bool) -> Result<Config> {
         let r: Config = serde_json::from_reader(BufReader::new(File::open(path)?))?;
         Ok(r.build(extended))
     }
 
+    /**
+    # Errors
+
+    Returns an error if not able to deserialize the given JSON `&str` as a [`Config`]
+    */
     pub fn from_str(s: &str, extended: bool) -> Result<Config> {
         Ok(serde_json::from_str::<Config>(s)?.build(extended))
     }
 
+    /**
+    # Errors
+
+    Returns an error if not able to serialize to a pretty JSON string
+    */
     pub fn dump(&self) -> Result<String> {
         Ok(serde_json::to_string_pretty(self)?)
     }
@@ -373,11 +395,11 @@ impl Config {
                 let kind_is_extended = WORD_KINDS_EXTENDED.contains(kind);
                 if extended || !word_is_extended || kind_is_extended {
                     let s = kinds.entry(*kind).or_default();
-                    s.insert(word.to_string());
+                    s.insert(word.clone());
                     let s = kinds
                         .entry(kind.with_syllables(word_details.syllables))
                         .or_default();
-                    s.insert(word.to_string());
+                    s.insert(word.clone());
                 }
             }
             self.words_built.insert(
@@ -415,7 +437,12 @@ impl Config {
         self
     }
 
-    pub fn list(&self, sub: &String) -> Result<Vec<String>> {
+    /**
+    # Errors
+
+    Returns an error if not able to resolve the given sub `&str`
+    */
+    pub fn list(&self, sub: &str) -> Result<Vec<String>> {
         if let Some(kind) = self.subs.get(sub) {
             if let Some(list) = self.kinds.get(kind) {
                 Ok(if sub.starts_with("{W:") {
@@ -506,11 +533,13 @@ impl Config {
     }
 
     /// Generate a keychain-style password like `plvifc-z9kedn-imcbDp`
+    #[must_use]
     pub fn keychain(&self) -> String {
         self.keychain_words(3).join("-")
     }
 
     /// Generate a "code name" like `BLUE STEEL`
+    #[must_use]
     pub fn codename(&self) -> String {
         format!(
             "{} {}",
@@ -535,6 +564,7 @@ impl Config {
     TAKENSTAR FINEWAVE
     ```
     */
+    #[must_use]
     pub fn codename_series(&self, n: usize) -> String {
         let mut adjectives = self
             .get_n(n + 1, Adjective)
@@ -559,6 +589,8 @@ impl Config {
     }
 
     /// Generate a haiku
+    #[allow(clippy::missing_panics_doc)]
+    #[must_use]
     pub fn haiku(&self, variant: HaikuVariant) -> String {
         let (add_syllables, kebab, newline) = variant.options();
         let (word_sep, line_sep, syl_sep) = if newline {
@@ -636,13 +668,15 @@ impl Config {
             }
             let mut words = words.join(word_sep);
             if add_syllables {
-                words.push_str(&format!(
+                write!(
+                    words,
                     "{syl_sep}({})",
                     line.iter()
-                        .map(|x| x.to_string())
+                        .map(ToString::to_string)
                         .collect::<Vec<_>>()
                         .join(",")
-                ));
+                )
+                .unwrap();
             }
             r.push(words);
         }
@@ -651,13 +685,15 @@ impl Config {
     }
 
     /// Generate a password from the given pattern
+    #[allow(clippy::missing_panics_doc)]
+    #[must_use]
     pub fn generate(&self, pattern: &str) -> String {
         let j = pattern.len();
         let mut subs = vec![];
         let mut words = 0;
         let mut kc_words = 0;
         let mut pre = BTreeMap::new();
-        'outer: for (sub, kind) in self.subs.iter() {
+        'outer: for (sub, kind) in &self.subs {
             let mut i = 0;
             while i < j {
                 if let Some(p) = pattern[i..].find(sub) {
@@ -670,30 +706,27 @@ impl Config {
             }
         }
         let mut i = 0;
-        for (p, (sub, kind)) in pre.iter() {
+        for (p, (sub, kind)) in &pre {
             let s = &pattern[i..*p];
             if *p > i {
                 words += s
                     .chars()
-                    .map(|c| if ['w', 'W', 'T'].contains(&c) { 1 } else { 0 })
+                    .map(|c| usize::from(['w', 'W', 'T'].contains(&c)))
                     .sum::<usize>();
-                kc_words += s
-                    .chars()
-                    .map(|c| if c == 'k' { 1 } else { 0 })
-                    .sum::<usize>();
+                kc_words += s.chars().map(|c| usize::from(c == 'k')).sum::<usize>();
                 subs.push(Sub::Pattern(s));
             }
-            subs.push(Sub::Special((sub.to_string(), *kind)));
+            subs.push(Sub::Special(((*sub).clone(), *kind)));
             i = *p + sub.len();
         }
         if subs.is_empty() {
             words += pattern
                 .chars()
-                .map(|c| if ['w', 'W', 'T'].contains(&c) { 1 } else { 0 })
+                .map(|c| usize::from(['w', 'W', 'T'].contains(&c)))
                 .sum::<usize>();
             kc_words += pattern
                 .chars()
-                .map(|c| if c == 'k' { 1 } else { 0 })
+                .map(|c| usize::from(c == 'k'))
                 .sum::<usize>();
             subs.push(Sub::Pattern(pattern));
         } else if i < j {
@@ -750,6 +783,7 @@ impl Default for Config {
 
 //--------------------------------------------------------------------------------------------------
 
+#[derive(Clone, Copy)]
 pub enum HaikuVariant {
     Normal,
     WithSyllables,
@@ -760,7 +794,7 @@ pub enum HaikuVariant {
 }
 
 impl HaikuVariant {
-    fn options(&self) -> (bool, bool, bool) {
+    fn options(self) -> (bool, bool, bool) {
         match self {
             Self::Condensed => (false, true, false),
             Self::WithSyllablesCondensed => (true, true, false),
@@ -787,7 +821,7 @@ enum KeychainWord {
     KeychainWord3,
 }
 
-use KeychainWord::*;
+use KeychainWord::{KeychainWord1, KeychainWord2, KeychainWord3};
 
 const KEYCHAIN_WORDS: [KeychainWord; 3] = [KeychainWord1, KeychainWord2, KeychainWord3];
 
@@ -804,6 +838,7 @@ fn random_str(n: usize, alphabet: &[char]) -> String {
 }
 
 /// Shuffle a string slice
+#[must_use]
 pub fn shuffle(s: &str) -> String {
     let mut rng = rand::rng();
     let mut r = s.chars().collect::<Vec<_>>();

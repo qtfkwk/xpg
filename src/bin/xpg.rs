@@ -1,28 +1,22 @@
-use anyhow::Result;
-use clap::{Parser, ValueEnum, builder::Styles};
-use convert_case::Casing;
-use std::path::PathBuf;
+use {
+    anyhow::Result,
+    clap::{Parser, ValueEnum},
+    clap_cargo::style::CLAP_STYLING,
+    convert_case::Casing,
+    std::path::PathBuf,
+};
 
 #[cfg(unix)]
 use pager2::Pager;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-const STYLES: Styles = Styles::styled()
-    .header(clap_cargo::style::HEADER)
-    .usage(clap_cargo::style::USAGE)
-    .literal(clap_cargo::style::LITERAL)
-    .placeholder(clap_cargo::style::PLACEHOLDER)
-    .error(clap_cargo::style::ERROR)
-    .valid(clap_cargo::style::VALID)
-    .invalid(clap_cargo::style::INVALID);
-
 #[derive(Parser)]
 #[command(
     about,
     version,
     max_term_width = 80,
-    styles = STYLES,
+    styles = CLAP_STYLING,
     before_help = format!("xpg {VERSION} <https://crates.io/crates/xpg>"),
     after_help = "\
 ---
@@ -63,6 +57,7 @@ Notes
    with the `-L` option to see its effect.
 "
 )]
+#[allow(clippy::struct_excessive_bools)]
 struct Cli {
     /// Shuffle characters
     #[arg(short, long)]
@@ -138,6 +133,7 @@ impl Cli {
 /**
 Provides the command line interface
 */
+#[allow(clippy::too_many_lines)]
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
@@ -274,11 +270,10 @@ fn main() -> Result<()> {
 
                     println!("{pw}");
                     break;
-                } else {
-                    attempts += 1;
-                    if attempts >= cli.attempts {
-                        error("Maximum attempts exceeded!");
-                    }
+                }
+                attempts += 1;
+                if attempts >= cli.attempts {
+                    error("Maximum attempts exceeded!");
                 }
             }
             i += 1;
@@ -333,9 +328,8 @@ impl Case {
             Case::Pascal => convert_case::Case::Pascal,
             Case::UpperCamel => convert_case::Case::UpperCamel,
             Case::Snake => convert_case::Case::Snake,
-            Case::Constant => convert_case::Case::Constant,
+            Case::Constant | Case::ScreamingSnake => convert_case::Case::Constant,
             Case::UpperSnake => convert_case::Case::UpperSnake,
-            Case::ScreamingSnake => convert_case::Case::Constant,
             Case::Kebab => convert_case::Case::Kebab,
             Case::Cobol => convert_case::Case::Cobol,
             Case::UpperKebab => convert_case::Case::UpperKebab,
