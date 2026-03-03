@@ -341,13 +341,6 @@ $ xpg -A title 'T T T T'
 !run:../target/release/xpg -A title 'T T T T'
 ```
 
-#### Apply toggle casing
-
-```text
-$ xpg -A toggle 'T T T T'
-!run:../target/release/xpg -A toggle 'T T T T'
-```
-
 #### Apply camel casing
 
 ```text
@@ -430,27 +423,6 @@ $ xpg -A flat 'T T T T'
 ```text
 $ xpg -A upper-flat 'T T T T'
 !run:../target/release/xpg -A upper-flat 'T T T T'
-```
-
-#### Apply alternating casing
-
-```text
-$ xpg -A alternating 'T T T T'
-!run:../target/release/xpg -A alternating 'T T T T'
-```
-
-#### Apply random casing
-
-```text
-$ xpg -A random 'T T T T'
-!run:../target/release/xpg -A random 'T T T T'
-```
-
-#### Apply pseudo-random casing
-
-```text
-$ xpg -A pseudo-random 'T T T T'
-!run:../target/release/xpg -A pseudo-random 'T T T T'
 ```
 
 #### Generate a password with words with 1, 2, 3, 4, and 5 syllables

@@ -464,7 +464,7 @@ impl Config {
         self.kinds
             .get(&kind)
             .unwrap()
-            .choose_multiple(&mut rand::rng(), n)
+            .sample(&mut rand::rng(), n)
             .cloned()
             .collect()
     }

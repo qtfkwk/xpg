@@ -296,7 +296,6 @@ enum Case {
     Upper,
     Lower,
     Title,
-    Toggle,
     Camel,
     Pascal,
     UpperCamel,
@@ -310,9 +309,6 @@ enum Case {
     Train,
     Flat,
     UpperFlat,
-    Alternating,
-    Random,
-    PseudoRandom,
     Sentence,
 }
 
@@ -323,7 +319,6 @@ impl Case {
             Case::Lower => convert_case::Case::Lower,
             Case::Title => convert_case::Case::Title,
             Case::Sentence => convert_case::Case::Sentence,
-            Case::Toggle => convert_case::Case::Toggle,
             Case::Camel => convert_case::Case::Camel,
             Case::Pascal => convert_case::Case::Pascal,
             Case::UpperCamel => convert_case::Case::UpperCamel,
@@ -336,9 +331,6 @@ impl Case {
             Case::Train => convert_case::Case::Train,
             Case::Flat => convert_case::Case::Flat,
             Case::UpperFlat => convert_case::Case::UpperFlat,
-            Case::Alternating => convert_case::Case::Alternating,
-            Case::Random => convert_case::Case::Random,
-            Case::PseudoRandom => convert_case::Case::PseudoRandom,
         })
     }
 }
